@@ -3,8 +3,6 @@ import { render } from 'react-dom'
 
 export default class App extends React.Component {
   render() {
-    return (
-      <p>App.js</p>
-    )
+    return this.props.children
   }
 }
