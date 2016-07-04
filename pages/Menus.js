@@ -1,62 +1,116 @@
+"use strict"
 import React from 'react'
 import { render } from 'react-dom'
-import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
-
+import 'antd/dist/antd.css';
+import List from 'list-to-tree'
 import { Menu, Icon } from 'antd';
+import ST from '../Setting.js'
+
 const SubMenu = Menu.SubMenu;
 
-const Sider = React.createClass({
-  getInitialState() {
-    return {
+export default class Sider extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
       current: '1',
       openKeys: [],
-    };
-  },
+    }
+  }
+
+  componentWillMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
+    let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    this.flatenMenus = userInfo.menus.map(
+      i=>{
+        if (i.ancestry) {
+         i.listOrderNum = parseInt(i.ancestry)
+        } else {
+          i.listOrderNum = null
+        }
+        return i
+      }
+    )
+    let ltt = new List(this.flatenMenus, {
+      key_id: 'id',
+      key_parent: 'listOrderNum'
+    })
+    var tree = ltt.GetTree()
+    this.menus = tree
+    this.setState({
+      openKeys: this.menus.map(ele=>ele.id.toString())
+    })
+  }
+
+  handleKeyPath(ele) {
+    let oldOpenKeys = this.state.openKeys.slice()
+    let key = ele.keyPath[0]
+    if (ele.open) {
+      oldOpenKeys.push(key)
+    } else {
+      let index = oldOpenKeys.indexOf(key)
+      if (index>-1) {
+        oldOpenKeys.splice(oldOpenKeys.indexOf(key), 1)
+      }
+    }
+    return oldOpenKeys
+  }
+
   handleClick(e) {
-    console.log('click ', e);
+    let openKeys = this.handleKeyPath(e)
+    let currentItem = this.flatenMenus.find(ele=>ele.id.toString() === e.key )
+    ST.historyPush(currentItem.url)
     this.setState({
       current: e.key,
-      openKeys: e.keyPath.slice(1),
+      openKeys: openKeys,
     });
-  },
+  }
+
   onToggle(info) {
+    let openKeys = this.handleKeyPath(info)
     this.setState({
-      openKeys: info.open ? info.keyPath : info.keyPath.slice(1),
+      openKeys: openKeys,
     });
-  },
+  }
+
+  parseMenusList(obj) {
+    let { child, id, name} = obj
+    if (child) {
+      return (
+        <SubMenu key={ id } title={ name }>
+          {
+            child.map(ele=>{
+              return this.parseMenusList(ele)
+            })
+          }
+        </SubMenu>
+      )
+    } else {
+      return <Menu.Item key={id}>{name}</Menu.Item>
+    }
+  }
+
   render() {
     return (
-      <Menu onClick={this.handleClick}
-            style={{ width: 240 }}
+      <Menu onClick={this.handleClick.bind(this)}
+            style={{ width: 240, flex: 1 }}
             openKeys={this.state.openKeys}
-            onOpen={this.onToggle}
-            onClose={this.onToggle}
+            onOpen={this.onToggle.bind(this)}
+            onClose={this.onToggle.bind(this)}
             selectedKeys={[this.state.current]}
             mode="inline"
       >
-        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>导航一</span></span>}>
-          <Menu.Item key="1">选项1</Menu.Item>
-          <Menu.Item key="2">选项2</Menu.Item>
-          <Menu.Item key="3">选项3</Menu.Item>
-          <Menu.Item key="4">选项4</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>导航二</span></span>}>
-          <Menu.Item key="5">选项5</Menu.Item>
-          <Menu.Item key="6">选项6</Menu.Item>
-          <SubMenu key="sub3" title="三级导航">
-            <Menu.Item key="7">选项7</Menu.Item>
-            <Menu.Item key="8">选项8</Menu.Item>
-          </SubMenu>
-        </SubMenu>
-        <SubMenu key="sub4" title={<span><Icon type="setting" /><span>导航三</span></span>}>
-          <Menu.Item key="9">选项9</Menu.Item>
-          <Menu.Item key="10">选项10</Menu.Item>
-          <Menu.Item key="11">选项11</Menu.Item>
-          <Menu.Item key="12">选项12</Menu.Item>
-        </SubMenu>
+        {
+          this.menus.map(ele=>{
+            return this.parseMenusList(ele)
+          })
+        }
       </Menu>
-    );
-  },
-});
+    )
+  }
+}
 
 export default Sider
