@@ -13,7 +13,7 @@ export default class Sider extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      current: '1',
+      current: null,
       openKeys: [],
     }
   }
@@ -62,7 +62,7 @@ export default class Sider extends React.Component {
   handleClick(e) {
     let openKeys = this.handleKeyPath(e)
     let currentItem = this.flatenMenus.find(ele=>ele.id.toString() === e.key )
-    ST.historyPush(currentItem.url)
+    ST.history.push(currentItem.url)
     this.setState({
       current: e.key,
       openKeys: openKeys,

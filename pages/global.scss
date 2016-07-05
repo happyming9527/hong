@@ -1,0 +1,19 @@
+.ant-breadcrumb {
+  margin-bottom: 20px;
+  background-color: #F6F6F6;
+  padding: 10px 20px 10px 20px;
+  border-radius: 5px;
+  a {
+    color: #2db7f5
+  }
+}
+
+/* 由于输入标签长度不确定，所以需要微调使之看上去居中 */
+.ant-advanced-search-form > .ant-row {
+  position: relative;
+  left: -6px;
+}
+
+.ant-advanced-search-form .ant-btn + .ant-btn {
+  margin-left: 8px;
+}

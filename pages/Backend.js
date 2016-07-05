@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'
 import {  Row, Col  } from 'antd'
 import Menus from './Menus.js'
 import TopNavigator from './TopNavigator.js'
+require("!style!css!sass!./global.scss");
 
 export default class Backend extends React.Component {
   constructor(props) {

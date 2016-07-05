@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import { Button, Form, Input } from 'antd';
 import 'antd/dist/antd.css'
 import ST from '../Setting'
-
+import {Link} from 'react-router'
 const createForm = Form.create;
 const FormItem = Form.Item;
 let storage = window.localStorage
@@ -23,19 +23,20 @@ let BasicDemo = React.createClass({
     e.preventDefault();
     this.props.form.validateFields((errors, values) => {
       if (!!errors) {
-        alert('Errors in form!!!')
         return;
       }
 
       fetch('/api/foo/react_login', {
         method: 'post',
+        credentials: 'include',
+        headers:{ "Content-Type": "application/json"},
         body: JSON.stringify(values)}
       )
         .then(e=>e.json())
         .then(result=>{
           if (result.code && result.code == 1) {
             storage.setItem('userInfo', JSON.stringify(result.data))
-            ST.historyPush('/backend')
+            ST.history.push('/backend')
             ST.info.success('登陆成功!')
           } else {
             alert(result.text || '网络连接失败')
