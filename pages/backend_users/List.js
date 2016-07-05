@@ -35,13 +35,9 @@ export default class BackendUser extends React.Component {
       )}];
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
-  }
-
   render() {
     let that = this
-    let pagination = {
+    let paginationConfig = {
       showQuickJumper: true,
       total: this.props.total,
       pageSize: this.props.pageSize,
@@ -49,8 +45,14 @@ export default class BackendUser extends React.Component {
       onChange(current) {
         that.props.changePage(current)
       },
-    };
+    }
+    return (
+      <Table
+        bordered={true}
+        dataSource={this.props.dataSource}
+        columns={this.columns}
+        pagination={paginationConfig}/>
+    )
 
-    return <Table dataSource={this.props.dataSource} columns={this.columns} pagination={pagination}/>
   }
 }

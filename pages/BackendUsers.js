@@ -19,7 +19,7 @@ export default class BackendUser extends React.Component {
       total: 0,
     }
     this.searchCondition = {}
-    this.per = 11
+    this.per = 10
     this.currentPage = 1
 
   }
@@ -90,14 +90,12 @@ export default class BackendUser extends React.Component {
           </Row>
 
           <Row style={{marginTop: 20, marginBottom: 20}}>
-            <Card style={{ width: '100%' }}>
               <List
                 ref={i=>this.list=i}
                 pageSize = {this.per}
                 changePage={this.changePage.bind(this)}
                 dataSource={this.state.dataSource}
                 total={this.state.total} />
-            </Card>
           </Row>
         </div>
     )
