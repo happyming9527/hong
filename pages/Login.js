@@ -25,25 +25,13 @@ let BasicDemo = React.createClass({
       if (!!errors) {
         return;
       }
-
-      fetch('/api/foo/react_login', {
-        method: 'post',
-        credentials: 'include',
-        headers:{ "Content-Type": "application/json"},
-        body: JSON.stringify(values)}
-      )
-        .then(e=>e.json())
-        .then(result=>{
-          if (result.code && result.code == 1) {
-            storage.setItem('userInfo', JSON.stringify(result.data))
-            ST.history.push('/backend')
-            ST.info.success('登陆成功!')
-          } else {
-            alert(result.text || '网络连接失败')
-          }
-      }).catch(e=>{
-        ST.info.error(e.message)
-      })
+      ST.httpPost('/api/foo/react_login', values)
+        .then(result=> {
+          storage.setItem('userInfo', JSON.stringify(result.data))
+          ST.history.push('/backend')
+          ST.info.success('登陆成功!')
+        })
+        .catch(e=>ST.info.error(e.message)).done
     })
   },
 
@@ -51,19 +39,19 @@ let BasicDemo = React.createClass({
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form;
     const nameProps = getFieldProps('name', {
       rules: [
-        { required: true, whitespace: true, message: '请填写登录账号' },
+        {required: true, whitespace: true, message: '请填写登录账号'},
       ],
     });
 
     const passwdProps = getFieldProps('passwd', {
       rules: [
-        { required: true, whitespace: true, message: '请填写密码' },
+        {required: true, whitespace: true, message: '请填写密码'},
       ],
     });
 
     const formItemLayout = {
-      labelCol: { span: 7 },
-      wrapperCol: { span: 12 },
+      labelCol: {span: 7},
+      wrapperCol: {span: 12},
     };
 
     return (

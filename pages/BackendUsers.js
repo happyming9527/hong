@@ -3,13 +3,10 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
 import ST from '../Setting.js'
-import SearchForm from './backend_users/SearchForm.js'
-import List from './backend_users/List.js'
+import SearchForm from './backend_users/_SearchForm.js'
+import List from './backend_users/_List.js'
 import {Link} from 'react-router'
 const Panel = Collapse.Panel;
-
-
-
 
 export default class BackendUser extends React.Component {
   constructor(props) {

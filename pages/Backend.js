@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Row, Col  } from 'antd'
-import Menus from './Menus.js'
-import TopNavigator from './TopNavigator.js'
-require("!style!css!sass!./global.scss");
+import LeftMenus from './_LeftMenus.js'
+import TopNavigator from './_TopNavigator.js'
+require("./global.scss");
 
 export default class Backend extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class Backend extends React.Component {
         </Row>
         <Row style={{flex: 1, alignItems: 'stretch', display: 'flex'}}>
           <Col span={6} style={{display: 'flex', overflowY: 'auto'}}>
-            <Menus/>
+            <LeftMenus/>
           </Col>
           <Col span={18} style={{display: 'flex', overflowY: 'auto'}}>
             { this.props.children}

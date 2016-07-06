@@ -18,24 +18,11 @@ export default class TopNavigator extends React.Component {
 
   logOut() {
     window.localStorage.removeItem('userInfo')
-    fetch('/api/foo/logout', {
-        method: 'post',
-        credentials: 'include',
-        headers:{ "Content-Type": "application/json"},
-        body: JSON.stringify({})
-      }
-    )
-      .then(e=>e.json())
+    ST.httpPost('/api/foo/logout')
       .then(result=> {
-        if (result.code && result.code == 1) {
           ST.history.push('/login')
           ST.info.success(result.text)
-        } else {
-          ST.info.error(result.text)
-        }
-      }).catch(e=> {
-      ST.info.error(e.message)
-    })
+      }).catch(e=>ST.info.error(e.message)).done
   }
 
   fetchData() {
@@ -46,26 +33,13 @@ export default class TopNavigator extends React.Component {
   }
 
   changeRole(ele) {
-    fetch('/api/foo/change_role', {
-      method: 'post',
-      credentials: 'include',
-      headers:{ "Content-Type": "application/json"},
-      body: JSON.stringify({
-        role_id: ele.id
-      })}
-    )
-      .then(e=>e.json())
+    ST.httpPost('/api/foo/change_role', { role_id: ele.id})
       .then(result=>{
-        if (result.code && result.code == 1) {
-          window.localStorage.setItem('userInfo', JSON.stringify(result.data))
-          ST.historyReload('backend')
-          ST.info.success('修改当前角色成功!')
-        } else {
-          alert(result.text || '网络连接失败')
-        }
-      }).catch(e=>{
-      ST.info.error(e.message)
-    })
+        window.localStorage.setItem('userInfo', JSON.stringify(result.data))
+        ST.historyReload('backend')
+        ST.info.success('修改当前角色成功!')
+      })
+      .catch(e=>ST.info.error(e.message)).done
   }
 
   render() {

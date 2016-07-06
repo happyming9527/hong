@@ -8,7 +8,7 @@ import ST from '../Setting.js'
 
 const SubMenu = Menu.SubMenu;
 
-export default class Sider extends React.Component {
+export default class LeftMenus extends React.Component {
 
   constructor(props) {
     super(props)
@@ -19,11 +19,16 @@ export default class Sider extends React.Component {
   }
 
   componentWillMount() {
+    this.currentPath = window.location.pathname
+    this.currentPath = this.currentPath.replace(/\/$/, '')
+    console.log(this.currentPath)
     this.fetchData()
   }
 
   fetchData() {
+    let that = this
     let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+
     this.flatenMenus = userInfo.menus.map(
       i=>{
         if (i.ancestry) {
@@ -31,9 +36,19 @@ export default class Sider extends React.Component {
         } else {
           i.listOrderNum = null
         }
+        if (i.url) {
+          i.url = i.url.replace(/\/$/, '')
+        }
         return i
       }
     )
+
+    let currentMenu = userInfo.menus.find(i=>i.url==that.currentPath)
+    let currentKey
+    if (currentMenu) {
+      currentKey = currentMenu.id.toString()
+    }
+
     let ltt = new List(this.flatenMenus, {
       key_id: 'id',
       key_parent: 'listOrderNum'
@@ -41,7 +56,8 @@ export default class Sider extends React.Component {
     var tree = ltt.GetTree()
     this.menus = tree
     this.setState({
-      openKeys: this.menus.map(ele=>ele.id.toString())
+      openKeys: this.menus.map(ele=>ele.id.toString()),
+      current: currentKey
     })
   }
 
@@ -113,4 +129,4 @@ export default class Sider extends React.Component {
   }
 }
 
-export default Sider
+export default LeftMenus
