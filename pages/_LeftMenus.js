@@ -31,8 +31,8 @@ export default class LeftMenus extends React.Component {
 
     this.flatenMenus = userInfo.menus.map(
       i=>{
-        if (i.ancestry) {
-         i.listOrderNum = parseInt(i.ancestry)
+        if (i.parent_id) {
+         i.listOrderNum = parseInt(i.parent_id)
         } else {
           i.listOrderNum = null
         }

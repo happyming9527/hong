@@ -25,10 +25,10 @@ let BasicDemo = React.createClass({
       if (!!errors) {
         return;
       }
-      ST.httpPost('/api/foo/react_login', values)
+      ST.httpPost('/api/logins/login', values)
         .then(result=> {
           storage.setItem('userInfo', JSON.stringify(result.data))
-          ST.history.push('/backend')
+          ST.history.replace('/backend')
           ST.info.success('登陆成功!')
         })
         .catch(e=>ST.info.error(e.message)).done
@@ -37,13 +37,13 @@ let BasicDemo = React.createClass({
 
   render() {
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form;
-    const nameProps = getFieldProps('name', {
+    const nameProps = getFieldProps('username', {
       rules: [
         {required: true, whitespace: true, message: '请填写登录账号'},
       ],
     });
 
-    const passwdProps = getFieldProps('passwd', {
+    const passwdProps = getFieldProps('password', {
       rules: [
         {required: true, whitespace: true, message: '请填写密码'},
       ],

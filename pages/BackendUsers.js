@@ -26,30 +26,20 @@ export default class BackendUser extends React.Component {
   }
 
   fetchData() {
-    fetch(`/api/foo/backend_users?page=${this.currentPage}&per=${this.per}`, {
-      method: 'post',
-      credentials: 'include',
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(this.searchCondition),
-    }).then(e=>e.json())
+    ST.httpPost(
+      `/api/backend_users/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
       .then(result=> {
-        if (result.code && result.code == 1) {
-          let dataSource = result.data.data.map(ele=> {
-            ele.key = ele.id.toString()
-            return ele
-          })
-          this.setState({
-            total: result.data.size,
-            loaded: true,
-            dataSource: dataSource
-          })
-        } else {
-          ST.info.error(result.text)
-        }
-      }).catch(e=> {
-      console.log(e.stack)
-      ST.info.error(e.message)
-    })
+        let dataSource = result.data.data.map(ele=> {
+          ele.key = ele.id.toString()
+          return ele
+        })
+        this.setState({
+          total: result.data.size,
+          loaded: true,
+          dataSource: dataSource
+        })
+      })
+      .catch(e=>ST.info.error(e.message)).done
   }
 
   changeConditionAndSearch(json) {

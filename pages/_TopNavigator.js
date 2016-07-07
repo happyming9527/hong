@@ -18,7 +18,7 @@ export default class TopNavigator extends React.Component {
 
   logOut() {
     window.localStorage.removeItem('userInfo')
-    ST.httpPost('/api/foo/logout')
+    ST.httpPost('/api/logins/logout')
       .then(result=> {
           ST.history.push('/login')
           ST.info.success(result.text)
@@ -33,7 +33,7 @@ export default class TopNavigator extends React.Component {
   }
 
   changeRole(ele) {
-    ST.httpPost('/api/foo/change_role', { role_id: ele.id})
+    ST.httpPost('/api/account/change_role', { role_id: ele.id})
       .then(result=>{
         window.localStorage.setItem('userInfo', JSON.stringify(result.data))
         ST.historyReload('backend')

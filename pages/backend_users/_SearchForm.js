@@ -35,7 +35,7 @@ let BasicDemo = React.createClass({
 
   render() {
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form;
-    const nameProps = getFieldProps('username', {
+    const nameProps = getFieldProps('username_cont', {
       rules: [],
     });
 

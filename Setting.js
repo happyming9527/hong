@@ -14,8 +14,8 @@ const info = {
 
 const history = browserHistory
 const historyReload = (path)=> {
-  history.push('/login');
-  history.push(path);
+  history.replace('/login');
+  history.replace(path);
 }
 
 const historyReplace = (path)=> {
