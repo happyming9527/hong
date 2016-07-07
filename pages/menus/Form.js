@@ -9,7 +9,6 @@ const RadioGroup = Radio.Group;
 let Demo = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
-    alert('foo')
     this.props.form.validateFields((errors, values) => {
       if (!!errors) {
         return;
@@ -34,49 +33,82 @@ let Demo = React.createClass({
     let node = this.props.currentNode
     let ot = this.props.operationType
 
-    let name, url, if_effective, urlWrapper, showButton
+    let name, url, if_effective, urlWrapper, showButton, parentName
 
     if (node) {
       if (ot === '查看') {
         name = <p className="ant-form-text" name="name">{node.name}</p>
         url = <p className="ant-form-text" name="url">{node.url}</p>
         if_effective = <Checkbox {...getFieldProps('if_effective',  {valuePropName: 'checked', initialValue: node.is_effective}) } disabled>有效</Checkbox>
-      } else if (ot === '修改') {
-
-        name = <Input type="text" {...getFieldProps('name', { initialValue: node.name })} />
-        url = <Input type="text" {...getFieldProps('pass', {initialValue: node.url })} />
-        if_effective = <Checkbox {...getFieldProps('if_effective',  {valuePropName: 'checked', initialValue: node.is_effective}) }>有效</Checkbox>
-        showButton = true
-      } else if (ot === '新增') {
-        const nameProps = getFieldProps('name', {
-          rules: [
-            {required: true, whitespace: true, message: '请填写名称'},
-          ],
-        });
-        const urlProps = getFieldProps('url', {
-          rules: [
-            {required: true, whitespace: true, message: '请填写url'}
-          ],
-        });
-        name = <Input type="text" {...nameProps} />
-        url = <Input type="text" {...urlProps} />
-        if_effective = <Checkbox {...getFieldProps('if_effective',  {valuePropName: 'checked', initialValue: true}) }>有效</Checkbox>
-        showButton = true
+      } else {
+        if (ot === '修改') {
+          const nameProps = getFieldProps('name', {
+            initialValue: node.name,
+            rules: [
+              {required: true, whitespace: true, message: '请填写名称'},
+            ],
+          });
+          const urlProps = getFieldProps('url', {
+            initialValue: node.url,
+            rules: [
+              //{required: true, whitespace: true, message: '请填写url'}
+            ],
+          });
+          const isEffectiveProps = getFieldProps('if_effective',  {
+            valuePropName: 'checked',
+            initialValue: node.is_effective
+          })
+          name = <Input type="text" {...nameProps} />
+          url = <Input type="text" {...urlProps} />
+          if_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
+          showButton = true
+        } else if (ot === '新增') {
+          const nameProps = getFieldProps('name', {
+            rules: [
+              {required: true, whitespace: true, message: '请填写名称'},
+            ],
+          });
+          const urlProps = getFieldProps('url', {
+            rules: [
+              //{required: true, whitespace: true, message: '请填写url'}
+            ],
+          });
+          const isEffectiveProps = getFieldProps('if_effective',  {
+            valuePropName: 'checked',
+            initialValue: true
+          })
+          name = <Input type="text" {...nameProps} />
+          url = <Input type="text" {...urlProps} />
+          if_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
+          showButton = true
+        }
       }
 
-      urlWrapper = node.isFolder ? null:<FormItem
-        {...formItemLayout}
-        label="路由"
-      >
+      urlWrapper = node.isFolder ? null:
+        <FormItem
+          {...formItemLayout}
+          label="路由"
+        >
         { url }
       </FormItem>
+
+      parentName = ot!=='新增' ? null:
+        <FormItem
+          {...formItemLayout}
+          label="父节点名称"
+        >
+          <p className="ant-form-text" name="name">{node.name}</p>
+        </FormItem>
     }
 
     return (
       !node ? null:
         <Form
+          form={this.props.form}
           horizontal
           onSubmit={this.handleSubmit}>
+
+          { parentName }
           <FormItem
             hasFeedback
             {...formItemLayout}
@@ -86,9 +118,8 @@ let Demo = React.createClass({
           </FormItem>
           { urlWrapper }
           <FormItem
-            hasFeedback
             {...formItemLayout}
-            label={<span>是否有效 <Tooltip title="选中为有效,有效则会在左侧菜单栏显示,否则不显示"><Icon type="question-circle-o" /></Tooltip></span>}
+            label={<span>是否有效 <Tooltip title="选中为有效,有效则会在左侧菜单栏显示,否则不显示" ><Icon  type="question-circle-o" style={{color: 'red'}} /></Tooltip></span>}
           >
             {if_effective}
           </FormItem>

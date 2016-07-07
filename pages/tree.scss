@@ -17,7 +17,11 @@
   .inner {
     display: flex;
     flex-direction: row;
-    alignItems: center;
+    align-items: center;
+  }
+
+  .collapse {
+    top: 4px;
   }
 
   .node {
