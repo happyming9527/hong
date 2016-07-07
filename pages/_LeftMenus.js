@@ -51,7 +51,8 @@ export default class LeftMenus extends React.Component {
 
     let ltt = new List(this.flatenMenus, {
       key_id: 'id',
-      key_parent: 'listOrderNum'
+      key_parent: 'listOrderNum',
+      key_sequence: 'order_num'
     })
     var tree = ltt.GetTree()
     this.menus = tree

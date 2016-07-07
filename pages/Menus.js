@@ -4,7 +4,7 @@ import Tree from 'react-ui-tree'
 import cn from 'classnames'
 import 'react-ui-tree/lib/react-ui-tree.less'
 import './tree.scss'
-import { Row, Col, Card, Breadcrumb } from 'antd';
+import { Row, Col, Card, Breadcrumb, Button } from 'antd';
 import 'antd/dist/antd.css'
 import {Link} from 'react-router'
 import ST from '../Setting.js'
@@ -25,31 +25,36 @@ export default class Menus extends React.Component {
     this.fetchData()
   }
 
+  resolveData(data) {
+    let menus = data.map(ele=>{
+      let isParent = data.find(i=>{
+        return i.parent_id === ele.id
+      })
+      if (isParent) {
+        ele.collapsed = false
+        ele.isFolder = true
+      } else {
+        ele.leaf = true
+      }
+      ele.module = ele.name
+      return ele
+    })
+
+    let ltt = new List(menus, {
+      key_id: 'id',
+      key_parent: 'parent_id',
+      key_child: 'children',
+      key_sequence: 'order_num'
+    })
+    let tree = ltt.GetTree()
+    let rootTree = tree[0]
+    return rootTree
+  }
+
   fetchData() {
     ST.httpPost('/api/menus/list')
       .then(result=> {
-        let dataSource = result.data
-        let menus = dataSource.map(ele=>{
-          let isParent = dataSource.find(i=>{
-            return i.parent_id === ele.id
-          })
-          if (isParent) {
-            ele.collapsed = false
-            ele.isFolder = true
-          } else {
-            ele.leaf = true
-          }
-          ele.module = ele.name
-          return ele
-        })
-
-        let ltt = new List(menus, {
-          key_id: 'id',
-          key_parent: 'parent_id',
-          key_child: 'children'
-        })
-        let tree = ltt.GetTree()
-        let rootTree = tree[0]
+        let rootTree = this.resolveData(result.data)
         this.setState({
           loaded: true,
           tree: rootTree
@@ -92,12 +97,30 @@ export default class Menus extends React.Component {
           <span
             style={{marginLeft: 5}}
             className={cn({ hidden: node !== this.state.active })}>
-            <a style={{marginLeft: 5}} onClick={this.editNode.bind(this, node)}>编辑</a>
+            <a
+              className={cn({ hidden: node.name === 'root' })}
+              style={{marginLeft: 5}} onClick={this.editNode.bind(this, node)}>编辑</a>
             <a style={{marginLeft: 5}} onClick={this.addNode.bind(this, node)}>增加</a>
           </span>
         </span>
       </div>
     );
+  }
+
+  changeTree(data) {
+    let rootTree = this.resolveData(data)
+    this.setState({
+      tree: rootTree
+    })
+  }
+
+  changeSequence() {
+    ST.httpPost('/api/menus/change_sequence', {tree: this.state.tree})
+      .then(result=> {
+        ST.info.success(result.text)
+        this.changeTree(result.data)
+      })
+      .catch(e=>ST.info.error(e.message)).done
   }
 
   render() {
@@ -117,18 +140,28 @@ export default class Menus extends React.Component {
               <Card title="菜单">
                 {
                   !this.state.tree ? null:
-                    <Tree
-                      paddingLeft={20}
-                      tree={this.state.tree}
-                      onChange={this.handleChange.bind(this)}
-                      renderNode={this.renderNode.bind(this)}
-                    />
+                    <div>
+                      <Tree
+                        paddingLeft={20}
+                        tree={this.state.tree}
+                        onChange={this.handleChange.bind(this)}
+                        renderNode={this.renderNode.bind(this)}
+                      />
+                      <Button
+                        style={{marginTop: 20}}
+                        type="primary"
+                        onClick={this.changeSequence.bind(this)} >修改</Button>
+                    </div>
                 }
               </Card>
             </Col>
             <Col span={14}>
               <Card title={`操作${!this.state.active ? '':`( ${this.state.operationType} )`}`}>
-                <Form key={this.state.operationType} currentNode={this.state.active} operationType={ this.state.operationType }/>
+                <Form
+                  key={this.state.operationType}
+                  currentNode={this.state.active}
+                  changeCallback={this.changeTree.bind(this)}
+                  operationType={ this.state.operationType }/>
               </Card>
             </Col>
 

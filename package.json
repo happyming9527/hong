@@ -23,7 +23,7 @@
     "history": "^3.0.0",
     "if-env": "^1.0.0",
     "less-loader": "^2.2.3",
-    "list-to-tree": "0.0.6",
+    "list-to-tree": "happyming9527/list-to-tree",
     "node-sass": "^3.8.0",
     "react": "15.1.0",
     "react-dom": "15.1.0",

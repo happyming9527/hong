@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon } from 'antd';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
+import ST from '../../Setting.js'
 
 let Demo = React.createClass({
   handleSubmit(e) {
@@ -13,14 +14,21 @@ let Demo = React.createClass({
       if (!!errors) {
         return;
       }
-      console.log('收到表单值：', this.props.form.getFieldsValue());
-      //ST.httpPost('/api/logins/login', values)
-      //  .then(result=> {
-      //    storage.setItem('userInfo', JSON.stringify(result.data))
-      //    ST.history.replace('/backend')
-      //    ST.info.success('登陆成功!')
-      //  })
-      //  .catch(e=>ST.info.error(e.message)).done
+      if (this.props.operationType === '修改') {
+        ST.httpPost('/api/menus/modify', {id: this.props.currentNode.id, data: values})
+          .then(result=> {
+            this.props.changeCallback(result.data)
+            ST.info.success(result.text)
+          })
+          .catch(e=>ST.info.error(e.message)).done
+      } else if (this.props.operationType === '新增') {
+        ST.httpPost('/api/menus/add', {parent_id: this.props.currentNode.id, data: values})
+          .then(result=> {
+            this.props.changeCallback(result.data)
+            ST.info.success(result.text)
+          })
+          .catch(e=>ST.info.error(e.message)).done
+      }
     })
   },
 
@@ -33,13 +41,13 @@ let Demo = React.createClass({
     let node = this.props.currentNode
     let ot = this.props.operationType
 
-    let name, url, if_effective, urlWrapper, showButton, parentName
+    let name, url, is_effective, urlWrapper, showButton, parentName
 
     if (node) {
       if (ot === '查看') {
         name = <p className="ant-form-text" name="name">{node.name}</p>
         url = <p className="ant-form-text" name="url">{node.url}</p>
-        if_effective = <Checkbox {...getFieldProps('if_effective',  {valuePropName: 'checked', initialValue: node.is_effective}) } disabled>有效</Checkbox>
+        is_effective = <Checkbox {...getFieldProps('is_effective',  {valuePropName: 'checked', initialValue: node.is_effective}) } disabled>有效</Checkbox>
       } else {
         if (ot === '修改') {
           const nameProps = getFieldProps('name', {
@@ -54,13 +62,13 @@ let Demo = React.createClass({
               //{required: true, whitespace: true, message: '请填写url'}
             ],
           });
-          const isEffectiveProps = getFieldProps('if_effective',  {
+          const isEffectiveProps = getFieldProps('is_effective',  {
             valuePropName: 'checked',
             initialValue: node.is_effective
           })
           name = <Input type="text" {...nameProps} />
           url = <Input type="text" {...urlProps} />
-          if_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
+          is_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
           showButton = true
         } else if (ot === '新增') {
           const nameProps = getFieldProps('name', {
@@ -73,13 +81,13 @@ let Demo = React.createClass({
               //{required: true, whitespace: true, message: '请填写url'}
             ],
           });
-          const isEffectiveProps = getFieldProps('if_effective',  {
+          const isEffectiveProps = getFieldProps('is_effective',  {
             valuePropName: 'checked',
             initialValue: true
           })
           name = <Input type="text" {...nameProps} />
           url = <Input type="text" {...urlProps} />
-          if_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
+          is_effective = <Checkbox {...isEffectiveProps }>有效</Checkbox>
           showButton = true
         }
       }
@@ -121,7 +129,7 @@ let Demo = React.createClass({
             {...formItemLayout}
             label={<span>是否有效 <Tooltip title="选中为有效,有效则会在左侧菜单栏显示,否则不显示" ><Icon  type="question-circle-o" style={{color: 'red'}} /></Tooltip></span>}
           >
-            {if_effective}
+            {is_effective}
           </FormItem>
           {
             !showButton ? null:
