@@ -17,7 +17,7 @@ export default class TopNavigator extends React.Component {
   }
 
   logOut() {
-    window.localStorage.removeItem('userInfo')
+    ST.storage.removeItem('userInfo')
     ST.httpPost('/api/logins/logout')
       .then(result=> {
           ST.history.push('/login')
@@ -26,7 +26,7 @@ export default class TopNavigator extends React.Component {
   }
 
   fetchData() {
-    let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    let userInfo = JSON.parse(ST.storage.getItem('userInfo'))
     this.name = userInfo.name
     this.current_role = userInfo.current_role
     this.roles = userInfo.roles
@@ -35,7 +35,7 @@ export default class TopNavigator extends React.Component {
   changeRole(ele) {
     ST.httpPost('/api/account/change_role', { role_id: ele.id})
       .then(result=>{
-        window.localStorage.setItem('userInfo', JSON.stringify(result.data))
+        ST.storage.setItem('userInfo', JSON.stringify(result.data))
         ST.historyReload('backend')
         ST.info.success('修改当前角色成功!')
       })

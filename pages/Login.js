@@ -7,7 +7,6 @@ import ST from '../Setting'
 import {Link} from 'react-router'
 const createForm = Form.create;
 const FormItem = Form.Item;
-let storage = window.localStorage
 
 function noop() {
   return false;
@@ -27,7 +26,7 @@ let BasicDemo = React.createClass({
       }
       ST.httpPost('/api/logins/login', values)
         .then(result=> {
-          storage.setItem('userInfo', JSON.stringify(result.data))
+          ST.storage.setItem('userInfo', JSON.stringify(result.data))
           ST.history.replace('/backend')
           ST.info.success('登陆成功!')
         })

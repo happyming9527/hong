@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon } from 'antd';
 const FormItem = Form.Item;
-const RadioGroup = Radio.Group;
 import ST from '../../Setting.js'
 
 let Demo = React.createClass({

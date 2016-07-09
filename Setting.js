@@ -18,6 +18,10 @@ const historyReload = (path)=> {
   history.replace(path);
 }
 
+const historyGoBack = ()=> {
+  history.goBack()
+}
+
 const historyReplace = (path)=> {
   browserHistory.replace(path)
 }
@@ -74,12 +78,15 @@ const loading = ()=> {
   </div>
 }
 
+const storage = window.sessionStorage
 
 export default {
   info,
   history,
   historyReload,
+  historyGoBack,
   loading,
   httpPost,
-  httpGet
+  httpGet,
+  storage
 }

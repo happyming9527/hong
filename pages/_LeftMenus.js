@@ -27,7 +27,7 @@ export default class LeftMenus extends React.Component {
 
   fetchData() {
     let that = this
-    let userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    let userInfo = JSON.parse(ST.storage.getItem('userInfo'))
 
     this.flatenMenus = userInfo.menus.map(
       i=>{
@@ -79,10 +79,14 @@ export default class LeftMenus extends React.Component {
   handleClick(e) {
     let openKeys = this.handleKeyPath(e)
     let currentItem = this.flatenMenus.find(ele=>ele.id.toString() === e.key )
-    ST.history.push(currentItem.url)
+    if (currentItem.url) {
+      ST.history.push(currentItem.url)
+    } else {
+      ST.info.error('此菜单还未配置路由')
+    }
     this.setState({
       current: e.key,
-      openKeys: openKeys,
+      openKeys: openKeys
     });
   }
 

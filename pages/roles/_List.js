@@ -13,35 +13,28 @@ export default class BackendUser extends React.Component {
       dataIndex: 'id',
       key: 'id',
     },{
-      title: '用户名',
-      dataIndex: 'username',
-      key: 'username',
-    }, {
-      title: '真名',
+      title: '名称',
       dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '创建时间',
-      dataIndex: 'created_at',
-      key: 'created_at',
-    }, {
+      key: 'username',
+    },
+      {
       title: '操作',
       key: 'operation',
       render: (text, record) => (
         <span>
           <a href="javascript:void(0)" onClick={this.editNode.bind(this, record)}>修改</a>
           <span className="ant-divider"></span>
-          <a href="javascript:void(0)" onClick={this.changeRoles.bind(this, record)}>修改角色</a>
+          <a href="javascript:void(0)" onClick={this.editNodeMenus.bind(this, record)}>添加菜单</a>
         </span>
       )}];
   }
 
-  editNode(node) {
-    ST.history.push(`/backend/backend_users/edit/${node.id}`)
+  editNode(record) {
+    ST.history.push(`/backend/roles/edit?id=${record.id}&name=${record.name}`)
   }
 
-  changeRoles(node) {
-    ST.history.push(`/backend/backend_users/edit_roles/${node.id}`)
+  editNodeMenus(record) {
+    ST.history.push(`/backend/roles/edit_menus?id=${record.id}&name=${record.name}`)
   }
 
   render() {
@@ -55,6 +48,7 @@ export default class BackendUser extends React.Component {
         that.props.changePage(current)
       },
     }
+
     return (
       <Table
         bordered={true}

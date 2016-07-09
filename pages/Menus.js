@@ -9,7 +9,7 @@ import 'antd/dist/antd.css'
 import {Link} from 'react-router'
 import ST from '../Setting.js'
 import List from 'list-to-tree'
-import Form from './menus/Form.js'
+import Form from './menus/_Form.js'
 
 export default class Menus extends React.Component {
   constructor(props) {
