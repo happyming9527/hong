@@ -17,6 +17,7 @@ import Roles from './pages/Roles.js'
 import RolesEdit from './pages/roles/RolesEdit.js'
 import RolesEditMenus from './pages/roles/RolesEditMenus.js'
 import RolesAdd from './pages/roles/RolesAdd.js'
+import WriteFeed from './pages/WriteFeed.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -41,6 +42,7 @@ render((
         </Route>
         <Route path="change_self_password" component={ChangeSelfPassword}/>
         <Route path="menus" component={Menus}/>
+        <Route path="write_feed" component={WriteFeed}/>
         <Route path="roles" component={App}>
           <IndexRoute component={Roles} />
           <Route path="add" component={RolesAdd}/>
