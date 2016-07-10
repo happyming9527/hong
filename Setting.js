@@ -1,8 +1,8 @@
 "use strict";
 import React from 'react'
-import { message, Spin } from 'antd';
+import { message, Spin, Row, Breadcrumb } from 'antd';
 import 'antd/dist/antd.css'
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
 
 const info = {
   info: (str, time)=>message.info(str, time || 3),
@@ -78,6 +78,52 @@ const loading = ()=> {
   </div>
 }
 
+const BreadCrumb = (props)=>{
+  return (
+    <Row>
+      <Breadcrumb separator=">">
+        <Breadcrumb.Item><Link to="/backend">首页</Link></Breadcrumb.Item>
+        {
+          props.list.map(
+            i=>{
+              return (
+                <Breadcrumb.Item key={i.name}>
+                  { i.url ? <Link to={i.url}>{i.name}</Link> : i.name }
+                </Breadcrumb.Item>
+              )
+            }
+          )
+        }
+      </Breadcrumb>
+    </Row>
+  )
+}
+
+const Container = (props)=>{
+  return !props.loaded ? ST.loading() :
+    <div style={{width: '100%', padding: '20px 30px'}}>
+      {
+        !props.breadcrumb ? null:
+          <BreadCrumb list={ props.breadcrumb }/>
+      }
+      {
+        props.children
+      }
+    </div>
+}
+
+Container.defaultProps = {
+  loaded: true
+}
+
+const PaddingRow = (props)=>{
+  return (
+    <Row style={{marginTop: 20, marginBottom: 20}}>
+      {props.children}
+    </Row>
+  )
+}
+
 const storage = window.sessionStorage
 
 export default {
@@ -88,5 +134,8 @@ export default {
   loading,
   httpPost,
   httpGet,
-  storage
+  storage,
+  BreadCrumb,
+  Container,
+  PaddingRow
 }

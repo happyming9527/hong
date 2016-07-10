@@ -63,22 +63,15 @@ export default class BackendUser extends React.Component {
   render() {
     let that = this
     return (
-        <div style={{width: '100%', padding: '20px 30px'}}>
-          <Row>
-            <Breadcrumb separator=">">
-              <Breadcrumb.Item><Link to="/backend">首页</Link></Breadcrumb.Item>
-              <Breadcrumb.Item>录入文章</Breadcrumb.Item>
-            </Breadcrumb>
-          </Row>
-
-          <Row style={{marginTop: 20, marginBottom: 20}}>
-            <RichEditor ref={i=>this.editor=i}/>
-          </Row>
-          <Row
-            style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <Button type="primary" htmlType="submit" onClick={this.submit.bind(this)}>提交</Button>
-          </Row>
-        </div>
+      <ST.Container breadcrumb={[{name: '测试页'}]}>
+        <ST.PaddingRow>
+          <RichEditor ref={i=>this.editor=i}/>
+        </ST.PaddingRow>
+        <ST.PaddingRow
+          style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Button type="primary" htmlType="submit" onClick={this.submit.bind(this)}>提交</Button>
+        </ST.PaddingRow>
+      </ST.Container>
     )
   }
 }

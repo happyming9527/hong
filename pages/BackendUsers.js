@@ -59,39 +59,30 @@ export default class BackendUser extends React.Component {
   render() {
     let that = this
     return (
-      !this.state.loaded ? ST.loading() :
-        <div style={{width: '100%', padding: '20px 30px'}}>
+      <ST.Container breadcrumb={[{name: '后台用户列表'}]}>
+        <Row>
+          <Collapse accordion>
+            <Panel header={'搜索框'} key="1">
+              <SearchForm
+                ref={i=>this.searchForm=i}
+                searchCallback={this.changeConditionAndSearch.bind(this)} />
+            </Panel>
+          </Collapse>
+        </Row>
 
-          <Row>
-            <Breadcrumb separator=">">
-              <Breadcrumb.Item><Link to="/backend">首页</Link></Breadcrumb.Item>
-              <Breadcrumb.Item>后台用户列表</Breadcrumb.Item>
-            </Breadcrumb>
-          </Row>
+        <Row style={{marginTop: 20, marginBottom: 20}}>
+          <Button type="primary" htmlType="submit" onClick={this.addFunc.bind(this)}>新增</Button>
+        </Row>
 
-          <Row>
-            <Collapse accordion>
-              <Panel header={'搜索框'} key="1">
-                <SearchForm
-                  ref={i=>this.searchForm=i}
-                  searchCallback={this.changeConditionAndSearch.bind(this)} />
-              </Panel>
-            </Collapse>
-          </Row>
-
-          <Row style={{marginTop: 20, marginBottom: 20}}>
-            <Button type="primary" htmlType="submit" onClick={this.addFunc.bind(this)}>新增</Button>
-          </Row>
-
-          <Row style={{marginTop: 20, marginBottom: 20}}>
-              <List
-                ref={i=>this.list=i}
-                pageSize = {this.per}
-                changePage={this.changePage.bind(this)}
-                dataSource={this.state.dataSource}
-                total={this.state.total} />
-          </Row>
-        </div>
+        <Row style={{marginTop: 20, marginBottom: 20}}>
+          <List
+            ref={i=>this.list=i}
+            pageSize = {this.per}
+            changePage={this.changePage.bind(this)}
+            dataSource={this.state.dataSource}
+            total={this.state.total} />
+        </Row>
+      </ST.Container>
     )
   }
 }

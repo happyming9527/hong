@@ -58,25 +58,20 @@ export default class BackendUser extends React.Component {
   render() {
     let that = this
     return (
-      !this.state.loaded ? ST.loading() :
-        <div style={{width: '100%', padding: '20px 30px'}}>
-          <Row>
-            <Breadcrumb separator=">">
-              <Breadcrumb.Item><Link to="/backend">首页</Link></Breadcrumb.Item>
-              <Breadcrumb.Item>后台角色管理</Breadcrumb.Item>
-            </Breadcrumb>
-          </Row>
-
-          <Row><Button type="primary" htmlType="submit" onClick={this.addFunc.bind(this)}>新增</Button></Row>
-          <Row style={{marginTop: 20, marginBottom: 20}}>
-            <List
-              ref={i=>this.list=i}
-              pageSize = {this.per}
-              changePage={this.changePage.bind(this)}
-              dataSource={this.state.dataSource}
-              total={this.state.total} />
-          </Row>
-        </div>
+      <ST.Container>
+        <ST.BreadCrumb list={
+          [{name: '后台角色管理'}]
+        }/>
+        <Row><Button type="primary" htmlType="submit" onClick={this.addFunc.bind(this)}>新增</Button></Row>
+        <ST.PaddingRow>
+          <List
+            ref={i=>this.list=i}
+            pageSize = {this.per}
+            changePage={this.changePage.bind(this)}
+            dataSource={this.state.dataSource}
+            total={this.state.total} />
+        </ST.PaddingRow>
+      </ST.Container>
     )
   }
 }

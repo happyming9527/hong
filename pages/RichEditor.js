@@ -4,12 +4,15 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Row, Col  } from 'antd'
 import {
+  AtomicBlockUtils,
+  Entity,
   Editor,
   EditorState,
   convertToRaw,
   RichUtils,
   convertFromHTML,
   ContentState,
+  Modifier,
   DefaultDraftBlockRenderMap,
 } from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html';
@@ -29,14 +32,23 @@ class RichEditorExample extends React.Component {
 
     this.state = {
       editorState: EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(html))),
+      showURLInput: false,
+      url: '',
+      urlType: '',
     };
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => this.setState({editorState});
-
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
+
+    this.onURLChange = (e) => this.setState({urlValue: e.target.value});
+    this.addAudio = this._addAudio.bind(this);
+    this.addImage = this._addImage.bind(this);
+    this.addVideo = this._addVideo.bind(this);
+    this.confirmMedia = this._confirmMedia.bind(this);
+    this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
   }
 
   getContent() {
@@ -72,8 +84,105 @@ class RichEditorExample extends React.Component {
     );
   }
 
-  render() {
+  _confirmMedia(e) {
+    e.preventDefault();
+    const {editorState, urlValue, urlType} = this.state;
+    const entityKey = Entity.create(urlType, 'IMMUTABLE', {src: urlValue})
+
+    this.setState({
+      editorState: AtomicBlockUtils.insertAtomicBlock(
+        editorState,
+        entityKey,
+        ' '
+      ),
+      showURLInput: false,
+      urlValue: '',
+    }, () => {
+      setTimeout(() => this.focus(), 0);
+    });
+  }
+
+  _onURLInputKeyDown(e) {
+    if (e.which === 13) {
+      this._confirmMedia(e);
+    }
+  }
+
+  _promptForMedia(type) {
     const {editorState} = this.state;
+    this.setState({
+      showURLInput: true,
+      urlValue: '',
+      urlType: type,
+    }, () => {
+      setTimeout(() => this.refs.url.focus(), 0);
+    });
+  }
+
+  _addAudio() {
+    this._promptForMedia('audio');
+  }
+
+  _addImage() {
+    this._promptForMedia('image');
+  }
+
+  _addVideo() {
+    this._promptForMedia('video');
+  }
+
+  render() {
+    const styles = {
+      root: {
+        fontFamily: '\'Georgia\', serif',
+        padding: 20,
+        width: 600,
+      },
+      buttons: {
+        marginBottom: 10,
+      },
+      urlInputContainer: {
+        marginBottom: 10,
+      },
+      urlInput: {
+        fontFamily: '\'Georgia\', serif',
+        marginRight: 10,
+        padding: 3,
+      },
+      editor: {
+        border: '1px solid #ccc',
+        cursor: 'text',
+        minHeight: 80,
+        padding: 10,
+      },
+      button: {
+        marginTop: 10,
+        textAlign: 'center',
+      },
+      media: {
+        width: '100%',
+      },
+    };
+
+    const {editorState} = this.state;
+
+    let urlInput;
+    if (this.state.showURLInput) {
+      urlInput =
+        <div style={styles.urlInputContainer}>
+          <input
+            onChange={this.onURLChange}
+            ref="url"
+            style={styles.urlInput}
+            type="text"
+            value={this.state.urlValue}
+            onKeyDown={this.onURLInputKeyDown}
+          />
+          <button onMouseDown={this.confirmMedia}>
+            Confirm
+          </button>
+        </div>;
+    }
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -85,29 +194,85 @@ class RichEditorExample extends React.Component {
       }
     }
 
+    function mediaBlockRenderer(block) {
+      if (block.getType() === 'atomic') {
+        return {
+          component: Media,
+          editable: false,
+        };
+      }
+
+      return null;
+    }
+
+    const Audio = (props) => {
+      return <audio controls src={props.src} style={styles.media} />;
+    };
+
+    const Image = (props) => {
+      return <img src={props.src} style={styles.media} />;
+    };
+
+    const Video = (props) => {
+      return <video controls src={props.src} style={styles.media} />;
+    };
+
+    const Media = (props) => {
+      const entity = Entity.get(props.block.getEntityAt(0));
+      const {src} = entity.getData();
+      const type = entity.getType();
+
+      let media;
+      if (type === 'audio') {
+        media = <Audio src={src} />;
+      } else if (type === 'image') {
+        media = <Image src={src} />;
+      } else if (type === 'video') {
+        media = <Video src={src} />;
+      }
+
+      return media;
+    };
+
+
+
     return (
-      <div className="RichEditor-root">
-        <BlockStyleControls
-          editorState={editorState}
-          onToggle={this.toggleBlockType}
-        />
-        <InlineStyleControls
-          editorState={editorState}
-          onToggle={this.toggleInlineStyle}
-        />
-        <div className={className} onClick={this.focus}>
-          <Editor
-            blockStyleFn={getBlockStyle}
-            customStyleMap={styleMap}
+        <div className="RichEditor-root">
+          <BlockStyleControls
             editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            placeholder="在此输入..."
-            ref="editor"
-            spellCheck={false}
+            onToggle={this.toggleBlockType}
           />
-        </div>
+          <InlineStyleControls
+            editorState={editorState}
+            onToggle={this.toggleInlineStyle}
+          />
+
+          <div style={styles.buttons}>
+            <button onMouseDown={this.addAudio} style={{marginRight: 10}}>
+              Add Audio
+            </button>
+            <button onMouseDown={this.addImage} style={{marginRight: 10}}>
+              Add Image
+            </button>
+            <button onMouseDown={this.addVideo} style={{marginRight: 10}}>
+              Add Video
+            </button>
+          </div>
+          {urlInput}
+          <div className={className} onClick={this.focus}>
+            <Editor
+              blockStyleFn={getBlockStyle}
+              customStyleMap={styleMap}
+              editorState={editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              onChange={this.onChange}
+              placeholder="在此输入..."
+              ref="editor"
+              spellCheck={false}
+            />
+          </div>
       </div>
+
     );
   }
 }
@@ -129,7 +294,7 @@ function getBlockStyle(block) {
   }
 }
 
-class StyleButton extends React.Component {
+class BlockStyleButton extends React.Component {
   constructor() {
     super();
     this.onToggle = (e) => {
@@ -175,7 +340,7 @@ const BlockStyleControls = (props) => {
   return (
     <div className="RichEditor-controls">
       {BLOCK_TYPES.map((type) =>
-        <StyleButton
+        <BlockStyleButton
           key={type.label}
           active={type.style === blockType}
           label={type.label}
@@ -199,7 +364,7 @@ const InlineStyleControls = (props) => {
   return (
     <div className="RichEditor-controls">
       {INLINE_STYLES.map(type =>
-        <StyleButton
+        <BlockStyleButton
           key={type.label}
           active={currentStyle.has(type.style)}
           label={type.label}
