@@ -81,6 +81,7 @@ class RichEditorExample extends React.Component {
     return false;
   }
 
+
   _toggleBlockType(blockType) {
     this.onChange(
       RichUtils.toggleBlockType(
@@ -235,16 +236,20 @@ class RichEditorExample extends React.Component {
     };
 
     const Media = (props) => {
+      debugger
+      if (!props.block.getEntityAt(0)) {
+        return null
+      }
       const entity = Entity.get(props.block.getEntityAt(0));
       const {src} = entity.getData();
       const type = entity.getType();
 
       let media;
-      if (type === 'audio') {
+      if (type.toUpperCase() === 'AUDIO') {
         media = <Audio src={src} />;
-      } else if (type === 'image') {
+      } else if (type.toUpperCase() === 'IMAGE') {
         media = <Image src={src} />;
-      } else if (type === 'video') {
+      } else if (type.toUpperCase() === 'VIDEO') {
         media = <Video src={src} />;
       }
 
@@ -271,6 +276,7 @@ class RichEditorExample extends React.Component {
           {urlInput}
           <div className={className} onClick={this.focus}>
             <Editor
+              blockRendererFn={mediaBlockRenderer}
               blockStyleFn={getBlockStyle}
               customStyleMap={styleMap}
               editorState={editorState}

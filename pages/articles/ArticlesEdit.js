@@ -30,7 +30,7 @@ export default class RolesEdit extends React.Component {
           loaded: true
         })
       })
-      .catch(e=>ST.info.error(e.message)).done
+      .catch(e=>console.log(e.stack)&&ST.info.error(e.message)).done
   }
 
   submitCallback(values) {
