@@ -17,7 +17,9 @@ import Roles from './pages/Roles.js'
 import RolesEdit from './pages/roles/RolesEdit.js'
 import RolesEditMenus from './pages/roles/RolesEditMenus.js'
 import RolesAdd from './pages/roles/RolesAdd.js'
-import WriteFeed from './pages/WriteFeed.js'
+import Articles from './pages/Articles.js'
+import ArticlesEdit from './pages/articles/ArticlesEdit.js'
+import ArticlesAdd from './pages/articles/ArticlesAdd.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -42,12 +44,16 @@ render((
         </Route>
         <Route path="change_self_password" component={ChangeSelfPassword}/>
         <Route path="menus" component={Menus}/>
-        <Route path="write_feed" component={WriteFeed}/>
         <Route path="roles" component={App}>
           <IndexRoute component={Roles} />
           <Route path="add" component={RolesAdd}/>
           <Route path="edit" component={RolesEdit}/>
           <Route path="edit_menus" component={RolesEditMenus}/>
+        </Route>
+        <Route path="articles" component={App}>
+          <IndexRoute component={Articles} />
+          <Route path="edit/:id" component={ArticlesEdit}/>
+          <Route path="add" component={ArticlesAdd}/>
         </Route>
         <Route path="*" component={Error404Page} />
       </Route>

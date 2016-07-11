@@ -16,6 +16,7 @@ import {
   DefaultDraftBlockRenderMap,
 } from 'draft-js'
 import {stateToHTML} from 'draft-js-export-html';
+import {stateFromHTML} from 'draft-js-import-html';
 import {Map} from 'immutable'
 require('draft-js/dist/Draft.css')
 require('./RichEditor.css')
@@ -23,22 +24,26 @@ require('./RichEditor.css')
 class RichEditorExample extends React.Component {
   constructor(props) {
     super(props);
-    let html =
-      `
-      <h4>中国用户</h4>
-      <blockquote>为了忘却的纪念</blockquote>
-      <p>今天是7月7日,很多人不太记得这是什么日子了.</p>
-      `
-
+    //let html =
+    //  `
+    //  <h4>中国用户</h4>
+    //  <blockquote>为了忘却的纪念</blockquote>
+    //  <p>今天是7月7日,很多人不太记得这是什么日子了.</p>
+    //  `
+    //let content = ContentState.createFromBlockArray(convertFromHTML(this.props.initContent))
+    let contentState = stateFromHTML(this.props.initContent);
     this.state = {
-      editorState: EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(html))),
+      editorState: EditorState.createWithContent(contentState),
       showURLInput: false,
       url: '',
       urlType: '',
     };
 
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({editorState});
+    this.onChange = (editorState) => {
+      this.setState({editorState})
+      this.props.changeCallback(stateToHTML(this.state.editorState.getCurrentContent()))
+    };
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
@@ -51,9 +56,19 @@ class RichEditorExample extends React.Component {
     this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    if (this.props.initContent !== nextProps.initContent) {
+      let contentState = stateFromHTML(nextProps.initContent);
+      this.setState({
+        editorState: EditorState.createWithContent(contentState),
+      })
+    }
+  }
+
   getContent() {
-    console.log(convertToRaw(this.state.editorState.getCurrentContent()))
-    return stateToHTML(this.state.editorState.getCurrentContent())
+    let that = this
+    return stateToHTML(that.state.editorState.getCurrentContent())
   }
 
   _handleKeyCommand(command) {
@@ -148,6 +163,8 @@ class RichEditorExample extends React.Component {
         fontFamily: '\'Georgia\', serif',
         marginRight: 10,
         padding: 3,
+        height: 35,
+        width: 300
       },
       editor: {
         border: '1px solid #ccc',
@@ -179,7 +196,7 @@ class RichEditorExample extends React.Component {
             onKeyDown={this.onURLInputKeyDown}
           />
           <button onMouseDown={this.confirmMedia}>
-            Confirm
+            添加
           </button>
         </div>;
     }
@@ -234,8 +251,6 @@ class RichEditorExample extends React.Component {
       return media;
     };
 
-
-
     return (
         <div className="RichEditor-root">
           <BlockStyleControls
@@ -247,17 +262,12 @@ class RichEditorExample extends React.Component {
             onToggle={this.toggleInlineStyle}
           />
 
-          <div style={styles.buttons}>
-            <button onMouseDown={this.addAudio} style={{marginRight: 10}}>
-              Add Audio
-            </button>
-            <button onMouseDown={this.addImage} style={{marginRight: 10}}>
-              Add Image
-            </button>
-            <button onMouseDown={this.addVideo} style={{marginRight: 10}}>
-              Add Video
-            </button>
+          <div className="RichEditor-controls">
+            <span className={'RichEditor-styleButton'} onMouseDown={this.addAudio}> 音频 </span>
+            <span className={'RichEditor-styleButton'} onMouseDown={this.addImage}> 图片 </span>
+            <span className={'RichEditor-styleButton'} onMouseDown={this.addVideo}> 视频 </span>
           </div>
+
           {urlInput}
           <div className={className} onClick={this.focus}>
             <Editor
