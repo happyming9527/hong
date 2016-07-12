@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs } from 'antd';
 const FormItem = Form.Item;
 import ST from '../../Setting.js'
-import WriteArticle from '../WriteArticle.js'
+import WriteArticle from './WriteArticle.js'
 
 class Demo extends React.Component {
 
@@ -29,8 +29,8 @@ class Demo extends React.Component {
   render() {
     const { getFieldProps } = this.props.form;
     const formItemLayout = {
-      labelCol: { span: 1 },
-      wrapperCol: { span: 23 },
+      labelCol: { span: 3 },
+      wrapperCol: { span: 21 },
     };
 
     const titleProps = getFieldProps('title', {

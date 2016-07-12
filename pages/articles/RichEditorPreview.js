@@ -2,9 +2,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Row, Col  } from 'antd'
-import LeftMenus from './_LeftMenus.js'
-import TopNavigator from './_TopNavigator.js'
-require("./global.scss");
 
 export default class RichEditorPreview extends React.Component {
   constructor(props) {
@@ -28,9 +25,9 @@ export default class RichEditorPreview extends React.Component {
     text-align: left;
     line-height: 1.5em;
     padding: 0px;
-    margin: 10px;
-    height: 100%;
-    width: 100%;
+    margin: 0px;
+    height: 736px;
+    width: 414px;
   }
 
   img {

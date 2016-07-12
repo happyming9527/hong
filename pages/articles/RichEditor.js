@@ -20,17 +20,11 @@ import {stateFromHTML} from 'draft-js-import-html';
 import {Map} from 'immutable'
 require('draft-js/dist/Draft.css')
 require('./RichEditor.css')
+import Atts from './Attachments.js'
 
-class RichEditorExample extends React.Component {
+class RichEditor extends React.Component {
   constructor(props) {
     super(props);
-    //let html =
-    //  `
-    //  <h4>中国用户</h4>
-    //  <blockquote>为了忘却的纪念</blockquote>
-    //  <p>今天是7月7日,很多人不太记得这是什么日子了.</p>
-    //  `
-    //let content = ContentState.createFromBlockArray(convertFromHTML(this.props.initContent))
     let contentState = stateFromHTML(this.props.initContent);
     this.state = {
       editorState: EditorState.createWithContent(contentState),
@@ -52,8 +46,8 @@ class RichEditorExample extends React.Component {
     this.addAudio = this._addAudio.bind(this);
     this.addImage = this._addImage.bind(this);
     this.addVideo = this._addVideo.bind(this);
+    this.openModal = this._openModal.bind(this)
     this.confirmMedia = this._confirmMedia.bind(this);
-    this.onURLInputKeyDown = this._onURLInputKeyDown.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +63,10 @@ class RichEditorExample extends React.Component {
   getContent() {
     let that = this
     return stateToHTML(that.state.editorState.getCurrentContent())
+  }
+
+  _openModal() {
+    this.attachment.toggle()
   }
 
   _handleKeyCommand(command) {
@@ -100,10 +98,9 @@ class RichEditorExample extends React.Component {
     );
   }
 
-  _confirmMedia(e) {
-    e.preventDefault();
-    const {editorState, urlValue, urlType} = this.state;
-    const entityKey = Entity.create(urlType, 'IMMUTABLE', {src: urlValue})
+  _confirmMedia(result) {
+    const {editorState, urlType} = this.state;
+    const entityKey = Entity.create(urlType, 'IMMUTABLE', {src: result})
 
     this.setState({
       editorState: AtomicBlockUtils.insertAtomicBlock(
@@ -118,20 +115,18 @@ class RichEditorExample extends React.Component {
     });
   }
 
-  _onURLInputKeyDown(e) {
-    if (e.which === 13) {
-      this._confirmMedia(e);
-    }
-  }
+  //_onURLInputKeyDown(e) {
+  //  if (e.which === 13) {
+  //    this._confirmMedia(e);
+  //  }
+  //}
 
   _promptForMedia(type) {
     const {editorState} = this.state;
     this.setState({
-      showURLInput: true,
-      urlValue: '',
       urlType: type,
     }, () => {
-      setTimeout(() => this.refs.url.focus(), 0);
+      setTimeout(()=>this.openModal(), 0);
     });
   }
 
@@ -184,23 +179,6 @@ class RichEditorExample extends React.Component {
 
     const {editorState} = this.state;
 
-    let urlInput;
-    if (this.state.showURLInput) {
-      urlInput =
-        <div style={styles.urlInputContainer}>
-          <input
-            onChange={this.onURLChange}
-            ref="url"
-            style={styles.urlInput}
-            type="text"
-            value={this.state.urlValue}
-            onKeyDown={this.onURLInputKeyDown}
-          />
-          <button onMouseDown={this.confirmMedia}>
-            添加
-          </button>
-        </div>;
-    }
 
     // If the user changes block type before entering any text, we can
     // either style the placeholder or hide it. Let's just hide it now.
@@ -236,7 +214,6 @@ class RichEditorExample extends React.Component {
     };
 
     const Media = (props) => {
-      debugger
       if (!props.block.getEntityAt(0)) {
         return null
       }
@@ -256,7 +233,11 @@ class RichEditorExample extends React.Component {
       return media;
     };
 
+    let modal = <Atts ref={i=>this.attachment=i} submitCallback={this.confirmMedia} attachmentKind={this.state.urlType} ></Atts>
+
     return (
+      <div>
+        {modal}
         <div className="RichEditor-root">
           <BlockStyleControls
             editorState={editorState}
@@ -272,8 +253,6 @@ class RichEditorExample extends React.Component {
             <span className={'RichEditor-styleButton'} onMouseDown={this.addImage}> 图片 </span>
             <span className={'RichEditor-styleButton'} onMouseDown={this.addVideo}> 视频 </span>
           </div>
-
-          {urlInput}
           <div className={className} onClick={this.focus}>
             <Editor
               blockRendererFn={mediaBlockRenderer}
@@ -287,6 +266,7 @@ class RichEditorExample extends React.Component {
               spellCheck={false}
             />
           </div>
+        </div>
       </div>
 
     );
@@ -327,8 +307,8 @@ class BlockStyleButton extends React.Component {
 
     return (
       <span className={className} onMouseDown={this.onToggle}>
-              {this.props.label}
-            </span>
+        {this.props.label}
+      </span>
     );
   }
 }
@@ -338,8 +318,6 @@ const BLOCK_TYPES = [
   {label: '标题2', style: 'header-two'},
   {label: '标题3', style: 'header-three'},
   {label: '标题4', style: 'header-four'},
-  {label: '标题5', style: 'header-five'},
-  {label: '标题6', style: 'header-six'},
   {label: '引用', style: 'blockquote'},
   {label: '无序列表', style: 'unordered-list-item'},
   {label: '有序列表', style: 'ordered-list-item'},
@@ -392,4 +370,4 @@ const InlineStyleControls = (props) => {
   );
 };
 
-export default RichEditorExample
+export default RichEditor

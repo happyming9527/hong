@@ -2,8 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card, Tabs } from 'antd'
-import ST from '../Setting.js'
-import List from './roles/_List.js'
+import ST from '../../Setting.js'
 import {Link} from 'react-router'
 const Panel = Collapse.Panel;
 const TabPane = Tabs.TabPane;
