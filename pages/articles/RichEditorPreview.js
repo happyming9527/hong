@@ -23,7 +23,6 @@ export default class RichEditorPreview extends React.Component {
 
   body {
     text-align: left;
-    line-height: 1.5em;
     padding: 0px;
     margin: 0px;
     height: 736px;
@@ -31,6 +30,16 @@ export default class RichEditorPreview extends React.Component {
   }
 
   img {
+    width: 100%;
+    text-align: center;
+  }
+
+  figure {
+    margin: 0;
+    padding: 0;
+  }
+
+  video {
     width: 100%;
     text-align: center;
   }
@@ -45,6 +54,9 @@ export default class RichEditorPreview extends React.Component {
   }
 
   h1,h2,h3,h4,h5,h6,p {word-wrap:break-word;}
+  p {
+      line-height: 1.5em;
+  }
 
 </style>
 </head>

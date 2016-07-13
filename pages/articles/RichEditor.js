@@ -249,7 +249,6 @@ class RichEditor extends React.Component {
           />
 
           <div className="RichEditor-controls">
-            <span className={'RichEditor-styleButton'} onMouseDown={this.addAudio}> 音频 </span>
             <span className={'RichEditor-styleButton'} onMouseDown={this.addImage}> 图片 </span>
             <span className={'RichEditor-styleButton'} onMouseDown={this.addVideo}> 视频 </span>
           </div>
