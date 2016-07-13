@@ -88,9 +88,12 @@ export default class Attachments extends React.Component {
           let obj = info.file.response.data
           let newDataSource = that.state.dataSource.slice()
           newDataSource.unshift(obj)
-          that.setState({
-            dataSource: newDataSource
-          }, ()=>ST.info.success(`${info.file.name} 上传成功。`))
+          let delayTime = that.props.attachmentKind==='video' ? 2000:0
+          that.setTimeout(()=>{
+            that.setState({
+              dataSource: newDataSource
+            }, ()=>ST.info.success(`${info.file.name} 上传成功。`))
+          },  delayTime)
         } else if (info.file.status === 'error') {
           ST.info.error(`${info.file.name} 上传失败。`);
         }
@@ -149,3 +152,5 @@ export default class Attachments extends React.Component {
     );
   }
 }
+
+ST.addTimerMixin(Attachments)

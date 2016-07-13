@@ -3,6 +3,12 @@ import React from 'react'
 import { message, Spin, Row, Breadcrumb } from 'antd';
 import 'antd/dist/antd.css'
 import { browserHistory, Link } from 'react-router'
+import TimerMixin from 'react-timer-mixin'
+import reactMixin from 'react-mixin'
+
+const addTimerMixin = (clazz)=>{
+  reactMixin.onClass(clazz, TimerMixin);
+}
 
 const info = {
   info: (str, time)=>message.info(str, time || 3),
@@ -127,6 +133,7 @@ const PaddingRow = (props)=>{
 const storage = window.sessionStorage
 
 export default {
+  addTimerMixin,
   info,
   history,
   historyReload,
