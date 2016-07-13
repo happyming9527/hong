@@ -36,7 +36,6 @@ class RichEditor extends React.Component {
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({editorState})
-      this.props.changeCallback(stateToHTML(this.state.editorState.getCurrentContent()))
     };
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
