@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
 import ST from '../Setting.js'
-import List from './articles/_List.js'
+import List from './user_feeds/_List.js'
 import {Link} from 'react-router'
 const Panel = Collapse.Panel;
 
@@ -26,7 +26,7 @@ export default class BackendUser extends React.Component {
 
   fetchData() {
     ST.httpPost(
-      `/api/articles/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
+      `/api/user_feeds/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
       .then(result=> {
         let dataSource = result.data.list.map(ele=> {
           ele.key = ele.id.toString()
@@ -51,23 +51,10 @@ export default class BackendUser extends React.Component {
     this.fetchData()
   }
 
-  addEgc() {
-    ST.history.push('/backend/articles/add/egc')
-  }
-
-  addLink() {
-    ST.history.push('/backend/articles/add/link')
-  }
-
   render() {
     let that = this
     return (
-      <ST.Container breadcrumb={[{name: '文章列表'}]}>
-
-        <Row style={{marginTop: 20, marginBottom: 20}}>
-          <Button type="primary" htmlType="submit" onClick={this.addEgc.bind(this)}>新增文章</Button>
-          <Button type="primary" htmlType="submit" onClick={this.addLink.bind(this)} style={{marginLeft: 10}}>新增外链</Button>
-        </Row>
+      <ST.Container breadcrumb={[{name: '用户微博管理'}]}>
 
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <List

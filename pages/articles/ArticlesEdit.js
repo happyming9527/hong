@@ -5,6 +5,7 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
+import LinkForm from './_LinkForm.js'
 import ST from '../../Setting.js'
 
 export default class RolesEdit extends React.Component {
@@ -36,18 +37,20 @@ export default class RolesEdit extends React.Component {
   submitCallback(values) {
     ST.httpPost(`/api/articles/modify?id=${this.nodeId}`, values)
       .then(result=> {
-        ST.info.success(result.text)
+        ST.info.success('修改成功')
         ST.history.replace('/backend/articles')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
 
   render() {
+    const Clazz = this.node&&this.node.feedType==1 ? Form:LinkForm
+    const name = this.node&&this.node.feedType==1 ? '文章修改':'链接修改'
     return (
-      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/articles'}, {name: '文章修改'}]}>
+      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/articles'}, {name: name}]}>
         <Row gutter={16}>
           <Card>
-            <Form oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
+            <Clazz oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
           </Card>
         </Row>
       </ST.Container>

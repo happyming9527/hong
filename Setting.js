@@ -130,6 +130,12 @@ const PaddingRow = (props)=>{
   )
 }
 
+const compact = (array)=>{
+  return array.filter((i, index)=>{
+    return (array.indexOf(i)==index) && i
+  })
+}
+
 const storage = window.sessionStorage
 
 export default {
@@ -144,5 +150,6 @@ export default {
   storage,
   BreadCrumb,
   Container,
-  PaddingRow
+  PaddingRow,
+  compact
 }

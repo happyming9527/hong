@@ -20,6 +20,7 @@ import RolesAdd from './pages/roles/RolesAdd.js'
 import Articles from './pages/Articles.js'
 import ArticlesEdit from './pages/articles/ArticlesEdit.js'
 import ArticlesAdd from './pages/articles/ArticlesAdd.js'
+import UserFeed from './pages/UserFeeds.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -53,7 +54,10 @@ render((
         <Route path="articles" component={App}>
           <IndexRoute component={Articles} />
           <Route path="edit/:id" component={ArticlesEdit}/>
-          <Route path="add" component={ArticlesAdd}/>
+          <Route path="add/:type" component={ArticlesAdd}/>
+        </Route>
+        <Route path="user_feeds" component={App}>
+          <IndexRoute component={UserFeed} />
         </Route>
         <Route path="*" component={Error404Page} />
       </Route>
