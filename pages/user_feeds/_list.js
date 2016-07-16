@@ -57,6 +57,8 @@ export default class BackendUser extends React.Component {
           }
 
           return <span>
+            <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
+            <span className="ant-divider"></span>
             {recButton}
           </span>
         }}];
@@ -64,6 +66,11 @@ export default class BackendUser extends React.Component {
 
   editNode(record) {
     ST.history.push(`/backend/user_feeds/edit/${record.id}`)
+  }
+
+
+  showNode(record) {
+    ST.history.push(`/backend/user_feeds/show/${record.id}`)
   }
 
   rec(record) {

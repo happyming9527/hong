@@ -6,8 +6,6 @@ import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , S
 const FormItem = Form.Item;
 const Option = Select.Option;
 import ST from '../../Setting.js'
-import WriteArticle from './WriteArticle.js'
-import Atts from './Attachments.js'
 
 class Demo extends React.Component {
 
@@ -163,26 +161,26 @@ class Demo extends React.Component {
             [<Row key="row1">
               <Button type="primary" onClick={this.openModal.bind(this)}>插入图片</Button>
             </Row>,
-            <Row  key="row2" gup={5}>
-              {
-                !this.state.resList ? <div>暂无标题图片</div>:
-                  this.state.resList.map(
-                    (i, index)=>{
-                      return (
-                        <Col span={3} key={index} style={{margin: '10px 0px 10px 0px', textAlign: 'center'}}>
-                          <img
-                            src={i.content}
-                            alt={i.content}
-                            style={{width: '100px', height: '100px', border: '1px solid gray'}} />
-                          <div>
-                            <a onClick={this.removeLogoImage.bind(this, i)} vhref="javascript:void(0)">删除</a>
-                          </div>
-                        </Col>
-                      )
-                    }
-                  )
-              }
-            </Row>
+              <Row  key="row2" gup={5}>
+                {
+                  !this.state.resList ? <div>暂无标题图片</div>:
+                    this.state.resList.map(
+                      (i, index)=>{
+                        return (
+                          <Col span={3} key={index} style={{margin: '10px 0px 10px 0px', textAlign: 'center'}}>
+                            <img
+                              src={i.content}
+                              alt={i.content}
+                              style={{width: '100px', height: '100px', border: '1px solid gray'}} />
+                            <div>
+                              <a onClick={this.removeLogoImage.bind(this, i)} vhref="javascript:void(0)">删除</a>
+                            </div>
+                          </Col>
+                        )
+                      }
+                    )
+                }
+              </Row>
             ]
           }
         </FormItem>
@@ -213,11 +211,11 @@ class Demo extends React.Component {
             searchPlaceholder="标签模式"
             onChange={this.changeTags.bind(this)}
           >
-          {
-            this.state.tag.map(i=>{
-              return <Option key={i}>{i}</Option>
-            })
-          }
+            {
+              this.state.tag.map(i=>{
+                return <Option key={i}>{i}</Option>
+              })
+            }
           </Select>
         </FormItem>
 

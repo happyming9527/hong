@@ -5,38 +5,43 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
-import LinkForm from './_LinkForm.js'
+//import LinkForm from './_LinkForm.js'
 import ST from '../../Setting.js'
 
-export default class ArticlesAdd extends React.Component {
+export default class RolesEdit extends React.Component {
   constructor(props) {
     super(props)
-    this.type = this.props.params.type
-    this.nodeName = this.props.location.query.name
+    this.nodeId = this.props.params.id
     this.state = {
       loaded: false
     }
   }
 
   componentWillMount() {
+    this.fetchData()
   }
 
-  submitCallback(values) {
-    ST.httpPost(`/api/articles/add`, values)
+  fetchData() {
+    let that = this
+    ST.httpPost(
+      `/api/articles/me?id=${this.nodeId}`)
       .then(result=> {
-        ST.info.success('添加成功')
-        ST.history.replace('/backend/articles')
+        that.node = result.data
+        that.setState({
+          loaded: true
+        })
       })
-      .catch(e=>ST.info.error(e.message)).done
+      .catch(e=>console.log(e.stack)&&ST.info.error(e.message)).done
   }
 
   render() {
-    const name = (this.type == 'egc' ? '文章':'外链')
+    const kind = this.node&&this.node.feedType==1 ? 'egc':'link'
+    const name = this.node&&this.node.feedType==1 ? '文章查看':'链接查看'
     return (
       <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/articles'}, {name: name}]}>
         <Row gutter={16}>
           <Card>
-            <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
+            <Form readonly={true} kind={kind} oldNode={this.node} submitCallback={()=>{}} />
           </Card>
         </Row>
       </ST.Container>
