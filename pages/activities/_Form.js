@@ -21,9 +21,10 @@ class Demo extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.oldNode !== nextProps.oldNode) {
+      let userCategory = this.categories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
-        userCategory: this.props.oldNode.userCategory
+        userCategory: userCategory&&userCategory.value
       })
     }
   }
@@ -112,15 +113,23 @@ class Demo extends React.Component {
         <Input type="text" {...contentProps} />
       </FormItem>
     } else if (this.props.kind == 'egc') {
+      const contentProps = getFieldProps('content', {
+        initialValue: this.props.oldNode.content,
+        placeholder: "请黏贴完整html",
+        autosize: { minRows: 10, maxRows: 40 },
+        rules: [
+          {required: true, whitespace: true, message: '请填写内容'},
+        ],
+      });
       content = <FormItem
         {...formItemLayout}
         label="内容"
       >
-        <Input type="textarea" placeholder="请黏贴完整html" autosize={{ minRows: 10, maxRows: 40 }} />
+        <Input type="textarea" {...contentProps} />
       </FormItem>
     }
 
-    console.log(this.state.selfTags)
+    console.log(this.state.userCategory)
     return (
       <Form
         form={this.props.form}
@@ -177,7 +186,7 @@ class Demo extends React.Component {
           label="阶段"
         >
           <Select
-            value = {this.state.userCategory}
+            value={this.state.userCategory}
             style={{ width: '100%' }}
             onChange={this.changeCategory.bind(this)}
           >
@@ -190,14 +199,12 @@ class Demo extends React.Component {
         </FormItem>
 
         {content}
-        {
-          this.props.readonly ? null:
-            <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
-              <Button type="primary" htmlType="submit">确定</Button>
-              &nbsp;&nbsp;&nbsp;
-              <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
-            </FormItem>
-        }
+        <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
+          {
+            this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>
+          }
+          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
+        </FormItem>
 
       </Form>
     );

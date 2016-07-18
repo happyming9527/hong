@@ -17,11 +17,12 @@ class Demo extends React.Component {
     this.defaultTags = ['孕期', '生啦']
     let selfTags = ST.compact(this.props.oldNode.tag.split(','))
     let tags = selfTags.concat(this.defaultTags)
+    let userCategory = this.categories.find(i=>i.key==this.props.oldNode.userCategory)
     this.state = {
       resList: this.props.oldNode.resList.slice(),
       tag: tags,
       selfTags: selfTags,
-      userCategory: this.props.oldNode.userCategory
+      userCategory: userCategory&&userCategory.value
     }
   }
 
@@ -34,11 +35,12 @@ class Demo extends React.Component {
       tags = tags.filter((i, index)=>{
         return (tags.indexOf(i)==index) && i
       })
+      let userCategory = this.categories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
         tag: tags,
         selfTags: selfTags,
-        userCategory: this.props.oldNode.userCategory
+        userCategory: userCategory&&userCategory.value
       })
     }
   }
@@ -217,14 +219,12 @@ class Demo extends React.Component {
         </FormItem>
 
         {content}
-        {
-          this.props.readonly ? null:
-            <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
-              <Button type="primary" htmlType="submit">确定</Button>
-              &nbsp;&nbsp;&nbsp;
-              <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
-            </FormItem>
-        }
+        <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
+          {
+            this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>
+          }
+          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
+        </FormItem>
 
       </Form>
     );

@@ -21,9 +21,10 @@ class Demo extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.oldNode !== nextProps.oldNode) {
+      let userCategory = this.categories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
-        userCategory: this.props.oldNode.userCategory
+        userCategory: userCategory&&userCategory.value
       })
     }
   }
@@ -171,32 +172,13 @@ class Demo extends React.Component {
             ]
           }
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="阶段"
-        >
-          <Select
-            value = {this.state.userCategory}
-            style={{ width: '100%' }}
-            onChange={this.changeCategory.bind(this)}
-          >
-            {
-              this.categories.map(i=>{
-                return <Option key={i.key}>{i.value}</Option>
-              })
-            }
-          </Select>
-        </FormItem>
 
-        {content}
-        {
-          this.props.readonly ? null:
-            <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
-              <Button type="primary" htmlType="submit">确定</Button>
-              &nbsp;&nbsp;&nbsp;
-              <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
-            </FormItem>
-        }
+        <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
+          {
+            this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>
+          }
+          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
+        </FormItem>
 
       </Form>
     );
