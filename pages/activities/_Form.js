@@ -3,10 +3,12 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , Select} from 'antd';
+const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 const Option = Select.Option;
 import ST from '../../Setting.js'
 import Atts from '../Attachments.js'
+import RichEditorPreview from '../articles/RichEditorPreview.js'
 
 class Demo extends React.Component {
 
@@ -76,6 +78,16 @@ class Demo extends React.Component {
     })
   }
 
+  preview(key) {
+    const { getFieldValue } = this.props.form;
+    let content = getFieldValue('content')
+    //if (key==='2') {
+    //  this.setState({
+    //    html: <div>ceshi</div>
+    //  })
+    //}
+  }
+
   render() {
     const { getFieldProps } = this.props.form;
     const formItemLayout = {
@@ -97,7 +109,10 @@ class Demo extends React.Component {
       ],
     });
 
-    let content
+    let contentChild, ContentProc
+    ContentProc = props=>{
+      return <div></div>
+    }
 
     if (this.props.kind == 'link') {
       const contentProps = getFieldProps('content', {
@@ -106,12 +121,17 @@ class Demo extends React.Component {
           {required: true, whitespace: true, message: '请填写链接'},
         ],
       });
-      content = <FormItem
-        {...formItemLayout}
-        label="链接"
-      >
-        <Input type="text" {...contentProps} />
-      </FormItem>
+      ContentProc = props=>{
+        return <FormItem
+          {...formItemLayout}
+          label="链接"
+        >
+          {props.children}
+        </FormItem>
+      }
+
+      contentChild = <Input type="text" {...contentProps} />
+
     } else if (this.props.kind == 'egc') {
       const contentProps = getFieldProps('content', {
         initialValue: this.props.oldNode.content,
@@ -121,12 +141,17 @@ class Demo extends React.Component {
           {required: true, whitespace: true, message: '请填写内容'},
         ],
       });
-      content = <FormItem
-        {...formItemLayout}
-        label="内容"
-      >
-        <Input type="textarea" {...contentProps} />
-      </FormItem>
+
+      ContentProc = props=>{
+        return <FormItem
+          {...formItemLayout}
+          label="内容"
+        >
+          {props.children}
+        </FormItem>
+      }
+
+      contentChild = <Input type="textarea" {...contentProps} />
     }
 
     console.log(this.state.userCategory)
@@ -198,7 +223,19 @@ class Demo extends React.Component {
           </Select>
         </FormItem>
 
-        {content}
+        <ContentProc>
+          <Row gutter={2}>
+            <Tabs defaultActiveKey="1" onChange={this.preview.bind(this)}>
+              <TabPane tab="编辑" key="1">
+                {contentChild}
+              </TabPane>
+              <TabPane tab="预览" key="2">
+                <RichEditorPreview html={this.state.html} />
+              </TabPane>
+            </Tabs>
+          </Row>
+        </ContentProc>
+
         <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
           {
             this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>

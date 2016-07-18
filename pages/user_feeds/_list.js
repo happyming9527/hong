@@ -2,12 +2,16 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Button, Form, Input, Table, Popconfirm} from 'antd';
+import { Button, Form, Input, Table, Popconfirm, Row} from 'antd';
 import ST from '../../Setting.js'
+import VerticalList from './_VerticalList.js'
 
 export default class BackendUser extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      vertical: true
+    }
     this.columns = [{
       title: 'id',
       dataIndex: 'id',
@@ -36,40 +40,42 @@ export default class BackendUser extends React.Component {
       {
         title: '操作',
         key: 'operation',
-        render: (text, record) => {
-          let recButton
-          if (record.opState==1) {
-            recButton =
-              [
-                <Popconfirm key={'p1'} title={`确定要推荐这个微博吗`} onConfirm={this.rec.bind(this, record)}>
-                  <a href="javascript:void(0)">推荐</a>
-                </Popconfirm>,
-                <span key={'p2'}  className="ant-divider"></span>,
-                <Popconfirm key={'p3'}  title={`确定要置顶这个微博吗`} onConfirm={this.top.bind(this, record)}>
-                  <a href="javascript:void(0)">置顶</a>
-                </Popconfirm>
-              ]
-          } else if (record.opState==2) {
-            recButton = [
-              <Popconfirm  key={'p1'}  title={`确定要取消置顶这个微博吗`} onConfirm={this.cancelTop.bind(this, record)}>
-                <a href="javascript:void(0)">取消置顶</a>
-              </Popconfirm>
-            ]
+        render: this.actionButtons.bind(this)}];
+  }
 
-          } else if (record.opState==3) {
-            recButton = [
-              <Popconfirm  key={'p1'}  title={`确定要取消推荐这个微博吗`} onConfirm={this.cancelRec.bind(this, record)}>
-                <a href="javascript:void(0)">取消推荐</a>
-              </Popconfirm>
-            ]
-          }
+  actionButtons(text, record) {
+    let recButton
+    if (record.opState==1) {
+      recButton =
+        [
+          <Popconfirm key={'p1'} title={`确定要推荐这个微博吗`} onConfirm={this.rec.bind(this, record)}>
+            <a href="javascript:void(0)">推荐</a>
+          </Popconfirm>,
+          <span key={'p2'}  className="ant-divider"></span>,
+          <Popconfirm key={'p3'}  title={`确定要置顶这个微博吗`} onConfirm={this.top.bind(this, record)}>
+            <a href="javascript:void(0)">置顶</a>
+          </Popconfirm>
+        ]
+    } else if (record.opState==2) {
+      recButton = [
+        <Popconfirm  key={'p1'}  title={`确定要取消置顶这个微博吗`} onConfirm={this.cancelTop.bind(this, record)}>
+          <a href="javascript:void(0)">取消置顶</a>
+        </Popconfirm>
+      ]
 
-          return <span>
+    } else if (record.opState==3) {
+      recButton = [
+        <Popconfirm  key={'p1'}  title={`确定要取消推荐这个微博吗`} onConfirm={this.cancelRec.bind(this, record)}>
+          <a href="javascript:void(0)">取消推荐</a>
+        </Popconfirm>
+      ]
+    }
+
+    return <span>
             <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
             <span className="ant-divider"></span>
-            {recButton}
+      {recButton}
           </span>
-        }}];
   }
 
   editNode(record) {
@@ -120,6 +126,18 @@ export default class BackendUser extends React.Component {
       .catch(e=>ST.info.error(e.message)).done
   }
 
+  setVertical() {
+    this.setState({
+      vertical: true
+    })
+  }
+
+  cancelVertical() {
+    this.setState({
+      vertical: false
+    })
+  }
+
   render() {
     let that = this
     let paginationConfig = {
@@ -132,12 +150,27 @@ export default class BackendUser extends React.Component {
       },
     }
 
-    return (
-      <Table
+    let table
+    if (this.state.vertical) {
+      table = <VerticalList dataSource={this.props.dataSource} pagination={paginationConfig} actionButtons={this.actionButtons.bind(this)} />
+    } else {
+      table = <Table
         bordered={true}
         dataSource={this.props.dataSource}
         columns={this.columns}
         pagination={paginationConfig}/>
+    }
+    return (
+      <div>
+        <Row style={{marginBottom: 20}}>
+          <Button type="primary" htmlType="submit" style={{marginRight: '10px'}} onClick={this.setVertical.bind(this)}>瀑布式页面</Button>
+          <Button type="primary" htmlType="submit" style={{marginRight: '10px'}}  onClick={this.cancelVertical.bind(this)}>表格式页面</Button>
+        </Row>
+
+        <Row>
+          {table}
+        </Row>
+      </div>
     )
 
   }
