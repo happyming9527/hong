@@ -6,7 +6,6 @@ import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , S
 const FormItem = Form.Item;
 const Option = Select.Option;
 import ST from '../../Setting.js'
-import WriteArticle from './WriteArticle.js'
 import Atts from '../Attachments.js'
 
 class Demo extends React.Component {
@@ -14,30 +13,16 @@ class Demo extends React.Component {
   constructor(props) {
     super(props)
     this.categories = [{key: 1, value: '备孕'}, {key: 2, value: '孕期'}, {key: 3, value: '已生'}]
-    this.defaultTags = ['孕期', '生啦']
-    let selfTags = ST.compact(this.props.oldNode.tag.split(','))
-    let tags = selfTags.concat(this.defaultTags)
     this.state = {
       resList: this.props.oldNode.resList.slice(),
-      tag: tags,
-      selfTags: selfTags,
       userCategory: this.props.oldNode.userCategory
     }
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (this.props.oldNode !== nextProps.oldNode) {
-      let selfTags = ST.compact(nextProps.oldNode.tag.split(','))
-      console.log(selfTags)
-      let tags = selfTags.concat(this.defaultTags)
-      tags = tags.filter((i, index)=>{
-        return (tags.indexOf(i)==index) && i
-      })
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
-        tag: tags,
-        selfTags: selfTags,
         userCategory: this.props.oldNode.userCategory
       })
     }
@@ -50,14 +35,12 @@ class Demo extends React.Component {
         return;
       }
       if (this.props.kind=='egc') {
-        values['content'] = this.editor.getContent()
         values['feedType'] = 1
       } else {
         values['feedType'] = 2
       }
       values['userCategory'] = this.state.userCategory
       values['resList'] = this.state.resList
-      values['tag'] = this.state.selfTags.join(',')
       this.props.submitCallback(values)
     })
   }
@@ -74,12 +57,6 @@ class Demo extends React.Component {
     })
     this.setState({
       resList: list
-    })
-  }
-
-  changeTags(value) {
-    this.setState({
-      selfTags: value
     })
   }
 
@@ -112,6 +89,13 @@ class Demo extends React.Component {
       ],
     });
 
+    const descProps = getFieldProps('description', {
+      initialValue: this.props.oldNode.title,
+      rules: [
+        {required: true, whitespace: true, message: '请填写描述'},
+      ],
+    });
+
     let content
 
     if (this.props.kind == 'link') {
@@ -132,11 +116,10 @@ class Demo extends React.Component {
         {...formItemLayout}
         label="内容"
       >
-        <WriteArticle ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
+        <Input type="text" placeholder="请黏贴文案" />
       </FormItem>
     }
 
-    console.log(this.state.selfTags)
     return (
       <Form
         form={this.props.form}
@@ -150,6 +133,13 @@ class Demo extends React.Component {
           <Input type="text" {...titleProps} />
         </FormItem>
         <FormItem
+          hasFeedback
+          {...formItemLayout}
+          label="描述"
+        >
+          <Input type="text" {...descProps} />
+        </FormItem>
+        <FormItem
           {...formItemLayout}
           label="标题图片"
         >
@@ -158,26 +148,26 @@ class Demo extends React.Component {
             [<Row key="row1">
               <Button type="primary" onClick={this.openModal.bind(this)}>插入图片</Button>
             </Row>,
-            <Row  key="row2" gup={5}>
-              {
-                !this.state.resList ? <div>暂无标题图片</div>:
-                  this.state.resList.map(
-                    (i, index)=>{
-                      return (
-                        <Col span={3} key={index} style={{margin: '10px 0px 10px 0px', textAlign: 'center'}}>
-                          <img
-                            src={i.content}
-                            alt={i.content}
-                            style={{width: '100px', height: '100px', border: '1px solid gray'}} />
-                          <div>
-                            <a onClick={this.removeLogoImage.bind(this, i)} href="javascript:void(0)">删除</a>
-                          </div>
-                        </Col>
-                      )
-                    }
-                  )
-              }
-            </Row>
+              <Row  key="row2" gup={5}>
+                {
+                  !this.state.resList ? <div>暂无标题图片</div>:
+                    this.state.resList.map(
+                      (i, index)=>{
+                        return (
+                          <Col span={3} key={index} style={{margin: '10px 0px 10px 0px', textAlign: 'center'}}>
+                            <img
+                              src={i.content}
+                              alt={i.content}
+                              style={{width: '100px', height: '100px', border: '1px solid gray'}} />
+                            <div>
+                              <a onClick={this.removeLogoImage.bind(this, i)} href="javascript:void(0)">删除</a>
+                            </div>
+                          </Col>
+                        )
+                      }
+                    )
+                }
+              </Row>
             ]
           }
         </FormItem>
@@ -197,24 +187,6 @@ class Demo extends React.Component {
             }
           </Select>
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="标签"
-        >
-          <Select
-            tags
-            value = {this.state.selfTags}
-            style={{ width: '100%' }}
-            searchPlaceholder="标签模式"
-            onChange={this.changeTags.bind(this)}
-          >
-          {
-            this.state.tag.map(i=>{
-              return <Option key={i}>{i}</Option>
-            })
-          }
-          </Select>
-        </FormItem>
 
         {content}
         {
@@ -232,7 +204,7 @@ class Demo extends React.Component {
 };
 
 Demo.defaultProps = {
-  oldNode: {resList: [], tag: ''}
+  oldNode: {resList: []}
 }
 
 export default Form.create()(Demo)

@@ -17,6 +17,14 @@ export default class BackendUser extends React.Component {
       dataIndex: 'privateTypeDesc',
       key: 'privateTypeDesc',
     },{
+      title: '用户id',
+      dataIndex: 'userId',
+      key: 'userId',
+    },{
+      title: '内容',
+      dataIndex: 'content',
+      key: 'content',
+    },{
       title: '创建时间',
       dataIndex: 'createTimeDesc',
       key: 'createTimeDesc',

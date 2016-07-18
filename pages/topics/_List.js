@@ -27,11 +27,11 @@ export default class List extends React.Component {
         render: (text, record) => {
           let recButton
           if (record.opState==0) {
-            recButton = <Popconfirm title={`确定要发布这个活动吗`} onConfirm={this.publish.bind(this, record)}>
+            recButton = <Popconfirm title={`确定要发布这个话题吗`} onConfirm={this.publish.bind(this, record)}>
               <a href="javascript:void(0)">发布</a>
             </Popconfirm>
           } else if (record.opState==1) {
-            recButton = <Popconfirm title={`确定要取消发布这个活动吗`} onConfirm={this.cancelPublish.bind(this, record)}>
+            recButton = <Popconfirm title={`确定要取消发布这个话题吗`} onConfirm={this.cancelPublish.bind(this, record)}>
               <a href="javascript:void(0)">取消发布</a>
             </Popconfirm>
           }
@@ -44,22 +44,22 @@ export default class List extends React.Component {
             {recButton}
           </span>
 
-              }}];
+        }}];
   }
 
   editNode(record) {
-    ST.history.push(`/backend/activities/edit/${record.id}`)
+    ST.history.push(`/backend/topics/edit/${record.id}`)
   }
 
   showNode(record) {
-    ST.history.push(`/backend/activities/show/${record.id}`)
+    ST.history.push(`/backend/topics/show/${record.id}`)
   }
 
   publish(record) {
     ST.httpPost(
-      `/api/activities/publish?id=${record.id}`)
+      `/api/topics/publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/activities')
+        ST.historyReload('/backend/topics')
         ST.info.success('发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
@@ -67,9 +67,9 @@ export default class List extends React.Component {
 
   cancelPublish(record) {
     ST.httpPost(
-      `/api/activities/cancel_publish?id=${record.id}`)
+      `/api/topics/cancel_publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/activities')
+        ST.historyReload('/backend/topics')
         ST.info.success('取消发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done

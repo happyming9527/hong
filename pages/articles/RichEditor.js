@@ -20,7 +20,7 @@ import {stateFromHTML} from 'draft-js-import-html';
 import {Map} from 'immutable'
 require('draft-js/dist/Draft.css')
 require('./RichEditor.css')
-import Atts from './Attachments.js'
+import Atts from '../Attachments.js'
 
 class RichEditor extends React.Component {
   constructor(props) {

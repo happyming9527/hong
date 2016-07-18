@@ -21,10 +21,10 @@ export default class ArticlesAdd extends React.Component {
   }
 
   submitCallback(values) {
-    ST.httpPost(`/api/activities/add`, values)
+    ST.httpPost(`/api/topics/add`, values)
       .then(result=> {
         ST.info.success('添加成功')
-        ST.history.replace('/backend/activities')
+        ST.history.replace('/backend/topics')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -32,7 +32,7 @@ export default class ArticlesAdd extends React.Component {
   render() {
     const name = (this.type == 'egc' ? '文章':'外链')
     return (
-      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/activities'}, {name: name}]}>
+      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/topics'}, {name: name}]}>
         <Row gutter={16}>
           <Card>
             <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />

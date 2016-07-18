@@ -24,6 +24,13 @@ import ArticlesShow from './pages/articles/ArticlesShow.js'
 import UserFeed from './pages/UserFeeds.js'
 import UserFeedsShow from './pages/user_feeds/UserFeedsShow.js'
 import Activities from './pages/Activities.js'
+import ActivitiesAdd from './pages/activities/ActivitiesAdd.js'
+import ActivitiesEdit from './pages/activities/ActivitiesEdit.js'
+import ActivitiesShow from './pages/activities/ActivitiesShow.js'
+import Topics from './pages/Topics.js'
+import TopicsAdd from './pages/topics/TopicsAdd.js'
+import TopicsEdit from './pages/topics/TopicsEdit.js'
+import TopicsShow from './pages/topics/TopicsShow.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -66,6 +73,15 @@ render((
         </Route>
         <Route path="activities" component={App}>
           <IndexRoute component={Activities} />
+          <Route path="add/:type" component={ActivitiesAdd}/>
+          <Route path="edit/:id" component={ActivitiesEdit}/>
+          <Route path="show/:id" component={ActivitiesShow}/>
+        </Route>
+        <Route path="topics" component={App}>
+          <IndexRoute component={Topics} />
+          <Route path="add/:type" component={TopicsAdd}/>
+          <Route path="edit/:id" component={TopicsEdit}/>
+          <Route path="show/:id" component={TopicsShow}/>
         </Route>
         <Route path="*" component={Error404Page} />
       </Route>

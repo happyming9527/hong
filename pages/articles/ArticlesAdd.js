@@ -5,7 +5,6 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
-import LinkForm from './_LinkForm.js'
 import ST from '../../Setting.js'
 
 export default class ArticlesAdd extends React.Component {

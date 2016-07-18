@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm, Modal, Row, Col, Tabs, Upload, Icon} from 'antd';
 const TabPane = Tabs.TabPane;
-import ST from '../../Setting.js'
+import ST from '../Setting.js'
 
 export default class Attachments extends React.Component {
   constructor(props) {
