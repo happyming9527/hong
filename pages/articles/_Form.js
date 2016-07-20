@@ -3,11 +3,13 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , Select} from 'antd';
+const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 const Option = Select.Option;
 import ST from '../../Setting.js'
-import WriteArticle from './WriteArticle.js'
 import Atts from '../Attachments.js'
+import RichEditorPreview from '../articles/RichEditorPreview.js'
+import RichEditor from './RichEditor.js'
 
 class Demo extends React.Component {
 
@@ -100,6 +102,21 @@ class Demo extends React.Component {
     })
   }
 
+  preview(key) {
+    if (key==='2') {
+      let content
+      if (this.props.kind == 'link') {
+        const { getFieldValue } = this.props.form;
+        content = getFieldValue('content')
+      } else if (this.props.kind == 'egc') {
+        content = this.editor.getContent()
+      }
+      this.setState({
+        html: content
+      })
+    }
+  }
+
   render() {
     const { getFieldProps } = this.props.form;
     const formItemLayout = {
@@ -123,19 +140,9 @@ class Demo extends React.Component {
           {required: true, whitespace: true, message: '请填写链接'},
         ],
       });
-      content = <FormItem
-        {...formItemLayout}
-        label="链接"
-      >
-        <Input type="text" {...contentProps} />
-      </FormItem>
+      content = <Input type="text" {...contentProps} />
     } else if (this.props.kind == 'egc') {
-      content = <FormItem
-        {...formItemLayout}
-        label="内容"
-      >
-        <WriteArticle ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
-      </FormItem>
+      content = <RichEditor ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
     }
 
     console.log(this.state.selfTags)
@@ -218,7 +225,21 @@ class Demo extends React.Component {
           </Select>
         </FormItem>
 
-        {content}
+        <FormItem
+          {...formItemLayout}
+          label="内容"
+        >
+          <Row gutter={2}>
+            <Tabs defaultActiveKey="1" onChange={this.preview.bind(this)}>
+              <TabPane tab="编辑" key="1">
+                {content}
+              </TabPane>
+              <TabPane tab="预览" key="2">
+                <RichEditorPreview html={this.state.html} needWrapper={true} isUrl={this.props.kind=='link'} />
+              </TabPane>
+            </Tabs>
+          </Row>
+        </FormItem>
         <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
           {
             this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>

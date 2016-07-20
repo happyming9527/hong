@@ -72,7 +72,7 @@ export default class BackendUser extends React.Component {
     }
 
     return <span>
-            <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
+            <a href="javascript:void(0)" onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount||0})</a>
             <span className="ant-divider"></span>
       {recButton}
           </span>
@@ -85,6 +85,10 @@ export default class BackendUser extends React.Component {
 
   showNode(record) {
     ST.history.push(`/backend/user_feeds/show/${record.id}`)
+  }
+
+  showComments(record) {
+    ST.history.push(`/backend/user_feeds/comments/${record.id}`)
   }
 
   rec(record) {
@@ -162,11 +166,6 @@ export default class BackendUser extends React.Component {
     }
     return (
       <div>
-        <Row style={{marginBottom: 20}}>
-          <Button type="primary" htmlType="submit" style={{marginRight: '10px'}} onClick={this.setVertical.bind(this)}>瀑布式页面</Button>
-          <Button type="primary" htmlType="submit" style={{marginRight: '10px'}}  onClick={this.cancelVertical.bind(this)}>表格式页面</Button>
-        </Row>
-
         <Row>
           {table}
         </Row>

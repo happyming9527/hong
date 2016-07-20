@@ -7,6 +7,7 @@ export default class RichEditorPreview extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      url: null
     }
     this.htmlTemplate =
       `
@@ -67,10 +68,20 @@ export default class RichEditorPreview extends React.Component {
   }
 
   setContent(html) {
-    var doc = window.rich_editor_preview.document.open();
-    let result = this.htmlTemplate.replace('#replacement#', html)
-    doc.write(result);
-    doc.close();
+    if (this.props.isUrl) {
+      this.setState({url: html})
+    } else {
+      var doc = window.rich_editor_preview.document.open();
+      let result
+      if (this.props.needWrapper) {
+        result = this.htmlTemplate.replace('#replacement#', html)
+      } else {
+        result = html
+      }
+      doc.write(result);
+      doc.close();
+    }
+
   }
 
   componentDidMount() {
@@ -87,6 +98,6 @@ export default class RichEditorPreview extends React.Component {
 //<div dangerouslySetInnerHTML={{__html: this.props.html}}></div>
 //  style={{width: '414px', height: '736px'}}
   render() {
-    return <iframe style={{width: '414px', height: '736px'}} name="rich_editor_preview"></iframe>
+    return <iframe style={{width: '414px', height: '736px'}} name="rich_editor_preview" src={this.state.url} ></iframe>
   }
 }

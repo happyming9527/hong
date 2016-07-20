@@ -47,7 +47,7 @@ export default class VerticalList extends React.Component {
                     </Row>
                     <Row gutter={10}>
                       {
-                        i.resList.map(i=>{
+                        i.resList&&i.resList.map(i=>{
                           let com
                           if (i.resType==1) {
                             com = <Col span={8} key={i.id} style={{padding: '10px'}}>

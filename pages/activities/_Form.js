@@ -79,13 +79,13 @@ class Demo extends React.Component {
   }
 
   preview(key) {
-    const { getFieldValue } = this.props.form;
-    let content = getFieldValue('content')
-    //if (key==='2') {
-    //  this.setState({
-    //    html: <div>ceshi</div>
-    //  })
-    //}
+    if (key==='2') {
+      const { getFieldValue } = this.props.form;
+      let content = getFieldValue('content')
+      this.setState({
+        html: content
+      })
+    }
   }
 
   render() {
@@ -109,10 +109,7 @@ class Demo extends React.Component {
       ],
     });
 
-    let contentChild, ContentProc
-    ContentProc = props=>{
-      return <div></div>
-    }
+    let contentChild
 
     if (this.props.kind == 'link') {
       const contentProps = getFieldProps('content', {
@@ -121,14 +118,6 @@ class Demo extends React.Component {
           {required: true, whitespace: true, message: '请填写链接'},
         ],
       });
-      ContentProc = props=>{
-        return <FormItem
-          {...formItemLayout}
-          label="链接"
-        >
-          {props.children}
-        </FormItem>
-      }
 
       contentChild = <Input type="text" {...contentProps} />
 
@@ -141,15 +130,6 @@ class Demo extends React.Component {
           {required: true, whitespace: true, message: '请填写内容'},
         ],
       });
-
-      ContentProc = props=>{
-        return <FormItem
-          {...formItemLayout}
-          label="内容"
-        >
-          {props.children}
-        </FormItem>
-      }
 
       contentChild = <Input type="textarea" {...contentProps} />
     }
@@ -223,18 +203,21 @@ class Demo extends React.Component {
           </Select>
         </FormItem>
 
-        <ContentProc>
+        <FormItem
+          {...formItemLayout}
+          label="内容"
+        >
           <Row gutter={2}>
             <Tabs defaultActiveKey="1" onChange={this.preview.bind(this)}>
               <TabPane tab="编辑" key="1">
                 {contentChild}
               </TabPane>
               <TabPane tab="预览" key="2">
-                <RichEditorPreview html={this.state.html} />
+                <RichEditorPreview html={this.state.html} needWrapper={false} isUrl={this.props.kind=='link'} />
               </TabPane>
             </Tabs>
           </Row>
-        </ContentProc>
+        </FormItem>
 
         <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
           {

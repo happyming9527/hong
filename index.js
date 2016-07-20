@@ -23,6 +23,7 @@ import ArticlesAdd from './pages/articles/ArticlesAdd.js'
 import ArticlesShow from './pages/articles/ArticlesShow.js'
 import UserFeed from './pages/UserFeeds.js'
 import UserFeedsShow from './pages/user_feeds/UserFeedsShow.js'
+import UserFeedComments from './pages/user_feeds/_CommentList.js'
 import Activities from './pages/Activities.js'
 import ActivitiesAdd from './pages/activities/ActivitiesAdd.js'
 import ActivitiesEdit from './pages/activities/ActivitiesEdit.js'
@@ -31,6 +32,11 @@ import Topics from './pages/Topics.js'
 import TopicsAdd from './pages/topics/TopicsAdd.js'
 import TopicsEdit from './pages/topics/TopicsEdit.js'
 import TopicsShow from './pages/topics/TopicsShow.js'
+import ShakeTips from './pages/ShakeTips.js'
+import ShakeTipsAdd from './pages/shake_tips/ShakeTipsAdd.js'
+import ShakeTipsEdit from './pages/shake_tips/ShakeTipsEdit.js'
+import Blacklist from './pages/Blacklist.js'
+import Users from './pages/Users.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -70,6 +76,7 @@ render((
         <Route path="user_feeds" component={App}>
           <IndexRoute component={UserFeed} />
           <Route path="show/:id" component={UserFeedsShow}/>
+          <Route path="comments/:id" component={UserFeedComments}/>
         </Route>
         <Route path="activities" component={App}>
           <IndexRoute component={Activities} />
@@ -82,6 +89,17 @@ render((
           <Route path="add/:type" component={TopicsAdd}/>
           <Route path="edit/:id" component={TopicsEdit}/>
           <Route path="show/:id" component={TopicsShow}/>
+        </Route>
+        <Route path="shake_tips" component={App}>
+          <IndexRoute component={ShakeTips} />
+          <Route path="add/:type" component={ShakeTipsAdd}/>
+          <Route path="edit/:id" component={ShakeTipsEdit}/>
+        </Route>
+        <Route path="blacklist" component={App}>
+          <IndexRoute component={Blacklist} />
+        </Route>
+        <Route path="users" component={App}>
+          <IndexRoute component={Users} />
         </Route>
         <Route path="*" component={Error404Page} />
       </Route>

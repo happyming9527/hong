@@ -41,7 +41,7 @@ export default class WriteArticle extends React.Component {
             <RichEditor changeCallback={this.preview.bind(this)} ref={i=>this.editor=i} initContent={this.props.initContent}/>
           </TabPane>
           <TabPane tab="预览" key="2">
-            <RichEditorPreview html={this.state.html} />
+            <RichEditorPreview html={this.state.html} needWrapper={true} />
           </TabPane>
         </Tabs>
       </Row>
