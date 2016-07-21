@@ -77,6 +77,7 @@ export default class Attachments extends React.Component {
       name: 'file',
       action: uploadUrl,
       accept: attachmentType,
+      showUploadList: false,
       headers: {
         //authorization: 'authorization-text',
       },

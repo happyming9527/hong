@@ -37,6 +37,10 @@ import ShakeTipsAdd from './pages/shake_tips/ShakeTipsAdd.js'
 import ShakeTipsEdit from './pages/shake_tips/ShakeTipsEdit.js'
 import Blacklist from './pages/Blacklist.js'
 import Users from './pages/Users.js'
+import Gifts from './pages/Gifts.js'
+import GiftsAdd from './pages/gifts/GiftsAdd.js'
+import GiftsEdit from './pages/gifts/GiftsEdit.js'
+import GiftsShow from './pages/gifts/GiftsShow'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -100,6 +104,12 @@ render((
         </Route>
         <Route path="users" component={App}>
           <IndexRoute component={Users} />
+        </Route>
+        <Route path="gifts" component={App}>
+          <IndexRoute component={Gifts} />
+          <Route path="add" component={GiftsAdd}/>
+          <Route path="edit/:id" component={GiftsEdit}/>
+          <Route path="show/:id" component={GiftsShow}/>
         </Route>
         <Route path="*" component={Error404Page} />
       </Route>
