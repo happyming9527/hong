@@ -2,16 +2,17 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Button, Form, Input, Table, Popconfirm} from 'antd';
+import { Button, Form, Input, Table, Popconfirm, Select} from 'antd';
+const Option = Select.Option;
 import ST from '../../Setting.js'
 
 export default class List extends React.Component {
   constructor(props) {
     super(props)
     this.columns = [{
-      title: 'id',
-      dataIndex: 'id',
-      key: 'id',
+      title: '用户id',
+      dataIndex: 'userId',
+      key: 'userId',
     },{
       title: '用户名',
       dataIndex: 'name',

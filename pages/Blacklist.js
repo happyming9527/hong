@@ -5,6 +5,7 @@ import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb
 import ST from '../Setting.js'
 import List from './blacklist/_List.js'
 import {Link} from 'react-router'
+import SearchForm from './blacklist/_SearchForm.js'
 const Panel = Collapse.Panel;
 
 export default class BackendUser extends React.Component {
@@ -21,6 +22,11 @@ export default class BackendUser extends React.Component {
   }
 
   componentWillMount() {
+    this.fetchData()
+  }
+
+  changeConditionAndSearch(json) {
+    this.searchCondition = json;
     this.fetchData()
   }
 
@@ -55,7 +61,15 @@ export default class BackendUser extends React.Component {
     let that = this
     return (
       <ST.Container breadcrumb={[{name: '黑名单列表'}]}>
-
+        <Row>
+          <Collapse accordion>
+            <Panel header={'搜索框'} key="1">
+              <SearchForm
+                ref={i=>this.searchForm=i}
+                searchCallback={this.changeConditionAndSearch.bind(this)} />
+            </Panel>
+          </Collapse>
+        </Row>
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <List
             ref={i=>this.list=i}

@@ -23,6 +23,13 @@ export default class List extends React.Component {
       render: (text, record)=>{
         return <img src={record.logo} alt="" style={{width: '50px', height: '50px'}}/>
       }
+    },{
+      title: '是否在黑名单中',
+      dataIndex: 'isInBlackList',
+      key: 'isInBlackList',
+      render: (text, record)=>{
+        return text ? <p style={{color: 'red'}}>在黑名单中</p>: <p>正常</p>
+      }
     },
       {
         title: '操作',
