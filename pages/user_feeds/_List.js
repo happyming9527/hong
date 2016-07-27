@@ -127,7 +127,7 @@ export default class BackendUser extends React.Component {
         ST.historyReload('/backend/user_feeds')
         ST.info.success('取消置顶成功')
       })
-      .catch(e=>ST.info.error(e.message)).done
+      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
   }
 
   setVertical() {

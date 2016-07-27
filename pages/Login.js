@@ -30,7 +30,7 @@ let BasicDemo = React.createClass({
           ST.history.replace('/backend')
           ST.info.success('登陆成功!')
         })
-        .catch(e=>ST.info.error(e.message)).done
+        .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
     })
   },
 
