@@ -5,6 +5,7 @@ import 'antd/dist/antd.css'
 import { browserHistory, Link } from 'react-router'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
+import Locales from './Locales.js'
 
 const addTimerMixin = (clazz)=>{
   reactMixin.onClass(clazz, TimerMixin);
@@ -106,7 +107,7 @@ const BreadCrumb = (props)=>{
 }
 
 const Container = (props)=>{
-  return !props.loaded ? ST.loading() :
+  return !props.loaded ? loading() :
     <div style={{width: '100%', padding: '20px 30px'}}>
       {
         !props.breadcrumb ? null:
@@ -151,5 +152,6 @@ export default {
   BreadCrumb,
   Container,
   PaddingRow,
-  compact
+  compact,
+  Locales
 }

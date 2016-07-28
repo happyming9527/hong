@@ -18,10 +18,14 @@ export default class List extends React.Component {
       key: 'name'
     },{
       title: '头像',
-      dataIndex: 'logo',
-      key: 'logo',
+      dataIndex: 'logoPath',
+      key: 'logoPath',
       render: (text, record)=>{
-        return <img src={record.logo} alt="" style={{width: '50px', height: '50px'}}/>
+        if (text) {
+          return <img src={text} alt="" style={{width: '50px', height: '50px'}}/>
+        } else {
+          return <p>暂无头像</p>
+        }
       }
     },{
       title: '是否在黑名单中',
