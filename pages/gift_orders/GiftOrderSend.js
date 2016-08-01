@@ -46,7 +46,7 @@ export default class RolesEdit extends React.Component {
   render() {
     return (
       <ST.Container breadcrumb={[{name: '礼品订单管理', url: '/backend/gift_orders'}, {name: '修改礼品订单'}]}>
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
           </Card>

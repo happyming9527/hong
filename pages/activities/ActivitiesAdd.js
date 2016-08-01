@@ -33,7 +33,7 @@ export default class ArticlesAdd extends React.Component {
     const name = (this.type == 'egc' ? '文章':'外链')
     return (
       <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/activities'}, {name: name}]}>
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
           </Card>

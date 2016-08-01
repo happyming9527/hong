@@ -37,7 +37,7 @@ export default class RolesEdit extends React.Component {
           </Breadcrumb>
         </Row>
 
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form submitCallback={this.submitCallback.bind(this)} />
           </Card>

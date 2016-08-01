@@ -11,7 +11,7 @@ class Demo extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      oldNode: this.props.oldNode
+      oldNode: this.props.oldNode,
     }
   }
 

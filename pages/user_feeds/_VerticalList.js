@@ -24,6 +24,10 @@ export default class VerticalList extends React.Component {
     this.props.pagination.onChange(page)
   }
 
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <div>
@@ -31,15 +35,19 @@ export default class VerticalList extends React.Component {
           {
             this.props.dataSource.map((i, index)=>{
               return (
-                <Row key={i.id} style={{borderWidth: 0, borderTopWidth: '1px',borderBottomWidth: (index==this.props.dataSource.length-1) ? 1:0,  borderStyle: 'solid', borderColor: 'gray', padding: 20}}>
+                <Row
+                  gutter={16}
+                  key={i.id}
+                  style={{borderWidth: 0, borderTopWidth: '1px',borderBottomWidth: (index==this.props.dataSource.length-1) ? 1:0,  borderStyle: 'solid', borderColor: 'gray', padding: 20}}>
                   <Col span={2}>
-                    logo
+                    <img src={i.userLogo} alt={i.userLogo} style={{width: 50,height: 50}}/>
                   </Col>
-                  <Col span={22}>
+                  <Col
+                    span={22}>
                     <Row>
                       <div style={{display: 'flex', direction: 'row', justifyContent: 'space-between', width: '100%'}}>
-                        <div>{i.userId}</div>
-                        <div>{i.createTime}</div>
+                        <div>用户名称:{i.userName} &emsp;用户id:{i.userId} &emsp;feed_id: {i.id}</div>
+                        <div>{i.pubTimeNice}</div>
                       </div>
                     </Row>
                     <Row>
@@ -71,15 +79,7 @@ export default class VerticalList extends React.Component {
             })
           }
         </div>
-        <Pagination
-          showQuickJumper
-          current={this.state.currentPage}
-          defaultCurrent={1}
-          total={this.props.pagination.total}
-          showTotal={this.props.pagination.showTotal}
-          pageSize={this.props.pagination.pageSize}
-          onChange={this.changePage.bind(this)}
-        />
+
       </div>
 
     )

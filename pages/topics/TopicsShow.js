@@ -38,7 +38,7 @@ export default class RolesEdit extends React.Component {
     const name = true ? '话题查看':'链接查看'
     return (
       <ST.Container breadcrumb={[{name: '话题管理', url: '/backend/topics'}, {name: name}]}>
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form readonly={true} kind={kind} oldNode={this.node} submitCallback={()=>{}} />
           </Card>

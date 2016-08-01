@@ -30,7 +30,7 @@ export default class ArticlesAdd extends React.Component {
   render() {
     return (
       <ST.Container breadcrumb={[{name: '礼品管理', url: '/backend/gifts'}, {name: '添加礼品'}]}>
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
           </Card>

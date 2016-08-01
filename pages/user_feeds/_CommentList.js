@@ -3,10 +3,10 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm, Row} from 'antd';
-import ST from '../../Setting.js'
+import ST, {SingleContainer} from '../../Setting.js'
 import VerticalList from './_VerticalList.js'
 
-export default class BackendUser extends React.Component {
+export default class CommentsList extends React.Component {
   constructor(props) {
     super(props)
     this.id = this.props.params.id
@@ -27,7 +27,6 @@ export default class BackendUser extends React.Component {
     ST.httpPost(
       `/api/user_feeds/comments?id=${this.id}`, {q: this.searchCondition})
       .then(result=> {
-        debugger
         let dataSource = result.data.list.map(ele=> {
           ele.key = ele.id.toString()
           return ele
@@ -70,14 +69,14 @@ export default class BackendUser extends React.Component {
     }
 
     return (
-      <ST.Container breadcrumb={[{name: '用户微博管理', url: '/backend/user_feeds'}, {name: '评论列表'}]}>
+      <SingleContainer breadcrumb={[{name: '用户微博管理', url: '/backend/user_feeds'}, {name: '评论列表'}]}  key="CommentsList" >
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <VerticalList dataSource={this.state.dataSource} pagination={paginationConfig} actionButtons={this.actionButtons.bind(this)} />
         </Row>
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
         </Row>
-      </ST.Container>
+      </SingleContainer>
     )
 
   }

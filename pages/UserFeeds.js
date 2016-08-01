@@ -2,31 +2,42 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
-import ST from '../Setting.js'
+import ST, {SingleContainer, SearchFormContainer} from '../Setting.js'
 import List from './user_feeds/_List.js'
 import {Link} from 'react-router'
-const Panel = Collapse.Panel;
+import SearchForm from './user_feeds/_SearchForm.js'
+const queryString = require('query-string');
 
-export default class BackendUser extends React.Component {
+export default class UserFeeds extends React.Component {
   constructor(props) {
+    debugger
     super(props)
-    this.state = {
-      dataSource: [],
-      total: 0,
-    }
-    this.searchCondition = {}
-    this.per = 10
-    this.currentPage = 1
-
   }
 
   componentWillMount() {
+    this.initValue()
     this.fetchData()
+  }
+
+  initValue() {
+    let searchParams = queryString.parse(location.search);
+    if (ST.isEmpty(searchParams)) {
+      searchParams = {
+        pageSize: 10,
+        currentPage: 1
+      }
+    }
+
+    this.state = {
+      dataSource: [],
+      total: 0,
+      searchParams: searchParams
+    }
   }
 
   fetchData() {
     ST.httpPost(
-      `/api/user_feeds/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
+      `/api/user_feeds/list`, this.state.searchParams)
       .then(result=> {
         let dataSource = result.data.list.map(ele=> {
           ele.key = ele.id.toString()
@@ -41,30 +52,47 @@ export default class BackendUser extends React.Component {
       .catch(e=>ST.info.error(e.message)).done
   }
 
-  changeConditionAndSearch(json) {
-    this.searchCondition = json;
+  research() {
+    ST.historyReload('/backend/user_feeds?'+queryString.stringify(this.state.searchParams))
     this.fetchData()
   }
 
+  changeConditionAndSearch(json) {
+    let params = {...this.state.searchParams, ...json, currentPage: 1}
+    this.setState({
+      searchParams: params
+    }, this.research)
+  }
+
   changePage(page) {
-    this.currentPage = page
-    this.fetchData()
+    let params = {...this.state.searchParams, currentPage: page}
+    this.setState({
+      searchParams: params
+    }, this.research)
+
   }
 
   render() {
     let that = this
+    let breadcrumb = [{name: '用户微博管理'}]
+    let header = (
+      <SearchFormContainer>
+        <SearchForm
+          ref={i=>this.searchForm=i}
+          searchParams={this.state.searchParams}
+          searchCallback={this.changeConditionAndSearch.bind(this)} />
+      </SearchFormContainer>
+    )
     return (
-      <ST.Container breadcrumb={[{name: '用户微博管理'}]}>
-
-        <Row style={{marginTop: 20, marginBottom: 20}}>
-          <List
-            ref={i=>this.list=i}
-            pageSize = {this.per}
-            changePage={this.changePage.bind(this)}
-            dataSource={this.state.dataSource}
-            total={this.state.total} />
-        </Row>
-      </ST.Container>
+      <SingleContainer breadcrumb={breadcrumb} header={header} key="UserFeeds">
+        <List
+          ref={i=>this.list=i}
+          currentPage = {this.state.searchParams.currentPage}
+          pageSize = {parseInt(this.state.searchParams.pageSize)}
+          changePage={this.changePage.bind(this)}
+          dataSource={this.state.dataSource}
+          total={parseInt(this.state.total)} />
+      </SingleContainer>
     )
   }
 }

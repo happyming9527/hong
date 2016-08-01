@@ -74,7 +74,7 @@ export default class BackendUserEditRoles extends React.Component {
             </Breadcrumb>
           </Row>
 
-          <Row gutter={16}>
+          <Row>
             <Card>
               <Select multiple
                 style={{ width: 400 }}

@@ -1,6 +1,7 @@
 "use strict";
 import React from 'react'
-import { message, Spin, Row, Breadcrumb } from 'antd';
+import { message, Spin, Row, Breadcrumb, Card, Button, Collapse } from 'antd';
+const Panel = Collapse.Panel;
 import 'antd/dist/antd.css'
 import { browserHistory, Link } from 'react-router'
 import TimerMixin from 'react-timer-mixin'
@@ -23,6 +24,12 @@ const history = browserHistory
 const historyReload = (path)=> {
   history.replace('/login');
   history.replace(path);
+}
+const historyFullReload = (path)=>{
+  history.replace('/login');
+  this.setTimeout(()=>{
+    history.replace(path);
+  },0)
 }
 
 const historyGoBack = ()=> {
@@ -108,9 +115,9 @@ const BreadCrumb = (props)=>{
 
 const Container = (props)=>{
   return !props.loaded ? loading() :
-    <div style={{width: '100%', padding: '20px 30px'}}>
+    <div style={{width: '100%', padding: '20px 30px', height: '100%'}}>
       {
-        !props.breadcrumb ? null:
+        !props.breadcrumb||props.breadcrumb.length==0 ? null:
           <BreadCrumb list={ props.breadcrumb }/>
       }
       {
@@ -122,6 +129,44 @@ const Container = (props)=>{
 Container.defaultProps = {
   loaded: true
 }
+
+const SingleContainer = (props)=>{
+  return <Container breadcrumb={props.breadcrumb} loaded={props.loaded} >
+    {props.header}
+    <Row style={{marginTop: 20, marginBottom: 20}}>
+      <Card>
+        {props.children}
+        {
+          !props.back ? null:
+            <Row style={{marginTop: 30}} style={{textAlign: 'center'}}>
+              <Button type="ghost" onClick={historyGoBack}>返回</Button>
+            </Row>
+        }
+      </Card>
+    </Row>
+    {props.footer}
+  </Container>
+}
+
+SingleContainer.defaultProps = {
+  loaded: true,
+  breadcrumb: []
+}
+
+const SearchFormContainer = (props)=>{
+  return (
+    <Row>
+      <Collapse accordion>
+        <Panel header={'搜索框'} key="1">
+          {props.children}
+        </Panel>
+      </Collapse>
+    </Row>
+  )
+}
+SearchFormContainer.defaultProps = {}
+
+export {Container, SingleContainer, SearchFormContainer};
 
 const PaddingRow = (props)=>{
   return (
@@ -135,6 +180,10 @@ const compact = (array)=>{
   return array.filter((i, index)=>{
     return (array.indexOf(i)==index) && i
   })
+}
+
+const isEmpty = (obj)=>{
+  return Object.keys(obj).length === 0
 }
 
 const storage = window.sessionStorage
@@ -153,5 +202,6 @@ export default {
   Container,
   PaddingRow,
   compact,
-  Locales
+  Locales,
+  isEmpty
 }

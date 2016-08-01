@@ -47,7 +47,7 @@ export default class RolesEdit extends React.Component {
     const name = true ? '摇一摇便签修改':'链接修改'
     return (
       <ST.Container breadcrumb={[{name: '摇一摇便签管理', url: '/backend/shake_tips'}, {name: name}]}>
-        <Row gutter={16}>
+        <Row>
           <Card>
             <Form kind={kind} oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
           </Card>

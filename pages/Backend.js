@@ -11,6 +11,12 @@ export default class Backend extends React.Component {
     super(props)
   }
 
+  componentWillReceiveProps(newProps) {
+    if (this.props.location.pathname != newProps.location.pathname ||this.props.location.search != newProps.location.search) {
+      this.refs.scrollDiv.scrollTop = 0
+    }
+  }
+
   render() {
     return (
       <div style={{flexDirection: 'column', justifyContent: 'flex-start', height: "100%", display: 'flex'}}>
@@ -19,10 +25,12 @@ export default class Backend extends React.Component {
         </Row>
         <Row style={{flex: 1, alignItems: 'stretch', display: 'flex'}}>
           <Col span={6} style={{display: 'flex', overflowY: 'auto'}}>
-            <LeftMenus/>
+            <LeftMenus style={{flex: 1}} />
           </Col>
-          <Col span={18} style={{display: 'flex', overflowY: 'auto'}}>
-            { this.props.children}
+          <Col span={18} style={{padding: 0, display:'flex'}}>
+            <div ref='scrollDiv' style={{flex: 1, display: 'flex', overflowY: 'auto', width: '100%'}} >
+              { this.props.children}
+            </div>
           </Col>
         </Row>
       </div>

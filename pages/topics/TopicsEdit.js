@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
-import ST from '../../Setting.js'
+import ST, {SingleContainer} from '../../Setting.js'
 
 export default class RolesEdit extends React.Component {
   constructor(props) {
@@ -45,14 +45,11 @@ export default class RolesEdit extends React.Component {
   render() {
     const kind = true ? 'egc':'link'
     const name = true ? '话题修改':'链接修改'
+    const breadcrumb = [{name: '话题管理', url: '/backend/topics'}, {name: name}]
     return (
-      <ST.Container breadcrumb={[{name: '话题管理', url: '/backend/topics'}, {name: name}]}>
-        <Row gutter={16}>
-          <Card>
-            <Form kind={kind} oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
-          </Card>
-        </Row>
-      </ST.Container>
+      <SingleContainer breadcrumb={breadcrumb}>
+        <Form kind={kind} oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
+      </SingleContainer>
     )
   }
 }

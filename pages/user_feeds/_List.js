@@ -2,7 +2,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Button, Form, Input, Table, Popconfirm, Row} from 'antd';
+import { Button, Form, Input, Table, Popconfirm, Row, Pagination} from 'antd';
 import ST from '../../Setting.js'
 import VerticalList from './_VerticalList.js'
 
@@ -144,30 +144,33 @@ export default class BackendUser extends React.Component {
 
   render() {
     let that = this
-    let paginationConfig = {
-      showQuickJumper: true,
-      total: this.props.total,
-      pageSize: this.props.pageSize,
-      showTotal: total =>`共 ${this.props.total} 条`,
-      onChange(current) {
-        that.props.changePage(current)
-      },
-    }
-
     let table
     if (this.state.vertical) {
-      table = <VerticalList dataSource={this.props.dataSource} pagination={paginationConfig} actionButtons={this.actionButtons.bind(this)} />
+      table = <VerticalList dataSource={this.props.dataSource} actionButtons={this.actionButtons.bind(this)} />
     } else {
       table = <Table
         bordered={true}
         dataSource={this.props.dataSource}
-        columns={this.columns}
-        pagination={paginationConfig}/>
+        columns={this.columns}/>
     }
     return (
       <div>
         <Row>
           {table}
+          <Pagination
+            showQuickJumper
+            total={this.props.total}
+            current={parseInt(this.props.currentPage)}
+            pageSize={parseInt(this.props.pageSize)}
+            showTotal={
+              total=>`共 ${parseInt(this.props.total)} 条`
+            }
+            onChange={
+              current=>{
+                that.props.changePage(current)
+              }
+            }
+          />
         </Row>
       </div>
     )

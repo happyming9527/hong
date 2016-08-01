@@ -6,7 +6,7 @@ import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
 //import LinkForm from './_LinkForm.js'
-import ST from '../../Setting.js'
+import ST, {SingleContainer} from '../../Setting.js'
 
 export default class RolesEdit extends React.Component {
   constructor(props) {
@@ -45,19 +45,27 @@ export default class RolesEdit extends React.Component {
   }
 
   render() {
+    const ShowRow = (props)=>{
+      return <Row style={{marginTop: 10}}>
+        <Col span={2} style={{textAlign: 'right', fontWeight: 'bold'}}>{props.name}</Col>
+        <Col span={22} style={{textAlign: 'left', paddingLeft: 20}}>{props.value||<span style={{color: 'red'}}>暂无</span>}</Col>
+      </Row>
+    }
     let that = this;
-    debugger
     return (
-      <ST.Container loaded={this.state.loaded} breadcrumb={[{name: '礼品订单管理', url: '/backend/gift_orders'}, {name: '修改礼品订单'}]}>
-        <Row gutter={16}>
-          <Card>
-            <Row>
-              <Col span={4}>礼品名称</Col>
-              <Col span={20}>{this.state.node.giftName}</Col>
-            </Row>
-          </Card>
-        </Row>
-      </ST.Container>
+      <SingleContainer back={true} loaded={this.state.loaded} breadcrumb={[{name: '礼品订单管理', url: '/backend/gift_orders'}, {name: '修改礼品订单'}]}>
+        <div>
+          <ShowRow name={'礼品名称'} value={this.state.node.giftName} />
+          <ShowRow name={'兑换人账户名'} value={this.state.node.userName} />
+          <ShowRow name={'兑换人id'} value={this.state.node.userId} />
+          <ShowRow name={'状态'} value={this.state.node.userId} />
+          <ShowRow name={'订单状态'} value={this.state.node.orderStatus} />
+          <ShowRow name={'收件人名称'} value={this.state.node.accepterName} />
+          <ShowRow name={'收件人电话'} value={this.state.node.accepterMobile} />
+          <ShowRow name={'收件人地址'} value={this.state.node.accepterAddress} />
+          <ShowRow name={'申请时间'} value={this.state.node.addTimeNice} />
+        </div>
+      </SingleContainer>
     )
   }
 }

@@ -6,7 +6,7 @@ import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
 //import LinkForm from './_LinkForm.js'
-import ST from '../../Setting.js'
+import ST,{SingleContainer} from '../../Setting.js'
 
 export default class RolesEdit extends React.Component {
   constructor(props) {
@@ -47,13 +47,9 @@ export default class RolesEdit extends React.Component {
     const kind = this.node&&this.node.feedType==1 ? 'egc':'link'
     const name = this.node&&this.node.feedType==1 ? '文章修改':'链接修改'
     return (
-      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/articles'}, {name: name}]}>
-        <Row gutter={16}>
-          <Card>
-            <Form kind={kind} oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
-          </Card>
-        </Row>
-      </ST.Container>
+      <SingleContainer breadcrumb={[{name: '文章管理', url: '/backend/articles'}, {name: name}]}>
+        <Form kind={kind} oldNode={this.node} submitCallback={this.submitCallback.bind(this)} />
+      </SingleContainer>
     )
   }
 }

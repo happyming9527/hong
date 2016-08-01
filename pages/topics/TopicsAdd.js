@@ -5,7 +5,7 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
-import ST from '../../Setting.js'
+import ST, {SingleContainer} from '../../Setting.js'
 
 export default class ArticlesAdd extends React.Component {
   constructor(props) {
@@ -30,15 +30,11 @@ export default class ArticlesAdd extends React.Component {
   }
 
   render() {
-    const name = (this.type == 'egc' ? '文章':'外链')
+    const name = (this.type == 'egc' ? '话题':'外链')
     return (
-      <ST.Container breadcrumb={[{name: '文章管理', url: '/backend/topics'}, {name: name}]}>
-        <Row gutter={16}>
-          <Card>
-            <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
-          </Card>
-        </Row>
-      </ST.Container>
+      <SingleContainer breadcrumb={[{name: '话题管理', url: '/backend/topics'}, {name: name}]}>
+        <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
+      </SingleContainer>
     )
   }
 }

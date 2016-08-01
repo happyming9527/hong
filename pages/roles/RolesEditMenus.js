@@ -105,7 +105,7 @@ export default class RolesEditMenus extends React.Component {
             </Breadcrumb>
           </Row>
 
-          <Row gutter={16}>
+          <Row>
             <Col span={24}>
               <Card>
                 <TreeSelect {...tProps} />
