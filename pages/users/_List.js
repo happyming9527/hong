@@ -39,13 +39,27 @@ export default class List extends React.Component {
         title: '操作',
         key: 'operation',
         render: (text, record) => {
-          return <span>
-            <a href="javascript:void(0)" onClick={this.addToBlacklist.bind(this, record)}>加入普通黑名单</a>
-            <span className="ant-divider"></span>
-            <a href="javascript:void(0)" onClick={this.addToBangBlacklist.bind(this, record)}>加入星星榜黑名单</a>
-          </span>
+          let buttons = [
+            <a key="查看" href="javascript:void(0)" onClick={this.addToBlacklist.bind(this, record)}>查看</a>,
+            <a key="我的粉丝" href="javascript:void(0)" onClick={this.showFansList.bind(this, record)}>我的粉丝</a>,
+            <a key="我的偶像" href="javascript:void(0)" onClick={this.showIdolsList.bind(this, record)}>我的偶像</a>,
+          ]
+          if (!record.isInBlackList) {
+            buttons.push(<a key="加入黑名单" href="javascript:void(0)" onClick={this.addToBlacklist.bind(this, record)}>加入黑名单</a>)
+          }
+          buttons = ST.opSeparate(buttons)
+          return <span> {buttons} </span>
+        }
+      }
+    ];
+  }
 
-        }}];
+  showFansList(record) {
+    ST.history.push(`/backend/users/fans_list/${record.userId}`)
+  }
+
+  showIdolsList(record) {
+    ST.history.push(`/backend/users/idols_list/${record.userId}`)
   }
 
   addToBlacklist(record) {

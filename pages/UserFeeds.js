@@ -10,7 +10,6 @@ const queryString = require('query-string');
 
 export default class UserFeeds extends React.Component {
   constructor(props) {
-    debugger
     super(props)
   }
 

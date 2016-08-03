@@ -37,6 +37,8 @@ import ShakeTipsAdd from './pages/shake_tips/ShakeTipsAdd.js'
 import ShakeTipsEdit from './pages/shake_tips/ShakeTipsEdit.js'
 import Blacklist from './pages/Blacklist.js'
 import Users from './pages/Users.js'
+import FansList from './pages/users/_FansList.js'
+import IdolsList from './pages/users/_IdolsList.js'
 import Gifts from './pages/Gifts.js'
 import GiftsAdd from './pages/gifts/GiftsAdd.js'
 import GiftsEdit from './pages/gifts/GiftsEdit.js'
@@ -107,6 +109,8 @@ render((
         </Route>
         <Route path="users" component={App}>
           <IndexRoute component={Users} />
+          <Route path="fans_list/:id" component={FansList}/>
+          <Route path="idols_list/:id" component={IdolsList}/>
         </Route>
         <Route path="gifts" component={App}>
           <IndexRoute component={Gifts} />

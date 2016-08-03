@@ -186,6 +186,16 @@ const isEmpty = (obj)=>{
   return Object.keys(obj).length === 0
 }
 
+const opSeparate = (array)=>{
+  let tmpArray = []
+  array.forEach((i, index)=>{
+    tmpArray.push(i);
+    if ((index+1) != array.length) {
+      tmpArray.push(<span key={Math.random()} className="ant-divider"/>)
+    }
+  })
+  return tmpArray
+}
 const storage = window.sessionStorage
 
 export default {
@@ -203,5 +213,6 @@ export default {
   PaddingRow,
   compact,
   Locales,
-  isEmpty
+  isEmpty,
+  opSeparate
 }
