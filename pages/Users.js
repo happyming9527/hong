@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
-import ST, {SingleContainer} from '../Setting.js'
+import ST, {Container} from '../Setting.js'
 import List from './users/_List.js'
 import {Link} from 'react-router'
 import SearchForm from './users/_SearchForm.js'
@@ -60,7 +60,7 @@ export default class BackendUser extends React.Component {
   render() {
     let that = this
     return (
-      <SingleContainer
+      <Container
         breadcrumb={[{name: 'app用户列表'}]}>
         <Row>
           <Collapse accordion>
@@ -80,7 +80,7 @@ export default class BackendUser extends React.Component {
             dataSource={this.state.dataSource}
             total={this.state.total} />
         </Row>
-      </SingleContainer>
+      </Container>
     )
   }
 }

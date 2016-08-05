@@ -66,6 +66,8 @@ export default class FansList extends React.Component {
     ]
     return (
       <SingleContainer
+        back={true}
+        loaded={this.state.loaded}
         breadcrumb={breadcrumb}>
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <List
@@ -74,9 +76,6 @@ export default class FansList extends React.Component {
             changePage={this.changePage.bind(this)}
             dataSource={this.state.dataSource}
             total={this.state.total} />
-        </Row>
-        <Row style={{marginTop: 20, marginBottom: 20}}>
-          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
         </Row>
       </SingleContainer>
     )

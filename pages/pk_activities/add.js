@@ -5,13 +5,11 @@ import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
 import {Link} from 'react-router'
 import Form from './_Form.js'
-import ST from '../../Setting.js'
+import ST, {SingleContainer} from '../../Setting.js'
 
 export default class ArticlesAdd extends React.Component {
   constructor(props) {
     super(props)
-    this.type = this.props.params.type
-    this.nodeName = this.props.location.query.name
     this.state = {
       loaded: false
     }
@@ -21,24 +19,21 @@ export default class ArticlesAdd extends React.Component {
   }
 
   submitCallback(values) {
-    ST.httpPost(`/api/activities/add`, values)
+    ST.httpPost(`/api/pk_activities/create_activity`, values)
       .then(result=> {
         ST.info.success('添加成功')
-        ST.history.replace('/backend/activities')
+        ST.history.replace('/backend/pk_activities')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
 
   render() {
-    const name = (this.type == 'egc' ? '活动':'外链')
+    let breadcrumb = [{name: '活动管理', url: '/backend/pk_activities'}, {name: '添加活动'}]
     return (
-      <ST.Container breadcrumb={[{name: '活动管理', url: '/backend/activities'}, {name: name}]}>
-        <Row>
-          <Card>
-            <Form kind={this.type} submitCallback={this.submitCallback.bind(this)} />
-          </Card>
-        </Row>
-      </ST.Container>
+      <SingleContainer
+        breadcrumb={breadcrumb}>
+        <Form submitCallback={this.submitCallback.bind(this)} />
+      </SingleContainer>
     )
   }
 }

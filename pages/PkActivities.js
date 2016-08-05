@@ -2,16 +2,14 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
-import ST, {SingleContainer} from '../../Setting.js'
-import List from './_List.js'
+import ST from '../Setting.js'
+import List from './pk_activities/_List.js'
 import {Link} from 'react-router'
 const Panel = Collapse.Panel;
 
-export default class FansList extends React.Component {
+export default class BackendUser extends React.Component {
   constructor(props) {
     super(props)
-    debugger
-    this.userId = this.props.params.id
     this.state = {
       dataSource: [],
       total: 0,
@@ -26,17 +24,12 @@ export default class FansList extends React.Component {
     this.fetchData()
   }
 
-  changeConditionAndSearch(json) {
-    this.searchCondition = json;
-    this.fetchData()
-  }
-
   fetchData() {
     ST.httpPost(
-      `/api/users/fans_list`, {userId: this.userId})
+      `/api/pk_activities/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
       .then(result=> {
         let dataSource = result.data.list.map(ele=> {
-          ele.key = ele.userId.toString()
+          ele.key = ele.id.toString()
           return ele
         })
         this.setState({
@@ -45,7 +38,7 @@ export default class FansList extends React.Component {
           dataSource: dataSource
         })
       })
-      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
+      .catch(e=>ST.info.error(e.message)).done
   }
 
   changeConditionAndSearch(json) {
@@ -58,26 +51,30 @@ export default class FansList extends React.Component {
     this.fetchData()
   }
 
+  add() {
+    ST.history.push('/backend/pk_activities/add')
+  }
+
+
   render() {
     let that = this
-    let breadcrumb = [
-      {name: 'app用户列表', url: '/backend/users'},
-      {name: '粉丝列表'}
-    ]
     return (
-      <SingleContainer
-        back={true}
-        loaded={this.state.loaded}
-        breadcrumb={breadcrumb}>
+      <ST.Container breadcrumb={[{name: 'pk活动列表'}]}>
+
+        <Row style={{marginTop: 20, marginBottom: 20}}>
+          <Button type="primary" htmlType="submit" onClick={this.add.bind(this)}>新增pk活动</Button>
+        </Row>
+
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <List
             ref={i=>this.list=i}
+            currentPage = {this.currentPage}
             pageSize = {this.per}
             changePage={this.changePage.bind(this)}
             dataSource={this.state.dataSource}
             total={this.state.total} />
         </Row>
-      </SingleContainer>
+      </ST.Container>
     )
   }
 }

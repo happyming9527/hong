@@ -40,7 +40,7 @@ export default class List extends React.Component {
         key: 'operation',
         render: (text, record) => {
           let buttons = [
-            <a key="查看" href="javascript:void(0)" onClick={this.addToBlacklist.bind(this, record)}>查看</a>,
+            <a key="查看" href="javascript:void(0)" onClick={this.showMe.bind(this, record)}>查看</a>,
             <a key="我的粉丝" href="javascript:void(0)" onClick={this.showFansList.bind(this, record)}>我的粉丝</a>,
             <a key="我的偶像" href="javascript:void(0)" onClick={this.showIdolsList.bind(this, record)}>我的偶像</a>,
           ]
@@ -56,6 +56,10 @@ export default class List extends React.Component {
 
   showFansList(record) {
     ST.history.push(`/backend/users/fans_list/${record.userId}`)
+  }
+
+  showMe(record) {
+    ST.history.push(`/backend/users/show/${record.userId}`)
   }
 
   showIdolsList(record) {

@@ -28,6 +28,10 @@ import Activities from './pages/Activities.js'
 import ActivitiesAdd from './pages/activities/ActivitiesAdd.js'
 import ActivitiesEdit from './pages/activities/ActivitiesEdit.js'
 import ActivitiesShow from './pages/activities/ActivitiesShow.js'
+import PkActivities from './pages/PkActivities.js'
+import PkActivitiesAdd from './pages/pk_activities/Add.js'
+import PkActivitiesShow from './pages/pk_activities/Show.js'
+import PkActivitiesEdit from './pages/pk_activities/Edit.js'
 import Topics from './pages/Topics.js'
 import TopicsAdd from './pages/topics/TopicsAdd.js'
 import TopicsEdit from './pages/topics/TopicsEdit.js'
@@ -39,6 +43,7 @@ import Blacklist from './pages/Blacklist.js'
 import Users from './pages/Users.js'
 import FansList from './pages/users/_FansList.js'
 import IdolsList from './pages/users/_IdolsList.js'
+import UsersShow from './pages/Users/_Show.js'
 import Gifts from './pages/Gifts.js'
 import GiftsAdd from './pages/gifts/GiftsAdd.js'
 import GiftsEdit from './pages/gifts/GiftsEdit.js'
@@ -93,6 +98,12 @@ render((
           <Route path="edit/:id" component={ActivitiesEdit}/>
           <Route path="show/:id" component={ActivitiesShow}/>
         </Route>
+        <Route path="pk_activities" component={App}>
+          <IndexRoute component={PkActivities} />
+          <Route path="add" component={PkActivitiesAdd}/>
+          <Route path="show/:id" component={PkActivitiesShow}/>
+          <Route path="edit/:id" component={PkActivitiesEdit}/>
+        </Route>
         <Route path="topics" component={App}>
           <IndexRoute component={Topics} />
           <Route path="add/:type" component={TopicsAdd}/>
@@ -111,6 +122,7 @@ render((
           <IndexRoute component={Users} />
           <Route path="fans_list/:id" component={FansList}/>
           <Route path="idols_list/:id" component={IdolsList}/>
+          <Route path="show/:id" component={UsersShow}/>
         </Route>
         <Route path="gifts" component={App}>
           <IndexRoute component={Gifts} />
