@@ -28,12 +28,24 @@ const expressCompany = new Array(
   {key: 'quanfengkuaidi', value: '全风快递'}
 )
 
-export {giftOrderStatus, expressCompany, opState}
+const ReportedFeedState = new Array(
+  {key: 50, value:'尚未处理的' },
+  {key: 51, value:'按取消处理' },
+  {key: 1, value:'按无价值的，混分处理' },
+  {key: 2, value:'按重复处理' },
+  {key: 3, value:'按骚扰处理' },
+  {key: 4, value:'按广告处理' },
+  {key: 5, value:'按不恰当的，影响社区氛围处理' }
+
+)
+
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState}
 
 const obj = {
   giftOrderStatus,
   opState,
-  expressCompany
+  expressCompany,
+  ReportedFeedState
 }
 
 export default obj

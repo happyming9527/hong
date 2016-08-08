@@ -145,7 +145,13 @@ class Demo extends React.Component {
       content = <RichEditor ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
     }
 
-    console.log(this.state.selfTags)
+    const userCategoryProps = getFieldProps('userCategory', {
+      value: this.props.oldNode.userCategory,
+      onChange: this.changeCategory.bind(this),
+      rules: [
+      ],
+    });
+
     return (
       <Form
         form={this.props.form}
@@ -195,9 +201,8 @@ class Demo extends React.Component {
           label="阶段"
         >
           <Select
-            value = {this.state.userCategory}
+            {...userCategoryProps}
             style={{ width: '100%' }}
-            onChange={this.changeCategory.bind(this)}
           >
             {
               this.categories.map(i=>{
