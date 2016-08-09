@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
 import ST, {SingleContainer, SearchFormContainer} from '../Setting.js'
-import List from './reported_feeds/_VerticalList'
+import List from './reported_feeds/_List.js'
 import {Link} from 'react-router'
 import SearchForm from './reported_feeds/_SearchForm.js'
 const queryString = require('query-string');

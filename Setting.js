@@ -65,6 +65,18 @@ const httpPost = (url, params = {})=> {
     })
 }
 
+const fetchPost = (callback, url, params) =>{
+  httpPost(url, params).then(callback).catch(e=>{
+    info.error(e.message) && console.log(e.stack)
+  }).done
+}
+
+const fetchGet = (callback, url, params) =>{
+  httpGet(url, params).then(callback).catch(e=>{
+    info.error(e.message) && console.log(e.stack)
+  }).done
+}
+
 const httpGet = (url, params = {})=> {
   let str = ''
   if (Object.keys(params).length !== 0) {
@@ -196,6 +208,16 @@ const opSeparate = (array)=>{
   })
   return tmpArray
 }
+
+const currentPath = ()=>{
+  return window.location.pathname + window.location.search
+}
+
+const successReload = (str)=>{
+  historyReload(currentPath());
+  info.success(str)
+}
+
 const storage = window.sessionStorage
 
 export default {
@@ -214,5 +236,9 @@ export default {
   compact,
   Locales,
   isEmpty,
-  opSeparate
+  opSeparate,
+  currentPath,
+  fetchPost,
+  fetchGet,
+  successReload
 }
