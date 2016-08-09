@@ -74,6 +74,8 @@ export default class BackendUser extends React.Component {
     return <span>
             <a href="javascript:void(0)" onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount||0})</a>
             <span className="ant-divider"></span>
+       <a href="javascript:void(0)" onClick={this.report.bind(this, record)}>举报</a>
+                  <span className="ant-divider"></span>
       {recButton}
           </span>
   }
@@ -126,6 +128,15 @@ export default class BackendUser extends React.Component {
       .then(result=> {
         ST.historyReload('/backend/user_feeds')
         ST.info.success('取消置顶成功')
+      })
+      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
+  }
+
+  report(record) {
+    ST.httpPost(`/api/user_feeds/report?id=${record.id}`)
+      .then(result=> {
+        ST.historyReload('/backend/user_feeds')
+        ST.info.success('举报成功')
       })
       .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
   }

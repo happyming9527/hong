@@ -12,38 +12,38 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^1.7.0",
-    "babel-core": "^6.10.4",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-object-rest-spread": "^6.8.0",
-    "babel-preset-es2015": "^6.9.0",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
-    "css-loader": "^0.23.1",
     "draft-js": "^0.7.0",
     "draft-js-export-html": "file:./local_modules/draft-js-export-html",
     "draft-js-import-element": "file:./local_modules/draft-js-import-element",
     "draft-js-import-html": "^0.2.0",
-    "express": "^4.14.0",
     "history": "^3.0.0",
     "if-env": "^1.0.0",
     "immutable": "^3.8.1",
-    "less-loader": "^2.2.3",
     "list-to-tree": "happyming9527/list-to-tree",
-    "node-sass": "^3.8.0",
     "query-string": "^4.2.2",
     "react": "15.1.0",
     "react-dom": "15.1.0",
     "react-mixin": "^3.0.5",
     "react-router": "^2.5.2",
     "react-timer-mixin": "^0.13.3",
-    "react-ui-tree": "^2.5.0",
+    "react-ui-tree": "^2.5.0"
+
+  },
+  "devDependencies": {
+    "less-loader": "^2.2.3",
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-es2015": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "node-sass": "^3.8.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
-  },
-  "devDependencies": {
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3"
   }
 }
