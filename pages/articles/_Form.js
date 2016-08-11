@@ -19,29 +19,26 @@ class Demo extends React.Component {
     this.defaultTags = ['孕期', '生啦']
     let selfTags = ST.compact(this.props.oldNode.tag.split(','))
     let tags = selfTags.concat(this.defaultTags)
-    let userCategory = userCategories.find(i=>i.key==this.props.oldNode.userCategory)
     this.state = {
       resList: this.props.oldNode.resList.slice(),
       tag: tags,
       selfTags: selfTags,
-      userCategory: userCategory&&userCategory.value
+      userCategory: this.props.oldNode.userCategory
     }
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (this.props.oldNode !== nextProps.oldNode) {
       let selfTags = ST.compact(nextProps.oldNode.tag.split(','))
       let tags = selfTags.concat(this.defaultTags)
       tags = tags.filter((i, index)=>{
         return (tags.indexOf(i)==index) && i
       })
-      let userCategory = userCategories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
         tag: tags,
         selfTags: selfTags,
-        userCategory: userCategory&&userCategory.value
+        userCategory: nextProps.oldNode.userCategory
       })
     }
   }
@@ -58,8 +55,8 @@ class Demo extends React.Component {
       } else {
         values['feedType'] = 2
       }
-      debugger
-      //values['userCategory'] = this.state.userCategory
+
+      values['userCategory'] = this.state.userCategory
       values['resList'] = this.state.resList
       values['tag'] = this.state.selfTags.join(',')
       this.props.submitCallback(values)
@@ -89,7 +86,7 @@ class Demo extends React.Component {
 
   changeCategory(value) {
     this.setState({
-      userCategory: value
+      userCategory:value,
     })
   }
 
@@ -145,16 +142,15 @@ class Demo extends React.Component {
       content = <RichEditor ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
     }
 
-    debugger
     const userCategoryProps = getFieldProps('userCategory', {
-      //onChange: this.changeCategory.bind(this),
+      value: this.state.userCategory,
+      onChange: this.changeCategory.bind(this),
       rules: [
       ],
     });
 
     return (
       <Form
-        form={this.props.form}
         horizontal
         onSubmit={this.handleSubmit.bind(this)}>
         <FormItem
@@ -200,15 +196,16 @@ class Demo extends React.Component {
           {...formItemLayout}
           label="阶段"
         >
-          <select {...userCategoryProps}>
-            <option value="0">不区分状态</option>
+          <Select
+            value={[this.state.userCategory]}
+            onChange={this.changeCategory.bind(this)} >
+            <Select.Option value="0">不区分状态</Select.Option>
             {
               userCategories.map(i=>{
-                let selected = i.key==parseInt(this.props.oldNode.userCategory) ? 'selected':''
-                return <option selected={selected} value={i.key} key={i.key}>{i.value}</option>
+                return <Select.Option value={i.key} key={i.key}>{i.value}</Select.Option>
               })
             }
-          </select>
+          </Select>
         </FormItem>
         <FormItem
           {...formItemLayout}

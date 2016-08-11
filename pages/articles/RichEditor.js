@@ -25,7 +25,7 @@ import Atts from '../Attachments.js'
 class RichEditor extends React.Component {
   constructor(props) {
     super(props);
-    let contentState = stateFromHTML(this.props.initContent);
+    let contentState = stateFromHTML(this.props.initContent||'');
     this.state = {
       editorState: EditorState.createWithContent(contentState),
       showURLInput: false,
@@ -50,7 +50,6 @@ class RichEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     if (this.props.initContent !== nextProps.initContent) {
       let contentState = stateFromHTML(nextProps.initContent);
       this.setState({
