@@ -16,6 +16,11 @@ function noop() {
 
 let BasicDemo = React.createClass({
 
+  getInitialState() {
+    return  {
+      searchParams: this.props.searchParams
+    }
+  },
 
   componentWillReceiveProps(nextProps) {
     return false
@@ -29,9 +34,16 @@ let BasicDemo = React.createClass({
         console.log('Errors in form!!!');
         return;
       }
-      console.log(values);
+      values['reportState'] = this.state.searchParams.reportState
       that.props.searchCallback(values)
     });
+  },
+
+  reportStateChange(value) {
+    let searchParams = {...this.state.searchParams, reportState: value}
+    this.setState({
+      searchParams: searchParams
+    })
   },
 
   render() {
@@ -74,15 +86,17 @@ let BasicDemo = React.createClass({
           {...formItemLayout}
           label="状态"
         >
-          <select {...reportStateProps}>
-            <option value="0">不区分状态</option>
+          <Select
+            value={[parseInt(this.state.searchParams.reportState)||'0']}
+            onChange={this.reportStateChange}
+          >
+            <Select.Option value="0">不区分状态</Select.Option>
             {
               ReportedFeedState.map(i=>{
-                let selected = i.key==parseInt(this.props.searchParams.reportState) ? 'selected':''
-                return <option selected={selected} value={i.key} key={i.key}>{i.value}</option>
+                return <Select.Option value={i.key} key={i.key}>{i.value}</Select.Option>
               })
             }
-          </select>
+          </Select>
         </FormItem>
 
         <FormItem wrapperCol={{ span: 12, offset: 7 }}>

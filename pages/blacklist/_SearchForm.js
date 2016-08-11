@@ -63,15 +63,7 @@ let BasicDemo = React.createClass({
         >
           <InputNumber min={1} style={{ width: 200 }} {...idProps} />
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="种类"
-        >
-          <Select defaultValue="1" style={{ width: 120 }} {...kindProps}>
-            <Option value="1">普通黑名单</Option>
-            <Option value="2">星星榜黑名单</Option>
-          </Select>
-        </FormItem>
+
         <FormItem wrapperCol={{ span: 12, offset: 7 }}>
           <Button type="primary" onClick={this.handleSubmit}>确定</Button>
           &nbsp;&nbsp;&nbsp;
