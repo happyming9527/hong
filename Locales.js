@@ -39,13 +39,20 @@ const ReportedFeedState = new Array(
 
 )
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState}
+const userCategory = new Array(
+  {key: 1, value: '备孕'},
+  {key: 2, value: '孕期'},
+  {key: 3, value: '已生'}
+)
+
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory}
 
 const obj = {
   giftOrderStatus,
   opState,
   expressCompany,
-  ReportedFeedState
+  ReportedFeedState,
+  userCategory
 }
 
 export default obj

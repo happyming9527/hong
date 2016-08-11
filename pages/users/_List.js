@@ -27,13 +27,6 @@ export default class List extends React.Component {
           return <p>暂无头像</p>
         }
       }
-    },{
-      title: '是否在黑名单中',
-      dataIndex: 'isInBlackList',
-      key: 'isInBlackList',
-      render: (text, record)=>{
-        return text ? <p style={{color: 'red'}}>在黑名单中</p>: <p>正常</p>
-      }
     },
       {
         title: '操作',
@@ -44,7 +37,7 @@ export default class List extends React.Component {
             <a key="我的粉丝" href="javascript:void(0)" onClick={this.showFansList.bind(this, record)}>我的粉丝</a>,
             <a key="我的偶像" href="javascript:void(0)" onClick={this.showIdolsList.bind(this, record)}>我的偶像</a>,
           ]
-          if (!record.isInBlackList) {
+          if (!record.inBlackList) {
             buttons.push(<a key="加入黑名单" href="javascript:void(0)" onClick={this.addToBlacklist.bind(this, record)}>加入黑名单</a>)
           }
           buttons = ST.opSeparate(buttons)

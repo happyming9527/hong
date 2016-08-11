@@ -10,16 +10,16 @@ import ST from '../../Setting.js'
 import Atts from '../Attachments.js'
 import RichEditorPreview from '../articles/RichEditorPreview.js'
 import RichEditor from './RichEditor.js'
+import {userCategory as userCategories} from '../../Locales.js'
 
 class Demo extends React.Component {
 
   constructor(props) {
     super(props)
-    this.categories = [{key: 1, value: '备孕'}, {key: 2, value: '孕期'}, {key: 3, value: '已生'}]
     this.defaultTags = ['孕期', '生啦']
     let selfTags = ST.compact(this.props.oldNode.tag.split(','))
     let tags = selfTags.concat(this.defaultTags)
-    let userCategory = this.categories.find(i=>i.key==this.props.oldNode.userCategory)
+    let userCategory = userCategories.find(i=>i.key==this.props.oldNode.userCategory)
     this.state = {
       resList: this.props.oldNode.resList.slice(),
       tag: tags,
@@ -32,12 +32,11 @@ class Demo extends React.Component {
 
     if (this.props.oldNode !== nextProps.oldNode) {
       let selfTags = ST.compact(nextProps.oldNode.tag.split(','))
-      console.log(selfTags)
       let tags = selfTags.concat(this.defaultTags)
       tags = tags.filter((i, index)=>{
         return (tags.indexOf(i)==index) && i
       })
-      let userCategory = this.categories.find(i=>i.key==nextProps.oldNode.userCategory)
+      let userCategory = userCategories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
         resList: nextProps.oldNode.resList.slice(),
         tag: tags,
@@ -59,7 +58,8 @@ class Demo extends React.Component {
       } else {
         values['feedType'] = 2
       }
-      values['userCategory'] = this.state.userCategory
+      debugger
+      //values['userCategory'] = this.state.userCategory
       values['resList'] = this.state.resList
       values['tag'] = this.state.selfTags.join(',')
       this.props.submitCallback(values)
@@ -145,9 +145,9 @@ class Demo extends React.Component {
       content = <RichEditor ref={i=>this.editor=i} initContent={this.props.oldNode.content} />
     }
 
+    debugger
     const userCategoryProps = getFieldProps('userCategory', {
-      value: this.props.oldNode.userCategory,
-      onChange: this.changeCategory.bind(this),
+      //onChange: this.changeCategory.bind(this),
       rules: [
       ],
     });
@@ -200,16 +200,15 @@ class Demo extends React.Component {
           {...formItemLayout}
           label="阶段"
         >
-          <Select
-            {...userCategoryProps}
-            style={{ width: '100%' }}
-          >
+          <select {...userCategoryProps}>
+            <option value="0">不区分状态</option>
             {
-              this.categories.map(i=>{
-                return <Option key={i.key}>{i.value}</Option>
+              userCategories.map(i=>{
+                let selected = i.key==parseInt(this.props.oldNode.userCategory) ? 'selected':''
+                return <option selected={selected} value={i.key} key={i.key}>{i.value}</option>
               })
             }
-          </Select>
+          </select>
         </FormItem>
         <FormItem
           {...formItemLayout}

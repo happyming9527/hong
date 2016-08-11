@@ -15,7 +15,7 @@ export default class BackendUser extends React.Component {
       total: 0,
     }
     this.searchCondition = {}
-    this.per = 10
+    this.per = 20
     this.currentPage = 1
 
   }
