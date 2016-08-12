@@ -2,7 +2,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , Select} from 'antd';
+import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , Select, DatePicker} from 'antd';
+const RangePicker = DatePicker.RangePicker;
 const FormItem = Form.Item;
 const Option = Select.Option;
 import ST from '../../Setting.js'
@@ -14,6 +15,8 @@ class Demo extends React.Component {
     super(props)
     this.categories = [{key: 1, value: '备孕'}, {key: 2, value: '孕期'}, {key: 3, value: '已生'}]
     this.state = {
+      startTimeNice: this.props.oldNode.startTimeNice,
+      endTimeNice: this.props.oldNode.endTimeNice,
       resList: this.props.oldNode.resList.slice(),
       userCategory: this.props.oldNode.userCategory
     }
@@ -23,6 +26,8 @@ class Demo extends React.Component {
     if (this.props.oldNode !== nextProps.oldNode) {
       let userCategory = this.categories.find(i=>i.key==nextProps.oldNode.userCategory)
       this.setState({
+        startTimeNice: nextProps.oldNode.startTimeNice,
+        endTimeNice: nextProps.oldNode.endTimeNice,
         resList: nextProps.oldNode.resList.slice(),
         userCategory: userCategory&&userCategory.value
       })
@@ -42,6 +47,8 @@ class Demo extends React.Component {
       }
       values['userCategory'] = this.state.userCategory
       values['resList'] = this.state.resList
+      values['startTime'] = this.state.startTimeNice
+      values['endTime'] = this.state.endTimeNice
       this.props.submitCallback(values)
     })
   }
@@ -76,6 +83,14 @@ class Demo extends React.Component {
     })
   }
 
+  changeDate(value, dateString) {
+    debugger
+    this.setState({
+      startTimeNice: dateString[0],
+      endTimeNice: dateString[1]
+    })
+  }
+
   render() {
     const { getFieldProps } = this.props.form;
     const formItemLayout = {
@@ -89,6 +104,18 @@ class Demo extends React.Component {
         {required: true, whitespace: true, message: '请填写标题'},
       ],
     });
+
+    const rangeProps = {
+      value: [this.state.startTimeNice, this.state.endTimeNice],
+      format: "yyyy-MM-dd HH:mm",
+      onChange: this.changeDate.bind(this)
+    }
+
+    //const rangeProps = {
+    //  value: ['1992-11-1 00:30', '2016-12-3 00:30'],
+    //  format: "yyyy-MM-dd HH:mm",
+    //  onChange: this.changeDate.bind(this)
+    //}
 
     const descProps = getFieldProps('description', {
       initialValue: this.props.oldNode.title,
@@ -123,7 +150,6 @@ class Demo extends React.Component {
 
     return (
       <Form
-        form={this.props.form}
         horizontal
         onSubmit={this.handleSubmit.bind(this)}>
         <FormItem
@@ -171,6 +197,16 @@ class Demo extends React.Component {
               </Row>
             ]
           }
+        </FormItem>
+
+        <FormItem
+          {...formItemLayout}
+          label="开始及结束时间"
+        >
+          <RangePicker
+            style={{ width: 300 }}
+            showTime
+            {...rangeProps} />
         </FormItem>
 
         <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
