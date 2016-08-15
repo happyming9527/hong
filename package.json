@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "antd": "^1.7.0",
+    "babel-plugin-transform-class-properties": "^6.11.5",
     "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "draft-js": "^0.7.0",
@@ -29,7 +30,6 @@
     "react-router": "^2.5.2",
     "react-timer-mixin": "^0.13.3",
     "react-ui-tree": "^2.5.0"
-
   },
   "devDependencies": {
     "less-loader": "^2.2.3",
@@ -40,7 +40,6 @@
     "css-loader": "^0.23.1",
     "node-sass": "^3.8.0",
     "less": "^2.7.1",
-    "less-loader": "^2.2.3",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
