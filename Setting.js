@@ -150,7 +150,7 @@ const SingleContainer = (props)=>{
         {props.children}
         {
           !props.back ? null:
-            <Row style={{marginTop: 30}} style={{textAlign: 'center'}}>
+            <Row style={{marginTop: 30, textAlign: 'center'}}>
               <Button type="ghost" onClick={historyGoBack}>返回</Button>
             </Row>
         }
