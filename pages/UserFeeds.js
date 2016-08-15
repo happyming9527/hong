@@ -5,7 +5,7 @@ import {  Collapse, Form, Input, Button, DatePicker,Table, Breadcrumb, Card } fr
 import {SingleContainer, SearchFormContainer} from '../Setting.js'
 import List from './user_feeds/_List.js'
 import SearchForm from './user_feeds/_SearchForm.js'
-import SearchComponent from '../componet/SearchComponent.js'
+import SearchComponent from '../componets/SearchComponent.js'
 
 export default class UserFeeds extends SearchComponent {
 
