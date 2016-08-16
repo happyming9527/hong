@@ -4,6 +4,7 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
+import {userCategory, shakeTipState} from '../../Locales.js'
 
 export default class List extends React.Component {
   constructor(props) {
@@ -18,12 +19,28 @@ export default class List extends React.Component {
       key: 'content',
     },{
       title: '阶段',
-      dataIndex: 'userCategoryDesc',
-      key: 'userCategoryDesc',
+      dataIndex: 'userCategory',
+      key: 'userCategory',
+      render: (text, record) =>{
+        let obj = userCategory.find(i=>i.key==text)
+        if (obj) {
+          return obj.value
+        } else {
+          return "未知"
+        }
+      }
     },{
       title: '状态',
-      dataIndex: 'opStateDesc',
-      key: 'opStateDesc',
+      dataIndex: 'opState',
+      key: 'opState',
+      render: (text, record) =>{
+        let obj = shakeTipState.find(i=>i.key==text)
+        if (obj) {
+          return obj.value
+        } else {
+          return "未知"
+        }
+      }
     },
       {
         title: '操作',

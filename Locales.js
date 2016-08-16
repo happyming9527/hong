@@ -42,17 +42,23 @@ const ReportedFeedState = new Array(
 const userCategory = new Array(
   {key: 1, value: '备孕'},
   {key: 2, value: '孕期'},
-  {key: 3, value: '已生'}
+  {key: 3, value: '辣妈'}
 )
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory}
+const shakeTipState = new Array(
+  {key: 0, value:'未发布' },
+  {key: 1, value:'已发布' }
+)
+
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState}
 
 const obj = {
   giftOrderStatus,
   opState,
   expressCompany,
   ReportedFeedState,
-  userCategory
+  userCategory,
+  shakeTipState
 }
 
 export default obj
