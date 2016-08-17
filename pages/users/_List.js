@@ -4,8 +4,9 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
+import ListComponent from '../../componets/ListComponent.js'
 
-export default class List extends React.Component {
+export default class List extends ListComponent {
   constructor(props) {
     super(props)
     this.columns = [{
@@ -63,8 +64,7 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/users/add_to_blacklist?id=${record.userId}&kind=${1}`)
       .then(result=> {
-        ST.historyReload('/backend/users')
-        ST.info.success('加入普通黑名单成功')
+        ST.successReload('加入普通黑名单成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -73,31 +73,10 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/users/add_to_blacklist?id=${record.userId}&kind=${2}`)
       .then(result=> {
-        ST.historyReload('/backend/users')
-        ST.info.success('加入普通黑名单成功')
+        ST.successReload('加入普通黑名单成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
 
-  render() {
-    let that = this
-    let paginationConfig = {
-      showQuickJumper: true,
-      total: this.props.total,
-      pageSize: this.props.pageSize,
-      showTotal: total =>`共 ${this.props.total} 条`,
-      onChange(current) {
-        that.props.changePage(current)
-      },
-    }
 
-    return (
-      <Table
-        bordered={true}
-        dataSource={this.props.dataSource}
-        columns={this.columns}
-        pagination={paginationConfig}/>
-    )
-
-  }
 }

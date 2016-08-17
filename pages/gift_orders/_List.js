@@ -1,61 +1,61 @@
 "use strict"
 import React from 'react'
-import { render } from 'react-dom'
+import {render} from 'react-dom'
 import 'antd/dist/antd.css';
-import { Button, Form, Input, Table, Popconfirm} from 'antd';
+import {Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
+import {giftOrderStatus} from '../../Locales.js'
+import ListComponent from '../../componets/ListComponent.js'
 
-export default class List extends React.Component {
-  constructor(props) {
-    super(props)
-    this.columns = [{
-      title: '订单id',
-      dataIndex: 'id',
-      key: 'id',
-    }, {
-      title: '礼品id',
-      dataIndex: 'giftId',
-      key: 'giftId',
-    }, {
-      title: '用户id',
-      dataIndex: 'userId',
-      key: 'userId',
-    }, {
-      title: '礼物名称',
-      dataIndex: 'giftName',
-      key: 'giftName',
-    }, {
-      title: '申请用户名',
-      dataIndex: 'userName',
-      key: 'userName'
-    }, {
-      title: '订单状态',
-      dataIndex: 'orderStatus',
-      key: 'orderStatus',
-      render: (text, record)=> {
-        let obj = ST.Locales.giftOrderStatus.find(i=>i.key == text)
-        return obj ? obj.value : '未知'
-      }
-    }, {
-      title: '收件人名称',
-      dataIndex: 'accepterName',
-      key: 'accepterName'
-    }, {
-      title: '收件人电话',
-      dataIndex: 'accepterMobile',
-      key: 'accepterMobile',
-    }, {
-      title: '收件人地址',
-      dataIndex: 'accepterAddress',
-      key: 'accepterAddress',
-    },
-      {
-        title: '操作',
-        key: 'operation',
-        render: this.actionButtons.bind(this)
-      }
-    ]
-  }
+export default class List extends ListComponent {
+
+  columns = [{
+    title: '订单id',
+    dataIndex: 'id',
+    key: 'id',
+  }, {
+    title: '礼品id',
+    dataIndex: 'giftId',
+    key: 'giftId',
+  }, {
+    title: '用户id',
+    dataIndex: 'userId',
+    key: 'userId',
+  }, {
+    title: '礼物名称',
+    dataIndex: 'giftName',
+    key: 'giftName',
+  }, {
+    title: '申请用户名',
+    dataIndex: 'userName',
+    key: 'userName'
+  }, {
+    title: '订单状态',
+    dataIndex: 'orderStatus',
+    key: 'orderStatus',
+    render: (text, record)=> {
+      let obj = giftOrderStatus.find(i=>i.key == text)
+      return obj ? obj.value : '未知'
+    }
+  }, {
+    title: '收件人名称',
+    dataIndex: 'accepterName',
+    key: 'accepterName'
+  }, {
+    title: '收件人电话',
+    dataIndex: 'accepterMobile',
+    key: 'accepterMobile',
+  }, {
+    title: '收件人地址',
+    dataIndex: 'accepterAddress',
+    key: 'accepterAddress',
+  },
+    {
+      title: '操作',
+      key: 'operation',
+      render: this.actionButtons.bind(this)
+    }
+  ]
 
   actionButtons(text, record) {
     let recButton
@@ -70,7 +70,7 @@ export default class List extends React.Component {
             <a href="javascript:void(0)">审核同意</a>
           </Popconfirm>
         ]
-    } else if (record.orderStatus==3) {
+    } else if (record.orderStatus == 3) {
       recButton = [<a href="javascript:void(0)" key={'p1'} onClick={this.sendNode.bind(this, record)}>发货</a>]
 
     }
@@ -78,7 +78,7 @@ export default class List extends React.Component {
     return <span>
       <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
       {
-        !recButton ? null: [
+        !recButton ? null : [
           <span className="ant-divider"></span>,
           recButton
         ]
@@ -110,27 +110,5 @@ export default class List extends React.Component {
         ST.info.success('操作成功')
       })
       .catch(e=>ST.info.error(e.message)).done
-  }
-
-  render() {
-    let that = this
-    let paginationConfig = {
-      showQuickJumper: true,
-      total: this.props.total,
-      pageSize: this.props.pageSize,
-      showTotal: total =>`共 ${this.props.total} 条`,
-      onChange(current) {
-        that.props.changePage(current)
-      },
-    }
-
-    return (
-      <Table
-        bordered={true}
-        dataSource={this.props.dataSource}
-        columns={this.columns}
-        pagination={paginationConfig}/>
-    )
-
   }
 }

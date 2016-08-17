@@ -174,7 +174,7 @@ export class InputNumber extends CommonComponent {
       rules: [],
     });
 
-    let helper = this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
       <FormItem
         {...helper}
@@ -220,7 +220,7 @@ export class ValueWrapper extends CommonComponent {
   }
 
   render() {
-    let helper = this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
       <FormItem
         {...helper}
@@ -268,7 +268,7 @@ export class Select extends CommonComponent {
 
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form.props.form;
     let value = this.state.value != null ? [parseInt(this.state.value)]:[]
-    let helper = this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
       <FormItem
         {...helper}
@@ -377,7 +377,7 @@ export class TimeRange extends React.Component {
       onChange: this.onTimeChange
     }
 
-    let helper = this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
 
       <FormItem
@@ -445,7 +445,7 @@ export class SingleUploader extends CommonComponent {
       },
     };
 
-    let helper = this.state.isValid ? {}:{help: `请设置${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请设置${this.props.label}`, validateStatus: 'error'}
 
     return (
       <FormItem
@@ -534,7 +534,7 @@ export class LogoInsert extends CommonComponent {
   render() {
     const that = this
 
-    let helper = this.state.isValid ? {}:{help: `请设置${this.props.label}`, validateStatus: 'error'}
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请设置${this.props.label}`, validateStatus: 'error'}
 
     return (
       <FormItem

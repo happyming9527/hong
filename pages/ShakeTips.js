@@ -5,51 +5,12 @@ import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb
 import ST from '../Setting.js'
 import List from './shake_tips/_List.js'
 import {Link} from 'react-router'
+import SearchComponent from '../componets/SearchComponent.js'
+
 const Panel = Collapse.Panel;
 
-export default class BackendUser extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      dataSource: [],
-      total: 0,
-    }
-    this.searchCondition = {}
-    this.per = 20
-    this.currentPage = 1
-
-  }
-
-  componentWillMount() {
-    this.fetchData()
-  }
-
-  fetchData() {
-    ST.httpPost(
-      `/api/shake_tips/list?page=${this.currentPage}&per=${this.per}`, {q: this.searchCondition})
-      .then(result=> {
-        let dataSource = result.data.list.map(ele=> {
-          ele.key = ele.id.toString()
-          return ele
-        })
-        this.setState({
-          total: result.data.totalCount,
-          loaded: true,
-          dataSource: dataSource
-        })
-      })
-      .catch(e=>ST.info.error(e.message)).done
-  }
-
-  changeConditionAndSearch(json) {
-    this.searchCondition = json;
-    this.fetchData()
-  }
-
-  changePage(page) {
-    this.currentPage = page
-    this.fetchData()
-  }
+export default class BackendUser extends SearchComponent {
+  url = '/api/shake_tips/list'
 
   addEgc() {
     ST.history.push('/backend/shake_tips/add/egc')
@@ -69,12 +30,7 @@ export default class BackendUser extends React.Component {
         </Row>
 
         <Row style={{marginTop: 20, marginBottom: 20}}>
-          <List
-            ref={i=>this.list=i}
-            pageSize = {this.per}
-            changePage={this.changePage.bind(this)}
-            dataSource={this.state.dataSource}
-            total={this.state.total} />
+          {this.makeList(List)}
         </Row>
       </ST.Container>
     )

@@ -2,7 +2,8 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker,  Table, Breadcrumb, Card } from 'antd'
-import ST from '../Setting.js'
+import ST, {SingleContainer, SearchFormContainer} from '../Setting.js'
+
 const queryString = require('query-string');
 
 export default class SearchComponent extends React.Component {
@@ -31,16 +32,44 @@ export default class SearchComponent extends React.Component {
     }
   }
 
-  fetchData(url) {
-    if (!url) {
-      alert('您还没有正确复写fetchData方法.')
+  makeHeader=(Clazz) =>{
+    return (
+      <SearchFormContainer>
+        <Clazz
+          searchParams={this.state.searchParams}
+          searchCallback={this.changeConditionAndSearch} />
+      </SearchFormContainer>
+    )
+  }
+
+  makeList = (Clazz)=>{
+    return (
+      <Clazz
+        currentPage = {this.state.searchParams.currentPage}
+        pageSize = {parseInt(this.state.searchParams.pageSize)}
+        changePage={this.changePage}
+        dataSource={this.state.dataSource}
+        total={parseInt(this.state.total)} />
+    )
+  }
+
+  makeRender = (breadcrumb, searchForm, list)=> {
+    return <SingleContainer breadcrumb={breadcrumb} header={this.makeHeader(searchForm)}>
+      {this.makeList(list)}
+    </SingleContainer>
+  }
+
+  url = null
+  keyName = 'id'
+  fetchData() {
+    if (!this.url) {
+      alert('您还没有设置url.')
       return
     }
-    ST.httpPost(
-      url, this.state.searchParams)
+    ST.httpPost(this.url, this.state.searchParams)
       .then(result=> {
         let dataSource = result.data.list.map(ele=> {
-          ele.key = ele.id.toString()
+          ele.key = ele[this.keyName].toString()
           return ele
         })
         this.setState({

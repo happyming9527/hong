@@ -51,14 +51,3 @@ const shakeTipState = new Array(
 )
 
 export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState}
-
-const obj = {
-  giftOrderStatus,
-  opState,
-  expressCompany,
-  ReportedFeedState,
-  userCategory,
-  shakeTipState
-}
-
-export default obj

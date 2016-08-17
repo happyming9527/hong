@@ -4,11 +4,11 @@ import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
+import ListComponent from '../../componets/ListComponent.js'
 
-export default class BackendUser extends React.Component {
-  constructor(props) {
-    super(props)
-    this.columns = [{
+export default class BackendUser extends ListComponent {
+
+    columns = [{
       title: 'id',
       dataIndex: 'id',
       key: 'id',
@@ -72,7 +72,6 @@ export default class BackendUser extends React.Component {
             {recButton}
           </span>
         }}];
-  }
 
   editNode(record) {
     ST.history.push(`/backend/articles/edit/${record.id}`)
@@ -141,25 +140,4 @@ export default class BackendUser extends React.Component {
       .catch(e=>ST.info.error(e.message)).done
   }
 
-  render() {
-    let that = this
-    let paginationConfig = {
-      showQuickJumper: true,
-      total: this.props.total,
-      pageSize: this.props.pageSize,
-      showTotal: total =>`共 ${this.props.total} 条`,
-      onChange(current) {
-        that.props.changePage(current)
-      },
-    }
-
-    return (
-      <Table
-        bordered={true}
-        dataSource={this.props.dataSource}
-        columns={this.columns}
-        pagination={paginationConfig}/>
-    )
-
-  }
 }

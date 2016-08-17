@@ -6,9 +6,7 @@ import { Button, Form, Input, Table } from 'antd';
 import ST from '../../Setting.js'
 
 export default class BackendUser extends React.Component {
-  constructor(props) {
-    super(props)
-    this.columns = [{
+    columns = [{
       title: 'id',
       dataIndex: 'id',
       key: 'id',
@@ -27,7 +25,6 @@ export default class BackendUser extends React.Component {
           <a href="javascript:void(0)" onClick={this.editNodeMenus.bind(this, record)}>添加菜单</a>
         </span>
       )}];
-  }
 
   editNode(record) {
     ST.history.push(`/backend/roles/edit?id=${record.id}&name=${record.name}`)
@@ -39,22 +36,11 @@ export default class BackendUser extends React.Component {
 
   render() {
     let that = this
-    let paginationConfig = {
-      showQuickJumper: true,
-      total: this.props.total,
-      pageSize: this.props.pageSize,
-      showTotal: total =>`共 ${this.props.total} 条`,
-      onChange(current) {
-        that.props.changePage(current)
-      },
-    }
-
     return (
       <Table
         bordered={true}
         dataSource={this.props.dataSource}
-        columns={this.columns}
-        pagination={paginationConfig}/>
+        columns={this.columns}/>
     )
 
   }
