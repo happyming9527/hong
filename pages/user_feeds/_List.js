@@ -97,8 +97,7 @@ export default class BackendUser extends React.Component {
     ST.httpPost(
       `/api/user_feeds/rec?id=${record.id}`)
       .then(result=> {
-        ST.historyReload(ST.currentPath())
-        ST.info.success('推荐成功')
+        ST.successReload('推荐成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -107,8 +106,7 @@ export default class BackendUser extends React.Component {
     ST.httpPost(
       `/api/user_feeds/cancel_rec?id=${record.id}`)
       .then(result=> {
-        ST.historyReload(ST.currentPath())
-        ST.info.success('取消推荐成功')
+        ST.successReload('取消推荐成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -117,8 +115,7 @@ export default class BackendUser extends React.Component {
     ST.httpPost(
       `/api/user_feeds/top?id=${record.id}`)
       .then(result=> {
-        ST.historyReload(ST.currentPath())
-        ST.info.success('置顶成功')
+        ST.successReload('置顶成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -126,8 +123,7 @@ export default class BackendUser extends React.Component {
   cancelTop(record) {
     ST.httpPost(`/api/user_feeds/cancel_top?id=${record.id}`)
       .then(result=> {
-        ST.historyReload(ST.currentPath())
-        ST.info.success('取消置顶成功')
+        ST.successReload('取消置顶成功')
       })
       .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
   }
@@ -135,8 +131,7 @@ export default class BackendUser extends React.Component {
   report(record) {
     ST.httpPost(`/api/user_feeds/report?id=${record.id}`)
       .then(result=> {
-        ST.historyReload(ST.currentPath())
-        ST.info.success('举报成功')
+        ST.successReload('举报成功')
       })
       .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
   }

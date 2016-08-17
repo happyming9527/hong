@@ -59,8 +59,7 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/activities/publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/activities')
-        ST.info.success('发布成功')
+        ST.successReload('发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -69,8 +68,7 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/activities/cancel_publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/activities')
-        ST.info.success('取消发布成功')
+        ST.successReload('取消发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

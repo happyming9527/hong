@@ -215,7 +215,9 @@ const currentPath = ()=>{
 
 const successReload = (str)=>{
   historyReload(currentPath());
-  info.success(str)
+  if (str) {
+    info.success(str)
+  }
 }
 
 const storage = window.sessionStorage

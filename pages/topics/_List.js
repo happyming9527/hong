@@ -57,8 +57,7 @@ export default class List extends ListComponent {
     ST.httpPost(
       `/api/topics/publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/topics')
-        ST.info.success('发布成功')
+        ST.successReload('发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -67,8 +66,7 @@ export default class List extends ListComponent {
     ST.httpPost(
       `/api/topics/cancel_publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/topics')
-        ST.info.success('取消发布成功')
+        ST.successReload('取消发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

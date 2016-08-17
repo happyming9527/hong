@@ -97,8 +97,7 @@ export default class List extends ListComponent {
   approve(record) {
     ST.httpPost(`/api/gift_orders/approve/${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/gift_orders')
-        ST.info.success('操作成功')
+        ST.successReload('操作成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -106,8 +105,7 @@ export default class List extends ListComponent {
   reject(record) {
     ST.httpPost(`/api/gift_orders/reject/${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/gift_orders')
-        ST.info.success('操作成功')
+        ST.successReload('操作成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

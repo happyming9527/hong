@@ -75,8 +75,7 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/shake_tips/publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/shake_tips')
-        ST.info.success('发布成功')
+        ST.successReload('发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -85,8 +84,7 @@ export default class List extends React.Component {
     ST.httpPost(
       `/api/shake_tips/cancel_publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/shake_tips')
-        ST.info.success('取消发布成功')
+        ST.successReload('取消发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

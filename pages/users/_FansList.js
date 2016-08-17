@@ -4,80 +4,19 @@ import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker, Row, Col, Table, Breadcrumb, Card } from 'antd'
 import ST, {SingleContainer} from '../../Setting.js'
 import List from './_List.js'
-import {Link} from 'react-router'
-const Panel = Collapse.Panel;
+import SearchForm from './_SearchForm.js'
+import SearchComponent from '../../componets/SearchComponent.js'
 
-export default class FansList extends React.Component {
-  constructor(props) {
-    super(props)
-    debugger
-    this.userId = this.props.params.id
-    this.state = {
-      dataSource: [],
-      total: 0,
-    }
-    this.searchCondition = {}
-    this.per = 10
-    this.currentPage = 1
 
-  }
-
-  componentWillMount() {
-    this.fetchData()
-  }
-
-  changeConditionAndSearch(json) {
-    this.searchCondition = json;
-    this.fetchData()
-  }
-
-  fetchData() {
-    ST.httpPost(
-      `/api/users/fans_list`, {userId: this.userId})
-      .then(result=> {
-        let dataSource = result.data.list.map(ele=> {
-          ele.key = ele.userId.toString()
-          return ele
-        })
-        this.setState({
-          total: result.data.totalCount,
-          loaded: true,
-          dataSource: dataSource
-        })
-      })
-      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
-  }
-
-  changeConditionAndSearch(json) {
-    this.searchCondition = json;
-    this.fetchData()
-  }
-
-  changePage(page) {
-    this.currentPage = page
-    this.fetchData()
-  }
-
+export default class FansList extends SearchComponent {
+  url = `/api/users/fans_list?userId=${this.props.params.id}`
+  keyName = 'userId'
   render() {
     let that = this
     let breadcrumb = [
       {name: 'app用户列表', url: '/backend/users'},
       {name: '粉丝列表'}
     ]
-    return (
-      <SingleContainer
-        back={true}
-        loaded={this.state.loaded}
-        breadcrumb={breadcrumb}>
-        <Row style={{marginTop: 20, marginBottom: 20}}>
-          <List
-            ref={i=>this.list=i}
-            pageSize = {this.per}
-            changePage={this.changePage.bind(this)}
-            dataSource={this.state.dataSource}
-            total={this.state.total} />
-        </Row>
-      </SingleContainer>
-    )
+    return this.makeRender(breadcrumb, SearchForm, List, true)
   }
 }

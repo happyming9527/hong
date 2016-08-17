@@ -85,8 +85,7 @@ export default class BackendUser extends ListComponent {
     ST.httpPost(
       `/api/articles/publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('发布成功')
+        ST.successReload('发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -95,8 +94,7 @@ export default class BackendUser extends ListComponent {
     ST.httpPost(
       `/api/articles/cancel_publish?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('取消发布成功')
+        ST.successReload('取消发布成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -105,8 +103,7 @@ export default class BackendUser extends ListComponent {
     ST.httpPost(
       `/api/articles/rec?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('推荐成功')
+        ST.successReload('推荐成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -115,8 +112,7 @@ export default class BackendUser extends ListComponent {
     ST.httpPost(
       `/api/articles/cancel_rec?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('取消推荐成功')
+        ST.successReload('取消推荐成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -125,8 +121,7 @@ export default class BackendUser extends ListComponent {
     ST.httpPost(
       `/api/articles/top?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('置顶成功')
+        ST.successReload('置顶成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }
@@ -134,8 +129,7 @@ export default class BackendUser extends ListComponent {
   cancelTop(record) {
     ST.httpPost(`/api/articles/cancel_top?id=${record.id}`)
       .then(result=> {
-        ST.historyReload('/backend/articles')
-        ST.info.success('取消置顶成功')
+        ST.successReload('取消置顶成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

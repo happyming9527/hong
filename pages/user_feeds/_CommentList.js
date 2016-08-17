@@ -46,16 +46,6 @@ export default class CommentsList extends React.Component {
           </span>
   }
 
-  //top(record) {
-  //  ST.httpPost(
-  //    `/api/user_feeds/comments?id=${record.id}`)
-  //    .then(result=> {
-  //      ST.historyReload('/backend/user_feeds')
-  //      ST.info.success('置顶成功')
-  //    })
-  //    .catch(e=>ST.info.error(e.message)).done
-  //}
-
   render() {
     let that = this
     let paginationConfig = {

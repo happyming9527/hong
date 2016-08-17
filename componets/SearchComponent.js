@@ -53,8 +53,8 @@ export default class SearchComponent extends React.Component {
     )
   }
 
-  makeRender = (breadcrumb, searchForm, list)=> {
-    return <SingleContainer breadcrumb={breadcrumb} header={this.makeHeader(searchForm)}>
+  makeRender = (breadcrumb, searchForm, list, canBack)=> {
+    return <SingleContainer back={canBack} breadcrumb={breadcrumb} header={this.makeHeader(searchForm)}>
       {this.makeList(list)}
     </SingleContainer>
   }
