@@ -53,6 +53,8 @@ import GiftOrdersSend from './pages/gift_orders/GiftOrderSend.js'
 import GiftOrdersShow from './pages/gift_orders/GiftOrderShow.js'
 import ReportedFeeds from './pages/ReportedFeeds.js'
 import ReportedFeedComments from './pages/reported_feeds/_CommentList.js'
+import SendMessageToAll from './pages/users/SendMessageToAll.js'
+import SendMessage from './pages/users/SendMessage.js'
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -122,9 +124,11 @@ render((
         </Route>
         <Route path="users" component={App}>
           <IndexRoute component={Users} />
+          <Route path="send_message_to_all" component={SendMessageToAll}/>
           <Route path="fans_list/:id" component={FansList}/>
           <Route path="idols_list/:id" component={IdolsList}/>
           <Route path="show/:id" component={UsersShow}/>
+          <Route path="send_message/:id" component={SendMessage}/>
         </Route>
         <Route path="gifts" component={App}>
           <IndexRoute component={Gifts} />
