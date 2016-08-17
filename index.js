@@ -21,9 +21,13 @@ import Articles from './pages/Articles.js'
 import ArticlesEdit from './pages/articles/ArticlesEdit.js'
 import ArticlesAdd from './pages/articles/ArticlesAdd.js'
 import ArticlesShow from './pages/articles/ArticlesShow.js'
+import ArticleRec from './pages/articles/_Rec.js'
+import ArticleTop from './pages/articles/_Top.js'
 import UserFeed from './pages/UserFeeds.js'
 import UserFeedsShow from './pages/user_feeds/UserFeedsShow.js'
 import UserFeedComments from './pages/user_feeds/_CommentList.js'
+import UserFeedRec from './pages/user_feeds/_Rec.js'
+import UserFeedTop from './pages/user_feeds/_Top.js'
 import Activities from './pages/Activities.js'
 import ActivitiesAdd from './pages/activities/ActivitiesAdd.js'
 import ActivitiesEdit from './pages/activities/ActivitiesEdit.js'
@@ -90,11 +94,15 @@ render((
           <Route path="edit/:id" component={ArticlesEdit}/>
           <Route path="show/:id" component={ArticlesShow}/>
           <Route path="add/:type" component={ArticlesAdd}/>
+          <Route path="rec/:id" component={ArticleRec}/>
+          <Route path="top/:id" component={ArticleTop}/>
         </Route>
         <Route path="user_feeds" component={App}>
           <IndexRoute component={UserFeed} />
           <Route path="show/:id" component={UserFeedsShow}/>
           <Route path="comments/:id" component={UserFeedComments}/>
+          <Route path="rec/:id" component={UserFeedRec}/>
+          <Route path="top/:id" component={UserFeedTop}/>
         </Route>
         <Route path="activities" component={App}>
           <IndexRoute component={Activities} />

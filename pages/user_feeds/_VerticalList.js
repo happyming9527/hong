@@ -47,7 +47,7 @@ export default class VerticalList extends React.Component {
                     span={22}>
                     <Row>
                       <div style={{display: 'flex', direction: 'row', justifyContent: 'space-between', width: '100%'}}>
-                        <div>用户名称:{i.userName} &emsp;用户id:{i.userId} &emsp;feed_id: {i.id} &emsp;私有情况: {userFeedPrivateState.fetch(i.privateType)||'未知'} &emsp;{i.isReported ? <span style={{color:'red'}}>已被举报</span>:null}</div>
+                        <div>用户名称:{i.userName} &emsp;用户id:{i.userId} &emsp;feed_id: {i.id} &emsp;私有情况: {userFeedPrivateState.fetch(i.privateState)||'未知'} &emsp;{i.isReported ? <span style={{color:'red'}}>已被举报</span>:null}</div>
                         <div>{i.pubTimeNice}</div>
                       </div>
                     </Row>

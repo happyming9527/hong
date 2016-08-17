@@ -46,13 +46,9 @@ export default class BackendUser extends ListComponent {
                 <a href="javascript:void(0)">取消发布</a>
               </Popconfirm>,
               <span className="ant-divider"></span>,
-              <Popconfirm title={`确定要推荐这个文章吗`} onConfirm={this.rec.bind(this, record)}>
-                <a href="javascript:void(0)">推荐</a>
-              </Popconfirm>,
+                <a href="javascript:void(0)" onClick={this.rec.bind(this, record)}>推荐</a>,
               <span className="ant-divider"></span>,
-              <Popconfirm title={`确定要置顶这个文章吗`} onConfirm={this.top.bind(this, record)}>
-                <a href="javascript:void(0)">置顶</a>
-              </Popconfirm>
+                <a href="javascript:void(0)" onClick={this.top.bind(this, record)}>置顶</a>
             ]
 
           } else if (record.opState==2) {
@@ -106,12 +102,7 @@ export default class BackendUser extends ListComponent {
   }
 
   rec(record) {
-    ST.httpPost(
-      `/api/articles/rec?id=${record.id}`)
-      .then(result=> {
-        ST.successReload('推荐成功')
-      })
-      .catch(e=>ST.info.error(e.message)).done
+    ST.history.push(`/backend/articles/rec/${record.id}`)
   }
 
   cancelRec(record) {
@@ -124,12 +115,7 @@ export default class BackendUser extends ListComponent {
   }
 
   top(record) {
-    ST.httpPost(
-      `/api/articles/top?id=${record.id}`)
-      .then(result=> {
-        ST.successReload('置顶成功')
-      })
-      .catch(e=>ST.info.error(e.message)).done
+    ST.history.push(`/backend/articles/top/${record.id}`)
   }
 
   cancelTop(record) {

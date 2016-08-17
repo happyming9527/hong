@@ -1,8 +1,8 @@
 "use strict"
 import React from 'react'
-import { render } from 'react-dom'
+import {render} from 'react-dom'
 import 'antd/dist/antd.css';
-import { Button, Form, Input, Table, Popconfirm, Row, Pagination} from 'antd';
+import {Button, Form, Input, Table, Popconfirm, Row, Pagination} from 'antd';
 import ST from '../../Setting.js'
 import VerticalList from './_VerticalList.js'
 import {userFeedPrivateState, opState} from '../../Locales.js'
@@ -16,34 +16,31 @@ export default class BackendUser extends React.Component {
 
   actionButtons(text, record) {
     let recButton
-    if (record.opState==1) {
+    if (record.opState == 1) {
       recButton =
         [
-          <Popconfirm key={'p1'} title={`确定要推荐这个微博吗`} onConfirm={this.rec.bind(this, record)}>
-            <a href="javascript:void(0)">推荐</a>
-          </Popconfirm>,
-          <span key={'p2'}  className="ant-divider"></span>,
-          <Popconfirm key={'p3'}  title={`确定要置顶这个微博吗`} onConfirm={this.top.bind(this, record)}>
-            <a href="javascript:void(0)">置顶</a>
-          </Popconfirm>
+          <a href="javascript:void(0)" onClick={this.rec.bind(this, record)}>推荐</a>,
+          <span key={'p2'} className="ant-divider"></span>,
+          <a href="javascript:void(0)" onClick={this.top.bind(this, record)}>置顶</a>
         ]
-    } else if (record.opState==2) {
+    } else if (record.opState == 2) {
       recButton = [
-        <Popconfirm  key={'p1'}  title={`确定要取消置顶这个微博吗`} onConfirm={this.cancelTop.bind(this, record)}>
+        <Popconfirm key={'p1'} title={`确定要取消置顶这个微博吗`} onConfirm={this.cancelTop.bind(this, record)}>
           <a href="javascript:void(0)">取消置顶</a>
         </Popconfirm>
       ]
 
-    } else if (record.opState==3) {
+    } else if (record.opState == 3) {
       recButton = [
-        <Popconfirm  key={'p1'}  title={`确定要取消推荐这个微博吗`} onConfirm={this.cancelRec.bind(this, record)}>
+        <Popconfirm key={'p1'} title={`确定要取消推荐这个微博吗`} onConfirm={this.cancelRec.bind(this, record)}>
           <a href="javascript:void(0)">取消推荐</a>
         </Popconfirm>
       ]
     }
 
     return <span>
-            <a href="javascript:void(0)" onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount||0})</a>
+            <a href="javascript:void(0)"
+               onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount || 0})</a>
             <span className="ant-divider"></span>
        <a href="javascript:void(0)" onClick={this.report.bind(this, record)}>举报</a>
                   <span className="ant-divider"></span>
@@ -65,12 +62,7 @@ export default class BackendUser extends React.Component {
   }
 
   rec(record) {
-    ST.httpPost(
-      `/api/user_feeds/rec?id=${record.id}`)
-      .then(result=> {
-        ST.successReload('推荐成功')
-      })
-      .catch(e=>ST.info.error(e.message)).done
+    ST.history.push(`/backend/user_feeds/rec/${record.id}`)
   }
 
   cancelRec(record) {
@@ -83,12 +75,7 @@ export default class BackendUser extends React.Component {
   }
 
   top(record) {
-    ST.httpPost(
-      `/api/user_feeds/top?id=${record.id}`)
-      .then(result=> {
-        ST.successReload('置顶成功')
-      })
-      .catch(e=>ST.info.error(e.message)).done
+    ST.history.push(`/backend/user_feeds/top/${record.id}`)
   }
 
   cancelTop(record) {
@@ -96,7 +83,7 @@ export default class BackendUser extends React.Component {
       .then(result=> {
         ST.successReload('取消置顶成功')
       })
-      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
+      .catch(e=>ST.info.error(e.message) && console.log(e.stack)).done
   }
 
   report(record) {
@@ -104,7 +91,7 @@ export default class BackendUser extends React.Component {
       .then(result=> {
         ST.successReload('举报成功')
       })
-      .catch(e=>ST.info.error(e.message)&&console.log(e.stack)).done
+      .catch(e=>ST.info.error(e.message) && console.log(e.stack)).done
   }
 
   setVertical() {
@@ -121,7 +108,7 @@ export default class BackendUser extends React.Component {
 
   render() {
     let that = this
-    let table = <VerticalList dataSource={this.props.dataSource} actionButtons={this.actionButtons.bind(this)} />
+    let table = <VerticalList dataSource={this.props.dataSource} actionButtons={this.actionButtons.bind(this)}/>
     return (
       <div>
         <Row>
@@ -135,7 +122,7 @@ export default class BackendUser extends React.Component {
               total=>`共 ${parseInt(this.props.total)} 条`
             }
             onChange={
-              current=>{
+              current=> {
                 that.props.changePage(current)
               }
             }
