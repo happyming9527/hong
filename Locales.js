@@ -50,4 +50,9 @@ const shakeTipState = new Array(
   {key: 1, value:'已发布' }
 )
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState}
+const egcTags = new Array(
+  {key: '孕期', value: '孕期'},
+  {key: '生啦', value: '生啦'}
+)
+
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags}

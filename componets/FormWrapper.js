@@ -16,6 +16,8 @@ export class FormWrapper extends React.Component {
     return false
   }
 
+  extraProps = {}
+
   handleSubmit = (e)=>{
     let that = this;
     e.preventDefault();
@@ -24,6 +26,11 @@ export class FormWrapper extends React.Component {
         console.log('Errors in form!!!');
         return;
       }
+
+      Object.keys(this.extraProps).forEach(i=>{
+        values[i] = this.extraProps[i];
+      })
+
       if (this.WrappedHiddenValues) {
         Object.keys(this.WrappedHiddenValues).forEach(i=>{
           values[i] = this.WrappedHiddenValues[i];
@@ -278,6 +285,103 @@ export class Select extends CommonComponent {
 
         <AntdSelect
           value={value}
+          onChange={this.onValueChange.bind(this)} >
+          {
+            this.props.options.map(i=>{
+              return <AntdSelect.Option value={i.key} key={i.key}>{i.value}</AntdSelect.Option>
+            })
+          }
+        </AntdSelect>
+
+      </FormItem>
+    )
+  }
+}
+
+export class MultiSelect extends CommonComponent {
+  constructor(props) {
+    super(props)
+    let value = this.props.node[this.props.name]
+    if (value) {
+      value= value.split(',')
+    } else {
+      value = []
+    }
+    this.state = {
+      value: value,
+      isValid: true
+    }
+    this.setFormData(value)
+    if (this.props.required) {
+      this.addValidate()
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.node !== nextProps.node) {
+      let value = nextProps.node[this.props.name]
+      if (value) {
+        value= value.split(',')
+      } else {
+        value = []
+      }
+      this.state = {
+        isValid: true,
+        value: value
+      }
+      this.setFormData(value)
+    }
+  }
+
+  validateSelf() {
+    let value = this.state.value
+    if (value && value.length > 0) {
+      this.setState({
+        isValid: true,
+        value: value
+      })
+      return true
+    } else {
+      this.setState({
+        isValid: false,
+        value: value
+      })
+      return false
+    }
+  }
+
+  setFormData(value){
+    if ( !this.props.form.WrappedHiddenValues ) {
+      this.props.form.WrappedHiddenValues = {}
+    }
+    if (value instanceof Array) {
+      value = value.join(',')
+    }
+    this.props.form.WrappedHiddenValues[this.props.name] = value
+  }
+
+  onValueChange(value) {
+    this.setState({
+      value: value
+    }, this.validateSelf)
+    this.setFormData(value)
+
+  }
+
+  render() {
+
+    const { getFieldProps, getFieldError, isFieldValidating } = this.props.form.props.form;
+    let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
+    return (
+      <FormItem
+        {...helper}
+        required={this.props.required}
+        {...this.props.form.formItemLayout}
+        label={this.props.label}>
+
+        <AntdSelect
+          tags
+          value={this.state.value}
           onChange={this.onValueChange.bind(this)} >
           {
             this.props.options.map(i=>{

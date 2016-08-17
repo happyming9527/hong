@@ -36,6 +36,7 @@ class RichEditor extends React.Component {
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
       this.setState({editorState})
+      this.props.onChange(this.getContent())
     };
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.toggleBlockType = (type) => this._toggleBlockType(type);
@@ -50,7 +51,7 @@ class RichEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.initContent !== nextProps.initContent) {
+    if (!this.props.initContent && (this.props.initContent !== nextProps.initContent)) {
       let contentState = stateFromHTML(nextProps.initContent);
       this.setState({
         editorState: EditorState.createWithContent(contentState),
