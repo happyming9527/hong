@@ -13,10 +13,6 @@ export default class UserFeeds extends SearchComponent {
   render() {
     let breadcrumb = [{name: '举报管理'}]
 
-    return (
-      <SingleContainer breadcrumb={breadcrumb} header={this.makeHeader(SearchForm)}>
-        {this.makeList(List)}
-      </SingleContainer>
-    )
+    return this.makeRender(breadcrumb, SearchForm, List)
   }
 }

@@ -165,6 +165,27 @@ SingleContainer.defaultProps = {
   breadcrumb: []
 }
 
+const MiniContainer = (props)=>{
+  return <Container breadcrumb={props.breadcrumb} loaded={props.loaded} >
+    {props.header}
+    <Row style={{marginTop: 20, marginBottom: 20}}>
+        {props.children}
+        {
+          !props.back ? null:
+            <Row style={{marginTop: 30, textAlign: 'center'}}>
+              <Button type="ghost" onClick={historyGoBack}>返回</Button>
+            </Row>
+        }
+    </Row>
+    {props.footer}
+  </Container>
+}
+
+MiniContainer.defaultProps = {
+  loaded: true,
+  breadcrumb: []
+}
+
 const SearchFormContainer = (props)=>{
   return (
     <Row>
@@ -178,7 +199,7 @@ const SearchFormContainer = (props)=>{
 }
 SearchFormContainer.defaultProps = {}
 
-export {Container, SingleContainer, SearchFormContainer};
+export {Container, SingleContainer, SearchFormContainer, MiniContainer};
 
 const PaddingRow = (props)=>{
   return (

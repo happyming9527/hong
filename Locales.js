@@ -11,9 +11,24 @@ class SubArray {
       return null
     }
   }
+
+  toArray() {
+    return this.array
+  }
+
+  fetchObj = (text)=> {
+    let obj = this.array.find(i=>i.key==text)
+    if (obj) {
+      return obj
+    } else {
+      return null
+    }
+  }
+
   map = (func)=>{
     return this.array.map(func)
   }
+
 }
 
 const giftOrderStatus = new SubArray([

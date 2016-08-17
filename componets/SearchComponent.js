@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {  Collapse, Form, Input, Button, DatePicker,  Table, Breadcrumb, Card } from 'antd'
-import ST, {SingleContainer, SearchFormContainer} from '../Setting.js'
+import ST, {Controller, SingleContainer, SearchFormContainer, MiniContainer} from '../Setting.js'
 
 const queryString = require('query-string');
 
@@ -57,6 +57,12 @@ export default class SearchComponent extends React.Component {
     return <SingleContainer back={canBack} breadcrumb={breadcrumb} header={this.makeHeader(searchForm)}>
       {this.makeList(list)}
     </SingleContainer>
+  }
+
+  makeMiniRender = (breadcrumb, searchForm, list, canBack)=>{
+    return <MiniContainer back={canBack} breadcrumb={breadcrumb} header={this.makeHeader(searchForm)}>
+      {this.makeList(list)}
+    </MiniContainer>
   }
 
   url = null

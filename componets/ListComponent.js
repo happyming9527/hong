@@ -13,7 +13,9 @@ export default class ListComponent extends React.Component {
         <Table
           bordered={true}
           dataSource={this.props.dataSource}
-          columns={this.columns}/>
+          columns={this.columns}
+          pagination={false}/>
+        <br/>
         <Pagination
           showQuickJumper
           total={this.props.total}

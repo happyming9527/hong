@@ -21,7 +21,7 @@ export default class BackendUser extends React.Component {
 
     let that = this
     if (record.reportState==50) {
-      ReportedFeedState.slice(1,ReportedFeedState.length).forEach((i, index)=> {
+      ReportedFeedState.toArray().slice(1,ReportedFeedState.length).forEach((i, index)=> {
         recButton.push(
           <Popconfirm key={`p${index}`} title={`确定要${i.value}吗`} onConfirm={that.resolveReport.bind(that, record, i.key)}>
             <a href="javascript:void(0)"> {i.value} </a>

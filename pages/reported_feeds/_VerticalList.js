@@ -29,13 +29,11 @@ export default class VerticalList extends React.Component {
         <div style={{marginBottom: 20}}>
           {
             this.props.dataSource.map((i, index)=> {
-              let state = ReportedFeedState.find(ele=>{
-                return ele.key==parseInt(i.reportState)
-              })
-              if (state.key == 50) {
-                state = <span style={{color:'red'}}>{state.value}</span>
+              let state = ReportedFeedState.fetch(parseInt(i.reportState))
+              if (parseInt(i.reportState) == 50) {
+                state = <span style={{color:'red'}}>{state}</span>
               } else {
-                state = state.value
+                state = state
               }
               return (
                 <Row

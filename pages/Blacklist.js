@@ -14,6 +14,6 @@ export default class BackendUser extends SearchComponent {
   render() {
     let that = this
     let breadcrumb=[{name: '黑名单管理'}]
-    return this.makeRender(breadcrumb, SearchForm, List)
+    return this.makeMiniRender(breadcrumb, SearchForm, List)
   }
 }
