@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import {Button, Form, Input, Table, Popconfirm, Select, Pagination, Row} from 'antd';
 import ST from '../../Setting.js'
 import ListComponent from '../../componets/ListComponent.js'
-
+import {blacklistKind} from '../../Locales.js'
 export default class List extends ListComponent {
 
   columns = [{
@@ -29,9 +29,12 @@ export default class List extends ListComponent {
     }
   }, {
     title: '黑名单种类',
-    dataIndex: 'kindDesc',
-    key: 'kindDesc',
-  },
+    dataIndex: 'kind',
+    key: 'kind',
+    render(text, recrod) {
+      return blacklistKind.fetch(text)||'未知'
+    }
+    },
     {
       title: '操作',
       key: 'operation',

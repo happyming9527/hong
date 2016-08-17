@@ -22,24 +22,14 @@ export default class List extends React.Component {
       dataIndex: 'userCategory',
       key: 'userCategory',
       render: (text, record) =>{
-        let obj = userCategory.find(i=>i.key==text)
-        if (obj) {
-          return obj.value
-        } else {
-          return "未知"
-        }
+        return userCategory.fetch(text)||"未知"
       }
     },{
       title: '状态',
       dataIndex: 'opState',
       key: 'opState',
       render: (text, record) =>{
-        let obj = shakeTipState.find(i=>i.key==text)
-        if (obj) {
-          return obj.value
-        } else {
-          return "未知"
-        }
+        return shakeTipState.fetch(text)||"未知"
       }
     },
       {

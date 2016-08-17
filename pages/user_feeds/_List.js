@@ -5,42 +5,13 @@ import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm, Row, Pagination} from 'antd';
 import ST from '../../Setting.js'
 import VerticalList from './_VerticalList.js'
-
+import {userFeedPrivateState, opState} from '../../Locales.js'
 export default class BackendUser extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       vertical: true
     }
-    this.columns = [{
-      title: 'id',
-      dataIndex: 'id',
-      key: 'id',
-    },{
-      title: '是否私有',
-      dataIndex: 'privateTypeDesc',
-      key: 'privateTypeDesc',
-    },{
-      title: '用户id',
-      dataIndex: 'userId',
-      key: 'userId',
-    },{
-      title: '内容',
-      dataIndex: 'content',
-      key: 'content',
-    },{
-      title: '创建时间',
-      dataIndex: 'createTimeDesc',
-      key: 'createTimeDesc',
-    },{
-      title: '状态',
-      dataIndex: 'opStateDesc',
-      key: 'opStateDesc',
-    },
-      {
-        title: '操作',
-        key: 'operation',
-        render: this.actionButtons.bind(this)}];
   }
 
   actionButtons(text, record) {
@@ -150,15 +121,7 @@ export default class BackendUser extends React.Component {
 
   render() {
     let that = this
-    let table
-    if (this.state.vertical) {
-      table = <VerticalList dataSource={this.props.dataSource} actionButtons={this.actionButtons.bind(this)} />
-    } else {
-      table = <Table
-        bordered={true}
-        dataSource={this.props.dataSource}
-        columns={this.columns}/>
-    }
+    let table = <VerticalList dataSource={this.props.dataSource} actionButtons={this.actionButtons.bind(this)} />
     return (
       <div>
         <Row>

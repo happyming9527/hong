@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
 import ListComponent from '../../componets/ListComponent.js'
-
+import {opState, feedType} from '../../Locales.js'
 export default class BackendUser extends ListComponent {
 
     columns = [{
@@ -18,12 +18,18 @@ export default class BackendUser extends ListComponent {
       key: 'title',
     },{
       title: '类型',
-      dataIndex: 'feedTypeDesc',
-      key: 'feedTypeDesc',
+      dataIndex: 'feedType',
+      key: 'feedType',
+      render(text, record) {
+        return feedType.fetch(text)||'未知'
+      }
     },{
       title: '状态',
-      dataIndex: 'opStateDesc',
-      key: 'opStateDesc',
+      dataIndex: 'opState',
+      key: 'opState',
+      render(text, record) {
+        return opState.fetch(text)||'未知'
+      }
     },
       {
         title: '操作',

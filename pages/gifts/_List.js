@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm, Row, Pagination} from 'antd';
 import ST from '../../Setting.js'
 import ListComponent from '../../componets/ListComponent.js'
-
+import {giftState} from '../../Locales.js'
 export default class List extends ListComponent {
 
   columns = [{
@@ -27,6 +27,13 @@ export default class List extends ListComponent {
     title: '积分',
     dataIndex: 'score',
     key: 'score',
+  },{
+    title: '状态',
+    dataIndex: 'opState',
+    key: 'opState',
+    render(text,record) {
+      return giftState.fetch(text)||'未知'
+    }
   },
     {
       title: '操作',

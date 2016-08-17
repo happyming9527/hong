@@ -34,8 +34,7 @@ export default class List extends ListComponent {
     dataIndex: 'orderStatus',
     key: 'orderStatus',
     render: (text, record)=> {
-      let obj = giftOrderStatus.find(i=>i.key == text)
-      return obj ? obj.value : '未知'
+      return giftOrderStatus.fetch(text)||'未知'
     }
   }, {
     title: '收件人名称',
