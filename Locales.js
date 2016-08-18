@@ -86,6 +86,10 @@ const topicState = new SubArray([
   {key: 1, value:'已发布' }]
 )
 
+const advState = new SubArray([
+  {key: 0, value:'未发布' },
+  {key: 1, value:'已发布' }]
+)
 
 const egcTags = new SubArray([
   {key: '孕期', value: '孕期'},
@@ -120,5 +124,5 @@ const blacklistKind = new SubArray([
   {key: 2, value: '星星榜黑名单'}
 ])
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState}
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState}
 

@@ -59,6 +59,10 @@ import ReportedFeeds from './pages/ReportedFeeds.js'
 import ReportedFeedComments from './pages/reported_feeds/_CommentList.js'
 import SendMessageToAll from './pages/users/SendMessageToAll.js'
 import SendMessage from './pages/users/SendMessage.js'
+import  Advs from './pages/Advs.js'
+import AdvsAdd from './pages/advs/AdvsAdd.js'
+import AdvsEdit from './pages/advs/AdvsEdit.js'
+
 
 function requireCredentials(nextState, replace, next) {
   if (ST.storage.getItem('userInfo')) {
@@ -121,6 +125,11 @@ render((
           <Route path="add/:type" component={TopicsAdd}/>
           <Route path="edit/:id" component={TopicsEdit}/>
           <Route path="show/:id" component={TopicsShow}/>
+        </Route>
+        <Route path="advs" component={App}>
+          <IndexRoute component={Advs} />
+          <Route path="add/:type" component={AdvsAdd}/>
+          <Route path="edit/:id" component={AdvsEdit}/>
         </Route>
         <Route path="shake_tips" component={App}>
           <IndexRoute component={ShakeTips} />
