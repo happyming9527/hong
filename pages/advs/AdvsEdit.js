@@ -26,7 +26,6 @@ export default class RolesEdit extends React.Component {
       `/api/advs/me?id=${this.nodeId}`)
       .then(result=> {
         that.node = result.data
-        debugger
         that.setState({
           loaded: true
         })

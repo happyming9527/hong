@@ -2,106 +2,38 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Checkbox, Radio, Tooltip, Icon, Tabs, Row, Col , Select, Upload, InputNumber, RadioGroup, DatePicker} from 'antd';
-const RangePicker = DatePicker.RangePicker;
-const Option = Select.Option;
-const TabPane = Tabs.TabPane;
-const FormItem = Form.Item;
-import ST from '../../Setting.js'
+import { Form } from 'antd';
+import {FormWrapper, Input, InputNumber, Select, SubmitButton, SingleUploader, CheckBox, TimeRange} from '../../componets/FormWrapper'
+import {expressCompany} from '../../Locales.js'
 
-class Demo extends React.Component {
+class Demo extends FormWrapper {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      oldNode: this.props.oldNode
-    }
+  formItemLayout = {
+    labelCol: { span: 7 },
+    wrapperCol: { span: 12 },
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.oldNode !== nextProps.oldNode) {
-      this.setState({
-        oldNode: nextProps.oldNode
-      })
-    }
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.form.validateFields((errors, values) => {
-      if (!!errors) {
-        return;
-      }
-      this.props.submitCallback(values)
-    })
-  }
-
 
   render() {
-    let that = this;
-    const { getFieldProps } = this.props.form;
-    const formItemLayout = {
-      labelCol: { span: 3 },
-      wrapperCol: { span: 21 },
-    };
-
-    const expressCompanyProps = getFieldProps('expressCompany', {
-      rules: [
-        {required: true, whitespace: true, message: '快递公司'},
-      ],
-    });
-
-    const expressNoProps = getFieldProps('expressNo', {
-      rules: [
-        {required: true, whitespace: true, message: '请填写快递单号'},
-      ],
-    });
-
-
+    const point = {
+      form: this,
+      node: this.props.oldNode
+    }
     return (
-      <Form
-        form={this.props.form}
-        horizontal
-        onSubmit={this.handleSubmit.bind(this)}>
-
-        <FormItem
-          {...formItemLayout}
+      <Form horizontal>
+        <Form.Item
+          {...this.formItemLayout}
           label="收件地址及联系方式"
         >
-          <p>{this.state.oldNode.accepterName||<span style={{color: 'red'}}>无联系人名称</span>}</p>
-          <p>{this.state.oldNode.accepterMobile||<span style={{color: 'red'}}>无联系人电话</span>}</p>
-          <p>{this.state.oldNode.accepterAddress||<span style={{color: 'red'}}>无联系地址</span>}</p>
-        </FormItem>
+          <p>{this.props.oldNode.accepterName||<span style={{color: 'red'}}>无联系人名称</span>}</p>
+          <p>{this.props.oldNode.accepterMobile||<span style={{color: 'red'}}>无联系人电话</span>}</p>
+          <p>{this.props.oldNode.accepterAddress||<span style={{color: 'red'}}>无联系地址</span>}</p>
+        </Form.Item>
 
-        <FormItem
-          {...formItemLayout}
-          label="快递公司"
-        >
-          <Select defaultValue="1" style={{ width: 120 }} {...expressCompanyProps}>
-            {
-              ST.Locales.expressCompany.map(i=>{
-                return <Option value={i.key} key={i.key}>{i.value}</Option>
-              })
-            }
-          </Select>
-        </FormItem>
-        <FormItem
-          hasFeedback
-          {...formItemLayout}
-          label="快递单号"
-        >
-          <Input type="text" {...expressNoProps} />
-        </FormItem>
-
-        <FormItem wrapperCol={{ span: 21, offset: 3 }} style={{ marginTop: 24 }}>
-          {
-            this.props.readonly ? null:<Button type="primary" htmlType="submit" style={{marginRight: '10px'}}>确定</Button>
-          }
-          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
-        </FormItem>
-
+        <Select {...point} label="快递公司" name='expressCompany' options={expressCompany} />
+        <Input {...point} label="快递单号" name='expressNo' />
+        <SubmitButton {...point} canBack={true} />
       </Form>
-    );
+    )
   }
 };
 

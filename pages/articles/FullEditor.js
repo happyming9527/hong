@@ -32,7 +32,6 @@ export default class Editor extends React.Component {
 
 
   render() {
-    debugger
     return (
       <Row gutter={2}>
         <Tabs defaultActiveKey="1">

@@ -14,7 +14,6 @@ class Demo extends FormWrapper {
       node: this.props.oldNode
     }
 
-    debugger
     return (
       <Form horizontal>
         <Input {...point} label="内容" name='content' required={true}/>

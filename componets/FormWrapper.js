@@ -263,7 +263,6 @@ export class Select extends CommonComponent {
   }
 
   onValueChange(value) {
-    debugger
     this.setState({
       value: value
     }, this.validateSelf)
@@ -272,9 +271,8 @@ export class Select extends CommonComponent {
   }
 
   render() {
-
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form.props.form;
-    let value = this.state.value != null ? [parseInt(this.state.value)]:[]
+    let value = this.state.value != null ? [this.state.value]:[]
     let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
       <FormItem
