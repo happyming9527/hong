@@ -29,8 +29,8 @@ export default class List extends ListComponent {
     key: 'score',
   },{
     title: '状态',
-    dataIndex: 'opState',
-    key: 'opState',
+    dataIndex: 'hide',
+    key: 'hide',
     render(text,record) {
       return giftState.fetch(text)||'未知'
     }
