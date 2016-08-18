@@ -15,37 +15,34 @@ export default class BackendUser extends React.Component {
   }
 
   actionButtons(text, record) {
-    let recButton
+    let recButton = [
+      <a href="javascript:void(0)" onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount || 0})</a>,
+      <a href="javascript:void(0)" onClick={this.report.bind(this, record)}>举报</a>]
     if (record.opState == 1) {
-      recButton =
-        [
-          <a href="javascript:void(0)" onClick={this.rec.bind(this, record)}>推荐</a>,
-          <span key={'p2'} className="ant-divider"></span>,
-          <a href="javascript:void(0)" onClick={this.top.bind(this, record)}>置顶</a>
-        ]
+      recButton.push(<a href="javascript:void(0)" onClick={this.rec.bind(this, record)}>推荐</a>)
+      recButton.push(<a href="javascript:void(0)" onClick={this.top.bind(this, record)}>置顶</a>)
     } else if (record.opState == 2) {
-      recButton = [
+      recButton.push(
         <Popconfirm key={'p1'} title={`确定要取消置顶这个微博吗`} onConfirm={this.cancelTop.bind(this, record)}>
           <a href="javascript:void(0)">取消置顶</a>
         </Popconfirm>
-      ]
-
+      )
     } else if (record.opState == 3) {
-      recButton = [
+      recButton.push(
         <Popconfirm key={'p1'} title={`确定要取消推荐这个微博吗`} onConfirm={this.cancelRec.bind(this, record)}>
           <a href="javascript:void(0)">取消推荐</a>
         </Popconfirm>
-      ]
+      )
+    }
+    if (record.status == -1) {
+      recButton.push(
+        <Popconfirm key={'p1'} title={`确定要取消删除这个微博吗`} onConfirm={this.cancelDelete.bind(this, record)}>
+          <a href="javascript:void(0)">取消删除</a>
+        </Popconfirm>
+      )
     }
 
-    return <span>
-            <a href="javascript:void(0)"
-               onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount || 0})</a>
-            <span className="ant-divider"></span>
-       <a href="javascript:void(0)" onClick={this.report.bind(this, record)}>举报</a>
-                  <span className="ant-divider"></span>
-      {recButton}
-          </span>
+    return <span> {ST.opSeparate(recButton)} </span>
   }
 
   editNode(record) {
@@ -70,6 +67,15 @@ export default class BackendUser extends React.Component {
       `/api/user_feeds/cancel_rec?id=${record.id}`)
       .then(result=> {
         ST.successReload('取消推荐成功')
+      })
+      .catch(e=>ST.info.error(e.message)).done
+  }
+
+  cancelDelete(record) {
+    ST.httpPost(
+      `/api/user_feeds/cancel_delete?id=${record.id}`)
+      .then(result=> {
+        ST.successReload('取消删除成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

@@ -12,6 +12,22 @@ class SubArray {
     }
   }
 
+  addExtra = (value)=>{
+    let newArray = this.array.slice()
+    newArray.unshift({key: value, value: '---请选择---'})
+    return new SubArray(newArray)
+  }
+
+  removeSome = (value)=>{
+    let newArray = []
+    this.array.forEach(i=>{
+      if (value.indexOf(i.key)<0) {
+        newArray.push(i)
+      }
+    })
+    return new SubArray(newArray)
+  }
+
   toArray() {
     return this.array
   }
@@ -39,6 +55,7 @@ const giftOrderStatus = new SubArray([
 )
 
 const opState = new SubArray([
+  {key: -1, value:'已删除' },
   {key: 0, value:'未发布' },
   {key: 1, value:'已发布' },
   {key: 2, value:'已置顶' },
