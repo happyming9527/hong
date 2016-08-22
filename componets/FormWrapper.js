@@ -109,7 +109,15 @@ export class Input extends React.Component {
   }
   render() {
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form.props.form;
-    const rules = !this.props.required ? []:[{required: true, whitespace: true, message: `请填写${this.props.label}`}]
+    let rules = []
+    if (this.props.required) {
+      rules = [{required: true, message: `请填写${this.props.label}`}]
+    } else if (this.props.max) {
+      rules = [{required: true, max: this.props.max, message: `请填写最多${this.props.max}个字符`}]
+    } else if (this.props.min) {
+      rules = [{required: true, min: this.props.min, message: `请填写最少${this.props.min}个字符`}]
+    }
+
     const passedProps = getFieldProps(this.props.name, {
       initialValue: this.props.node[this.props.name],
       rules: rules,
@@ -118,7 +126,7 @@ export class Input extends React.Component {
       {...this.props.form.formItemLayout}
       label={this.props.label}
     >
-      <AntdInput {...passedProps} placeholder="" />
+      <AntdInput {...passedProps} {...this.props} placeholder="" />
     </FormItem>
   }
 }

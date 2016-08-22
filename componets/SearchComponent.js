@@ -33,6 +33,9 @@ export default class SearchComponent extends React.Component {
   }
 
   makeHeader=(Clazz) =>{
+    if (Clazz == null) {
+      return null
+    }
     return (
       <SearchFormContainer>
         <Clazz

@@ -25,7 +25,7 @@ class Demo extends FormWrapper {
         <Input {...point} label="标题" name='title' required={true}/>
         <Input {...point} label="描述" name='description' required={true}/>
         <Input {...point} label="广告主名称" name='userName'/>
-        <SingleUploader {...point} label="标题图片" url='/api/advs/upload_image' name="userLogo"/>
+        <SingleUploader {...point} label="广告主头像" url='/api/advs/upload_image' name="userLogo"/>
         <LogoInsert
           {...point}
           label="标题图片"

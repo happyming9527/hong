@@ -28,6 +28,12 @@ class Demo extends FormWrapper {
           label="标题图片"
           name="resList"
           required={true}/>
+        <TimeRange
+          {...point}
+          required={true}
+          label="开始及结束时间"
+          name={['startDateNice','endDateNice']}
+          outPutName={['startDate','endDate']}/>
         <ValueWrapper {...point} name="content" label="内容">
           <Editor/>
         </ValueWrapper>

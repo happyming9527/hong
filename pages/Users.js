@@ -22,6 +22,6 @@ export default class UserFeeds extends SearchComponent {
     let breadcrumb = [{name: 'app用户列表'}]
 
     return this.makeRender(breadcrumb, SearchForm, List)
-    
+
   }
 }

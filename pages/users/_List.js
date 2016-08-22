@@ -28,6 +28,18 @@ export default class List extends ListComponent {
           return <p>暂无头像</p>
         }
       }
+    },{
+      title: '积分',
+      dataIndex: 'score',
+      key: 'score'
+    },{
+      title: '成长值',
+      dataIndex: 'growth_value',
+      key: 'growth_value'
+    },{
+      title: '积分',
+      dataIndex: 'score',
+      key: 'score'
     },
       {
         title: '操作',
@@ -36,7 +48,7 @@ export default class List extends ListComponent {
           let buttons = [
             <a key="查看" href="javascript:void(0)" onClick={this.showMe.bind(this, record)}>查看</a>,
             <a key="发送广播" href="javascript:void(0)" onClick={this.sendMessage.bind(this, record)}>发送广播</a>,
-
+            <a key="我的时光轴" href="javascript:void(0)" onClick={this.showMyFeedList.bind(this, record)}>我的时光轴</a>,
             <a key="我的粉丝" href="javascript:void(0)" onClick={this.showFansList.bind(this, record)}>我的粉丝</a>,
             <a key="我的偶像" href="javascript:void(0)" onClick={this.showIdolsList.bind(this, record)}>我的偶像</a>,
           ]
@@ -64,6 +76,10 @@ export default class List extends ListComponent {
 
   sendMessage(record) {
     ST.history.push(`/backend/users/send_message/${record.userId}`)
+  }
+
+  showMyFeedList(record) {
+    ST.history.push(`/backend/users/my_user_feeds/${record.userId}`)
   }
 
   addToBlacklist(record) {

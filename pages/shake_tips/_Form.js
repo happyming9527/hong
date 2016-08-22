@@ -16,7 +16,7 @@ class Demo extends FormWrapper {
 
     return (
       <Form horizontal>
-        <Input {...point} label="内容" name='content' required={true}/>
+        <Input {...point} label="内容" name='content' max={20}/>
         <Select {...point} label="阶段" name="userCategory" options = {userCategory} required={true}/>
         <SubmitButton {...point} canBack={true} />
       </Form>
