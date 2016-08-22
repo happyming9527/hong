@@ -28,6 +28,14 @@ export default class List extends ListComponent {
     dataIndex: 'score',
     key: 'score',
   },{
+    title: '数量',
+    dataIndex: 'count',
+    key: 'count',
+  },{
+    title: '剩余数量',
+    dataIndex: 'remain',
+    key: 'remain',
+  },{
     title: '状态',
     dataIndex: 'hide',
     key: 'hide',

@@ -19,7 +19,8 @@ class Demo extends FormWrapper {
         <Input {...point} label="标题" name='title' required={true}/>
         <Input {...point} label="描述" name='content' required={true}/>
         <InputNumber {...point} label="总数量" name='count' min={1} max={1000} required={true}/>
-        <InputNumber {...point} label="兑换积分数" name='score' min={1} max={10000} required={true}/>
+        <InputNumber {...point} label="剩余数量" name='remain' min={0} max={1000}/>
+        <InputNumber {...point} label="兑换积分数" name='score' min={0} max={10000} required={true}/>
         <InputNumber {...point} label="价格" name='price' min={1} max={10000} required={true}/>
         <SingleUploader {...point} label="标题图片" url='/api/gifts/upload_image' name="logo" required={true}/>
         <TimeRange

@@ -7,7 +7,7 @@ import { browserHistory, Link } from 'react-router'
 import TimerMixin from 'react-timer-mixin'
 import reactMixin from 'react-mixin'
 import Locales from './Locales.js'
-
+import 'whatwg-fetch';
 const addTimerMixin = (clazz)=>{
   reactMixin.onClass(clazz, TimerMixin);
 }

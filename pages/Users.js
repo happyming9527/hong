@@ -21,16 +21,7 @@ export default class UserFeeds extends SearchComponent {
     let that = this
     let breadcrumb = [{name: 'app用户列表'}]
 
-    return <Container breadcrumb={[{name: '话题列表'}]}>
-
-      <Row style={{marginTop: 20, marginBottom: 20}}>
-        <Button type="primary" htmlType="submit" onClick={this.sendMessageToAll}>发送广播消息</Button>
-      </Row>
-
-      <Row style={{marginTop: 20, marginBottom: 20}}>
-        {this.makeList(List)}
-      </Row>
-    </Container>
-
+    return this.makeRender(breadcrumb, SearchForm, List)
+    
   }
 }
