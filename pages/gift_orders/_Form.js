@@ -29,8 +29,8 @@ class Demo extends FormWrapper {
           <p>{this.props.oldNode.accepterAddress||<span style={{color: 'red'}}>无联系地址</span>}</p>
         </Form.Item>
 
-        <Select {...point} label="快递公司" name='expressCompany' options={expressCompany} />
-        <Input {...point} label="快递单号" name='expressNo' />
+        {/*<Select {...point} label="快递公司" name='expressCompany' options={expressCompany} />*/}
+        <Input {...point} label="快递单号" name='expressNo' required={true}/>
         <SubmitButton {...point} canBack={true} />
       </Form>
     )

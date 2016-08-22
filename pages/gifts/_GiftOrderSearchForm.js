@@ -22,7 +22,6 @@ class BasicDemo extends  FormWrapper {
 
         <Input {...point} label="用户名" name='userName' />
         <InputNumber {...point} label="用户id" name='userId'  min={1} style={{width: 200}}/>
-        <InputNumber {...point} label="礼物id" name='giftId'  min={1} style={{width: 200}}/>
         <Select {...point} label="状态" name='orderStatus' options={giftOrderStatus.addExtra(0)}/>
         <SubmitButton {...point}/>
       </Form>

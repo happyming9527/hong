@@ -53,6 +53,8 @@ import Gifts from './pages/Gifts.js'
 import GiftsAdd from './pages/gifts/GiftsAdd.js'
 import GiftsEdit from './pages/gifts/GiftsEdit.js'
 import GiftsShow from './pages/gifts/GiftsShow'
+import ImportExpressNo from './pages/gifts/ImportExpressNo.js'
+import MyGiftOrders from './pages/gifts/MyGiftOrders.js'
 import GiftOrders from './pages/GiftOrders.js'
 import GiftOrdersSend from './pages/gift_orders/GiftOrderSend.js'
 import GiftOrdersShow from './pages/gift_orders/GiftOrderShow.js'
@@ -154,6 +156,8 @@ render((
           <Route path="add" component={GiftsAdd}/>
           <Route path="edit/:id" component={GiftsEdit}/>
           <Route path="show/:id" component={GiftsShow}/>
+          <Route path="my_gift_orders/:id" component={MyGiftOrders}/>
+          <Route path="import_express_no/:id" component={ImportExpressNo}/>
         </Route>
         <Route path="gift_orders" component={App}>
           <IndexRoute component={GiftOrders} />

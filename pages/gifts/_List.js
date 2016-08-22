@@ -47,16 +47,21 @@ export default class List extends ListComponent {
       title: '操作',
       key: 'operation',
       render: (text, record) => {
+        let recButton = [
+          <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>,
+          <a href="javascript:void(0)" onClick={this.myOrders.bind(this, record)}>订单</a>,
+          <a href="javascript:void(0)" onClick={this.editNode.bind(this, record)}>修改</a>
+        ]
+        return <span> {ST.opSeparate(recButton)} </span>
 
-        return <span>
-            <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
-            <span className="ant-divider"></span>
-            <a href="javascript:void(0)" onClick={this.editNode.bind(this, record)}>修改</a>
-          </span>
 
       }
     }
   ];
+
+  myOrders(record) {
+    ST.history.push(`/backend/gifts/my_gift_orders/${record.id}?pageSize=100000&currentPage=1&giftId=${record.id}`)
+  }
 
   editNode(record) {
     ST.history.push(`/backend/gifts/edit/${record.id}`)
