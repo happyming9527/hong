@@ -65,6 +65,7 @@ import SendMessage from './pages/users/SendMessage.js'
 import  Advs from './pages/Advs.js'
 import AdvsAdd from './pages/advs/AdvsAdd.js'
 import AdvsEdit from './pages/advs/AdvsEdit.js'
+import AdvsShow from './pages/advs/AdvsShow.js'
 
 
 function requireCredentials(nextState, replace, next) {
@@ -133,6 +134,7 @@ render((
           <IndexRoute component={Advs} />
           <Route path="add/:type" component={AdvsAdd}/>
           <Route path="edit/:id" component={AdvsEdit}/>
+          <Route path="show/:id" component={AdvsShow}/>
         </Route>
         <Route path="shake_tips" component={App}>
           <IndexRoute component={ShakeTips} />

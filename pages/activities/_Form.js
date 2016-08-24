@@ -37,7 +37,7 @@ class Demo extends FormWrapper {
         <ValueWrapper {...point} name="content" label="内容">
           <Editor/>
         </ValueWrapper>
-        <SubmitButton {...point} canBack={true} />
+        <SubmitButton {...point} canBack={true} readonly={this.props.readonly}/>
       </Form>
     )
   }

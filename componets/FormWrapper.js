@@ -691,7 +691,11 @@ export class SubmitButton extends React.Component {
     const span = this.props.form.formItemLayout.wrapperCol.span
     return (
     <FormItem wrapperCol={{ span: span, offset: offset }}>
-      <Button type="primary" onClick={this.props.form.handleSubmit}>确定</Button>
+      {
+        this.props.readonly ? null:
+          <Button type="primary" onClick={this.props.form.handleSubmit}>确定</Button>
+      }
+
       {
         !this.props.canBack ? null:<Button type="ghost" style={{marginLeft: 10}} onClick={ST.historyGoBack}>返回</Button>
       }

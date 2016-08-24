@@ -31,7 +31,7 @@ class Demo extends FormWrapper {
           label="开始及结束时间"
           name={['startTimeNice','endTimeNice']}
           outPutName={['startTime','endTime']}/>
-        <SubmitButton {...point} canBack={true} />
+        <SubmitButton {...point} canBack={true} readonly={this.props.readonly}/>
       </Form>
     )
   }

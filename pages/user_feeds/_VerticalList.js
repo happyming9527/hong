@@ -60,7 +60,7 @@ export default class VerticalList extends React.Component {
                           let com
                           if (i.resType==1) {
                             com = <Col span={8} key={i.id} style={{padding: '10px'}}>
-                              <img src={i.content} style={{width: '200px'}}/>
+                              <img src={i.content} style={{maxWidth: '150px'}}/>
                             </Col>
                           } else if (i.resType==2) {
                             com = <Col span={8} key={i.id} style={{padding: '10px'}}>

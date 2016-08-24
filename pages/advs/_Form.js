@@ -2,7 +2,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
-import { Form, Tabs , Row, Input as AntdInput} from 'antd';
+import { Form, Tabs , Row, Input as AntdInput, Button} from 'antd';
 const TabPane = Tabs.TabPane;
 import {FormWrapper, Input, InputNumber, Select, SubmitButton, SingleUploader, CheckBox, TimeRange, ValueWrapper, LogoInsert} from '../../componets/FormWrapper'
 
@@ -38,7 +38,7 @@ class Demo extends FormWrapper {
           name={['startTimeNice','endTimeNice']}
           outPutName={['startTime','endTime']}/>
         <Input {...point} label="广告链接" name='link' required={true}/>
-        <SubmitButton {...point} canBack={true} />
+        <SubmitButton {...point} canBack={true} readonly={this.props.readonly}/>
       </Form>
     )
   }

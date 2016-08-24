@@ -23,7 +23,9 @@ export default class UserFeeds extends SearchComponent {
 
     return (
       <Container breadcrumb={[{name: 'app用户列表'}]}>
-
+        {
+          this.makeHeader(SearchForm)
+        }
         <Row style={{marginTop: 20, marginBottom: 20}}>
           <Button type="primary" htmlType="submit" onClick={this.sendMessageToAll.bind(this)}>群发消息</Button>
         </Row>
