@@ -48,6 +48,10 @@ export default class List extends ListComponent {
     title: '收件人地址',
     dataIndex: 'accepterAddress',
     key: 'accepterAddress',
+  }, {
+    title: '邮单号',
+    dataIndex: 'expressNo',
+    key: 'expressNo',
   },
     {
       title: '操作',

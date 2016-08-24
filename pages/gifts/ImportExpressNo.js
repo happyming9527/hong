@@ -3,7 +3,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css'
 import {Row, Col, Card, Breadcrumb, Button, Input } from 'antd'
-import {Link} from 'react-router'
 import Form from './_ExpressNoForm.js'
 import ST, {SingleContainer} from '../../Setting.js'
 
