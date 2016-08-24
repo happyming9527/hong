@@ -49,6 +49,8 @@ import FansList from './pages/users/_FansList.js'
 import IdolsList from './pages/users/_IdolsList.js'
 import UsersShow from './pages/users/_Show.js'
 import MyUserFeeds from './pages/users/MyUserFeeds.js'
+import ShowScore from './pages/users/ShowScore.js'
+import AddScore from './pages/users/AddScore.js'
 import Gifts from './pages/Gifts.js'
 import GiftsAdd from './pages/gifts/GiftsAdd.js'
 import GiftsEdit from './pages/gifts/GiftsEdit.js'
@@ -152,6 +154,8 @@ render((
           <Route path="show/:id" component={UsersShow}/>
           <Route path="send_message/:id" component={SendMessage}/>
           <Route path="my_user_feeds/:id" component={MyUserFeeds}/>
+          <Route path="show_score/:id" component={ShowScore}/>
+          <Route path="add_score/:id" component={AddScore}/>
         </Route>
         <Route path="gifts" component={App}>
           <IndexRoute component={Gifts} />

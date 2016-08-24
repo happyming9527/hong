@@ -141,5 +141,10 @@ const blacklistKind = new SubArray([
   {key: 2, value: '星星榜黑名单'}
 ])
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState}
+const addScoreReason = new SubArray([
+  { key: -1, value: '违规惩罚'},
+  {key: 6, value: '参加活动' },
+  { key: 8, value: '邀请用户'}
+])
 
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState, addScoreReason}

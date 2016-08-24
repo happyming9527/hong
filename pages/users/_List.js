@@ -47,6 +47,7 @@ export default class List extends ListComponent {
         render: (text, record) => {
           let buttons = [
             <a key="查看" href="javascript:void(0)" onClick={this.showMe.bind(this, record)}>查看</a>,
+            <a key="积分" href="javascript:void(0)" onClick={this.showScore.bind(this, record)}>积分</a>,
             <a key="发送广播" href="javascript:void(0)" onClick={this.sendMessage.bind(this, record)}>发送广播</a>,
             <a key="我的时光轴" href="javascript:void(0)" onClick={this.showMyFeedList.bind(this, record)}>我的时光轴</a>,
             <a key="我的粉丝" href="javascript:void(0)" onClick={this.showFansList.bind(this, record)}>我的粉丝</a>,
@@ -60,6 +61,10 @@ export default class List extends ListComponent {
         }
       }
     ];
+  }
+
+  showScore(record) {
+    ST.history.push(`/backend/users/show_score/${record.userId}`)
   }
 
   showFansList(record) {

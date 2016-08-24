@@ -77,6 +77,7 @@ export default class SearchComponent extends React.Component {
     }
     ST.httpPost(this.url, this.state.searchParams)
       .then(result=> {
+        debugger
         let dataSource = result.data.list.map(ele=> {
           ele.key = ele[this.keyName].toString()
           return ele
