@@ -28,6 +28,10 @@ export default class List extends ListComponent {
       }
     }
   }, {
+    title: '手机号',
+    dataIndex: 'acct',
+    key: 'acct',
+  }, {
     title: '黑名单种类',
     dataIndex: 'kind',
     key: 'kind',
@@ -41,9 +45,13 @@ export default class List extends ListComponent {
       render: (text, record) => {
 
         return <span>
-            <a href="javascript:void(0)" onClick={this.softDelete.bind(this, record)}>软删除</a>
+            <Popconfirm title={`确定要软删除这条记录吗`} onConfirm={this.softDelete.bind(this, record)}>
+              <a href="javascript:void(0)">软删除</a>
+            </Popconfirm>
             <span className="ant-divider"></span>
-            <a href="javascript:void(0)" onClick={this.hardDelete.bind(this, record)}>硬删除</a>
+            <Popconfirm title={`确定要硬删除这条记录吗`} onConfirm={this.hardDelete.bind(this, record)}>
+              <a href="javascript:void(0)">硬删除</a>
+            </Popconfirm>
           </span>
 
       }

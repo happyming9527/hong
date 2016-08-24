@@ -22,6 +22,7 @@ class BasicDemo extends  FormWrapper {
       <Form horizontal>
         <Input {...point} label="用户名" name='userName' />
         <InputNumber {...point} label="用户id" name='userId'  min={1} style={{width: 200}}/>
+        <InputNumber {...point} label="用户手机号" name='mobile' style={{width: 200}}/>
         <Select {...point} label="状态" name='reportState' options={ReportedFeedState}/>
         <SubmitButton {...point}/>
       </Form>

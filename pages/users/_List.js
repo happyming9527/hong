@@ -37,9 +37,9 @@ export default class List extends ListComponent {
       dataIndex: 'growth_value',
       key: 'growth_value'
     },{
-      title: '积分',
-      dataIndex: 'score',
-      key: 'score'
+      title: '手机号',
+      dataIndex: 'acct',
+      key: 'acct'
     },
       {
         title: '操作',

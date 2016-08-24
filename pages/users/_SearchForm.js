@@ -20,7 +20,8 @@ class BasicDemo extends  FormWrapper {
     return (
       <Form horizontal>
         <Input {...point} label="用户名" name='name' />
-        <InputNumber {...point} label="用户id" name='id'  min={1} style={{width: 200}}/>
+        <InputNumber {...point} label="用户id" name='id' min={1} style={{width: 200}}/>
+        <InputNumber {...point} label="用户手机号" name='mobile' style={{width: 200}}/>
         <SubmitButton {...point}/>
       </Form>
     );

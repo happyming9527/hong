@@ -22,6 +22,7 @@ class BasicDemo extends  FormWrapper {
 
         <Input {...point} label="用户名" name='userName' />
         <InputNumber {...point} label="用户id" name='userId'  min={1} style={{width: 200}}/>
+        <Input {...point} label="用户手机号" name='mobile' />
         <Select {...point} label="状态" name='opState' options={opState.addExtra(-2).removeSome([0])}/>
         <SubmitButton {...point}/>
       </Form>
