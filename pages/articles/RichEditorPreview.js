@@ -26,8 +26,8 @@ export default class RichEditorPreview extends React.Component {
     text-align: left;
     padding: 0px;
     margin: 0px;
-    height: 736px;
-    width: 414px;
+    max-height: 736px;
+    max-width: 414px;
   }
 
   img {
@@ -67,7 +67,7 @@ export default class RichEditorPreview extends React.Component {
 `
   }
 
-  setContent(html) {
+  setContent(html='') {
     if (this.props.isUrl) {
       this.setState({url: html})
     } else {

@@ -33,9 +33,10 @@ export default class Editor extends React.Component {
   render() {
     return (
       <Row gutter={2}>
-        <Tabs defaultActiveKey="1">
+        <Tabs defaultActiveKey="1" style={{minWidth: '500px'}}>
           <TabPane tab="编辑" key="1">
             <AntdInput
+              autosize
               type="textarea"
               onChange={this.contentChange}
               value={this.state.value}/>
