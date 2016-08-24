@@ -40,7 +40,7 @@ class Demo extends FormWrapper {
             this.props.kind == 'link' ? <Editor kind="link"/>:<FullEditor/>
           }
         </ValueWrapper>
-        <SubmitButton {...point} canBack={true} />
+        <SubmitButton {...point} canBack={true} readonly={this.props.readonly} />
       </Form>
     )
   }

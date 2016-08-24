@@ -31,7 +31,7 @@ class Demo extends FormWrapper {
           label="开始及结束时间"
           name={['beginAtNice','endAtNice']}
           outPutName={['beginAt','endAt']}/>
-        <CheckBox {...point} name="hide" label="发布" />
+        <CheckBox {...point} name="display" label="发布" />
         <SubmitButton {...point} canBack={true} readonly={this.props.readonly}/>
       </Form>
     )
