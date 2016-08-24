@@ -20,15 +20,19 @@ export default class List extends ListComponent {
   }, {
     title: '用户id',
     dataIndex: 'userId',
-    key: 'userId',
+    key: 'userId'
   }, {
     title: '礼物名称',
     dataIndex: 'giftName',
-    key: 'giftName',
+    key: 'giftName'
+
   }, {
     title: '申请用户名',
     dataIndex: 'userName',
-    key: 'userName'
+    key: 'userName',
+    render: (text, record)=> {
+      return <a target="_blank" href={`/backend/users?id=${record.userId}&pageSize=10&currentPage=1`}>{text}</a>
+    }
   }, {
     title: '订单状态',
     dataIndex: 'orderStatus',
@@ -79,7 +83,7 @@ export default class List extends ListComponent {
     }
 
     return <span>
-      <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
+      <a href="javascript:void(0)" target="_blank" onClick={this.showNode.bind(this, record)}>查看</a>
       {
         !recButton ? null : [
           <span className="ant-divider"></span>,
@@ -103,6 +107,10 @@ export default class List extends ListComponent {
         ST.successReload('操作成功')
       })
       .catch(e=>ST.info.error(e.message)).done
+  }
+
+  jumpToUser(record) {
+    ST.history.push(`/backend/users?id=${record.userId}&pageSize=10&currentPage=1`)
   }
 
   reject(record) {
