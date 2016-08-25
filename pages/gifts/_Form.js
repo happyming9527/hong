@@ -16,7 +16,7 @@ class Demo extends FormWrapper {
     }
     return (
       <Form horizontal>
-        <Input {...point} label="标题" name='title' required={true}/>
+        <Input {...point} label="标题" name='title' max={20}/>
         <Input {...point} type="textarea" label="描述" name='content' required={true}/>
         <InputNumber {...point} label="总数量" name='count' min={1} max={1000} required={true}/>
         <InputNumber {...point} label="兑换积分数" name='score' min={0} max={10000}/>
