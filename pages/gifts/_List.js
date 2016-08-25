@@ -37,8 +37,8 @@ export default class List extends ListComponent {
     key: 'remain',
   },{
     title: '状态',
-    dataIndex: 'hide',
-    key: 'hide',
+    dataIndex: 'display',
+    key: 'display',
     render(text,record) {
       return giftState.fetch(text)||'未知'
     }

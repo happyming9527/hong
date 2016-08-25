@@ -23,6 +23,7 @@
     "if-env": "^1.0.0",
     "immutable": "^3.8.1",
     "list-to-tree": "happyming9527/list-to-tree",
+    "moment": "^2.14.1",
     "query-string": "^4.2.2",
     "react": "15.1.0",
     "react-dom": "15.1.0",

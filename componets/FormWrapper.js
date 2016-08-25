@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import 'antd/dist/antd.css';
 import { Button, Row, Col, Icon, Upload, DatePicker, Checkbox as AntdCheckbox, Form as AntdForm, Input as AntdInput, InputNumber as AntdInputNumber, Select as AntdSelect } from 'antd'
-
+import moment from 'moment';
 const RangePicker = DatePicker.RangePicker;
 import ST from '../Setting.js'
 import Atts from '../pages/Attachments.js'
@@ -478,6 +478,64 @@ export class TimeRange extends React.Component {
     this.setFormData(value)
   }
 
+  setFromNow = ()=> {
+    let firstValue = this.state.firstValue
+    let lastValue = this.state.secondValue
+    if (!this.state.firstValue) {
+      firstValue = moment();
+      lastValue = firstValue.clone().add(1, 'days');
+      firstValue = this.format(firstValue);
+      lastValue = this.format(lastValue);
+    }
+    let sufix = moment().format('hh:mm:ss')
+    firstValue = firstValue.split(' ')[0]
+    lastValue = lastValue.split(' ')[0]
+    let firstValueString = firstValue + ' ' + sufix
+    let lastValueString = lastValue + ' ' + sufix
+    this.setState({
+      firstValue: firstValueString,
+      secondValue: lastValueString
+    })
+    this.setState({
+    })
+  }
+
+  setFromNight = ()=> {
+    let firstValue = this.state.firstValue
+    let lastValue = this.state.secondValue
+    if (!this.state.firstValue) {
+      firstValue = moment();
+      lastValue = firstValue.clone().add(1, 'days');
+      firstValue = this.format(firstValue);
+      lastValue = this.format(lastValue);
+    }
+    let firstSufix = '00:00:00'
+    let lastSufix = '23:59:59'
+    firstValue = firstValue.split(' ')[0]
+    lastValue = lastValue.split(' ')[0]
+    let firstValueString = firstValue + ' ' + firstSufix
+    let lastValueString = lastValue + ' ' + lastSufix
+    this.setState({
+      firstValue: firstValueString,
+      secondValue: lastValueString
+    })
+  }
+
+  format = (date)=>{
+    return date.format('YYYY-MM-DD hh:mm:ss')
+  }
+
+  setDate(day) {
+    let firstValue = moment();
+    let lastValue = firstValue.clone().add(day, 'days');
+    let firstValueString = this.format(firstValue);
+    let lastValueString = this.format(lastValue);
+    this.setState({
+      firstValue: firstValueString,
+      secondValue: lastValueString
+    })
+  }
+
   render() {
     const { getFieldProps, getFieldError, isFieldValidating } = this.props.form.props.form;
 
@@ -490,18 +548,20 @@ export class TimeRange extends React.Component {
     let helper = !this.props.required||this.state.isValid ? {}:{help: `请填写${this.props.label}`, validateStatus: 'error'}
     return (
 
-      <FormItem
-        {...helper}
-        required={this.props.required}
-        {...this.props.form.formItemLayout}
-        label={this.props.label}>
+      <Row>
+        <FormItem
+          {...helper}
+          required={this.props.required}
+          {...this.props.form.formItemLayout}
+          label={this.props.label}>
+          <a href="javascript:void(0)" onClick={this.setDate.bind(this, 1)}>1天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 2)} >2天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 3)}>3天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 7)}>7天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 14)}>14天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 30)}>30天</a>| <a href="javascript:void(0)" onClick={this.setFromNight }>凌晨起始</a> | <a href="javascript:void(0)" onClick={this.setFromNow}>现在起始</a>
+          <RangePicker
+            style={{ width: 300 }}
+            showTime
+            {...rangeProps} />
+        </FormItem>
+      </Row>
 
-        <RangePicker
-          style={{ width: 300 }}
-          showTime
-          {...rangeProps} />
-
-      </FormItem>
     )
   }
 }
