@@ -492,12 +492,7 @@ export class TimeRange extends React.Component {
     lastValue = lastValue.split(' ')[0]
     let firstValueString = firstValue + ' ' + sufix
     let lastValueString = lastValue + ' ' + sufix
-    this.setState({
-      firstValue: firstValueString,
-      secondValue: lastValueString
-    })
-    this.setState({
-    })
+    this.onTimeChange(null, [firstValueString, lastValueString])
   }
 
   setFromNight = ()=> {
@@ -515,10 +510,7 @@ export class TimeRange extends React.Component {
     lastValue = lastValue.split(' ')[0]
     let firstValueString = firstValue + ' ' + firstSufix
     let lastValueString = lastValue + ' ' + lastSufix
-    this.setState({
-      firstValue: firstValueString,
-      secondValue: lastValueString
-    })
+    this.onTimeChange(null, [firstValueString, lastValueString])
   }
 
   format = (date)=>{
@@ -530,10 +522,7 @@ export class TimeRange extends React.Component {
     let lastValue = firstValue.clone().add(day, 'days');
     let firstValueString = this.format(firstValue);
     let lastValueString = this.format(lastValue);
-    this.setState({
-      firstValue: firstValueString,
-      secondValue: lastValueString
-    })
+    this.onTimeChange(null, [firstValueString, lastValueString])
   }
 
   render() {
