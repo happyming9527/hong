@@ -36,6 +36,10 @@ export default class List extends ListComponent {
     dataIndex: 'remain',
     key: 'remain',
   },{
+    title: '排序因子',
+    dataIndex: 'orderNum',
+    key: 'orderNum',
+  },{
     title: '状态',
     dataIndex: 'display',
     key: 'display',
