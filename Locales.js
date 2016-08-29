@@ -144,7 +144,8 @@ const blacklistKind = new SubArray([
 const addScoreReason = new SubArray([
   { key: -1, value: '违规惩罚'},
   {key: 6, value: '参加活动' },
-  { key: 8, value: '邀请用户'}
+  { key: 8, value: '邀请用户'},
+  { key: 10, value: '其他'}
 ])
 
 export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState, addScoreReason}
