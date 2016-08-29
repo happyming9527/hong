@@ -15,10 +15,16 @@ class Demo extends FormWrapper {
   }
 
   extraProps = {
-      feedType: this.props.kind == 'link' ? 2:1
   }
 
   render() {
+    
+    if (this.props.oldNode.feedType) {
+      this.extraProps.feedType = this.props.oldNode.feedType
+    } else {
+      this.extraProps.feedType = this.props.kind == 'link' ? 2:1
+    }
+
     let that = this;
     const point = {
       form: this,
