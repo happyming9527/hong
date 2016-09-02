@@ -19,7 +19,7 @@ class Demo extends FormWrapper {
     return (
       <Form horizontal>
         <Input {...point} label="标题" name='title' max={20}/>
-        <Input {...point} label="描述" name='description' max={20}/>
+        <Input {...point} label="描述" name='description' max={86}/>
         <LogoInsert
           {...point}
           label="标题图片"
