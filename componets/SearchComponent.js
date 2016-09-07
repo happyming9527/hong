@@ -88,7 +88,7 @@ export default class SearchComponent extends React.Component {
           dataSource: dataSource
         })
       })
-      .catch(e=>ST.info.error(e.message)).done
+      .catch(e=>{ST.info.error(e.message) && console.log(e.stack)}).done
   }
 
   research() {

@@ -148,4 +148,10 @@ const addScoreReason = new SubArray([
   { key: 10, value: '其他'}
 ])
 
-export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState, addScoreReason}
+const topicType = new SubArray([
+  {key: 0, value: '普通话题'},
+  {key: 1, value: '邀请用户话题（实时积分）'},
+  {key: 2, value: '邀请用户话题（统计积分）'}
+])
+
+export {giftOrderStatus, expressCompany, opState, ReportedFeedState, userCategory, shakeTipState, egcTags, activityState, feedType, blacklistKind, giftState, topicState, userFeedPrivateState, advState, addScoreReason, topicType}

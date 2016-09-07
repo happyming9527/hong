@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import { Form} from 'antd';
 const FormItem = Form.Item;
 import {FormWrapper, Input, InputNumber, Select, SubmitButton, SingleUploader, CheckBox, TimeRange, LogoInsert} from '../../componets/FormWrapper'
+import {topicType} from '../../Locales.js'
 
 class Demo extends FormWrapper {
 
@@ -20,6 +21,8 @@ class Demo extends FormWrapper {
       <Form horizontal>
         <Input {...point} label="标题" name='title' max={20}/>
         <Input {...point} label="描述" name='description' max={86}/>
+        <Select {...point} label="种类" name='type' options={topicType} required={true}/>
+        <InputNumber {...point} label="extra" name='extra' min={0} max={10000}/>
         <LogoInsert
           {...point}
           label="标题图片"

@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import { Button, Form, Input, Table, Popconfirm} from 'antd';
 import ST from '../../Setting.js'
 import ListComponent from '../../componets/ListComponent.js'
-import {topicState} from '../../Locales.js'
+import {topicState, topicType} from '../../Locales.js'
 
 export default class List extends ListComponent {
     columns = [{
@@ -17,11 +17,18 @@ export default class List extends ListComponent {
       dataIndex: 'title',
       key: 'title',
     },{
+      title: '种类',
+      dataIndextype: 'type',
+      key: 'type',
+      render(text,record) {
+        return topicType.fetch(record.type)||'未知'
+      }
+    },{
       title: '状态',
       dataIndex: 'opState',
       key: 'opState',
       render(text,record) {
-        return topicState.fetch(text)||'未知'
+        return topicState.fetch(record.opState)||'未知'
       }
     },
       {
