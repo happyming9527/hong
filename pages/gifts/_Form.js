@@ -21,7 +21,7 @@ class Demo extends FormWrapper {
         <InputNumber {...point} label="总数量" name='count' min={1} max={1000} required={true}/>
         <InputNumber {...point} label="兑换积分数" name='score' min={0} max={10000}/>
         <InputNumber {...point} label="价格" name='price' min={1} max={10000} required={true}/>
-        <InputNumber {...point} label="要求用户等级" name='requireLevel' min={0} max={10000}/>
+        <InputNumber {...point} label="要求用户等级" name='requireLevel' min={1} max={7}/>
         <InputNumber {...point} label="要求发帖数" name='requireFeedsCount' min={0} max={10000}/>
         <InputNumber {...point} label="排序因子" name='orderNum' min={0} max={10000}/>
         <SingleUploader {...point} label="标题图片" url='/api/gifts/upload_image' name="logo" required={true}/>
