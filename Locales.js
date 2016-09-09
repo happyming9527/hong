@@ -143,6 +143,7 @@ const blacklistKind = new SubArray([
 
 const addScoreReason = new SubArray([
   { key: -1, value: '违规惩罚'},
+  { key: 0, value: '旧系统导入积分'},
   {key: 6, value: '参加活动' },
   { key: 8, value: '邀请用户'},
   { key: 10, value: '其他'}
