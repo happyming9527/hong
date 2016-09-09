@@ -262,6 +262,14 @@ export class Select extends CommonComponent {
       })
       return true
     } else {
+      if (value==0) {
+        this.setState({
+          isValid: true,
+          value: value
+        })
+        return true
+      }
+
       this.setState({
         isValid: false,
         value: value
