@@ -40,6 +40,7 @@ import Topics from './pages/Topics.js'
 import TopicsAdd from './pages/topics/TopicsAdd.js'
 import TopicsEdit from './pages/topics/TopicsEdit.js'
 import TopicsShow from './pages/topics/TopicsShow.js'
+import AllFeeds from './pages/topics/AllFeeds.js'
 import ShakeTips from './pages/ShakeTips.js'
 import ShakeTipsAdd from './pages/shake_tips/ShakeTipsAdd.js'
 import ShakeTipsEdit from './pages/shake_tips/ShakeTipsEdit.js'
@@ -64,7 +65,7 @@ import ReportedFeeds from './pages/ReportedFeeds.js'
 import ReportedFeedComments from './pages/reported_feeds/_CommentList.js'
 import SendMessageToAll from './pages/users/SendMessageToAll.js'
 import SendMessage from './pages/users/SendMessage.js'
-import  Advs from './pages/Advs.js'
+import Advs from './pages/Advs.js'
 import AdvsAdd from './pages/advs/AdvsAdd.js'
 import AdvsEdit from './pages/advs/AdvsEdit.js'
 import AdvsShow from './pages/advs/AdvsShow.js'
@@ -131,6 +132,7 @@ render((
           <Route path="add/:type" component={TopicsAdd}/>
           <Route path="edit/:id" component={TopicsEdit}/>
           <Route path="show/:id" component={TopicsShow}/>
+          <Route path="all_feeds/:id" component={AllFeeds}/>
         </Route>
         <Route path="advs" component={App}>
           <IndexRoute component={Advs} />

@@ -49,6 +49,8 @@ export default class List extends ListComponent {
           return <span>
             <a href="javascript:void(0)" onClick={this.showNode.bind(this, record)}>查看</a>
             <span className="ant-divider"></span>
+            <a href="javascript:void(0)" onClick={this.allFeeds.bind(this, record)}>相关记录</a>
+            <span className="ant-divider"></span>
             <a href="javascript:void(0)" onClick={this.editNode.bind(this, record)}>修改</a>
             <span className="ant-divider"></span>
             {recButton}
@@ -62,6 +64,10 @@ export default class List extends ListComponent {
 
   showNode(record) {
     ST.history.push(`/backend/topics/show/${record.id}`)
+  }
+
+  allFeeds(record) {
+    ST.history.push(`/backend/topics/all_feeds/${record.id}`)
   }
 
   publish(record) {
