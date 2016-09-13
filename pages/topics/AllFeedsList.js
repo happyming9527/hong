@@ -18,7 +18,7 @@ export default class BackendUser extends React.Component {
   actionButtons(text, record) {
     let recButton = [
       <a href="javascript:void(0)" onClick={this.showComments.bind(this, record)}>查看评论({record.commentCount || 0})</a>,
-      <a href="javascript:void(0)" onClick={this.addScore.bind(this, record)}>发积分</a>,
+      <a href="javascript:void(0)" onClick={this.addScore.bind(this, record)}>发积分({record.score})</a>,
       <a href="javascript:void(0)" onClick={this.report.bind(this, record)}>举报</a>]
     if (record.opState == 1) {
       recButton.push(<a href="javascript:void(0)" onClick={this.rec.bind(this, record)}>推荐</a>)
@@ -52,7 +52,11 @@ export default class BackendUser extends React.Component {
   }
 
   addScore(record) {
-    ST.history.push(`/backend/users/add_score/${record.userId}`)
+    ST.httpPost(`/api/users/add_score?id=${record.userId}`, {score: record.score})
+      .then(result=> {
+        ST.info.success('返豆成功.')
+      })
+      .catch(e=>ST.info.error(e.message)).done
   }
 
 
