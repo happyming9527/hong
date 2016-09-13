@@ -143,6 +143,7 @@ export default class BackendUser extends React.Component {
               }
             }
           />
+          <Button type="ghost" onClick={ST.historyGoBack}>返回</Button>
         </Row>
       </div>
     )
