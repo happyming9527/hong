@@ -52,7 +52,7 @@ export default class BackendUser extends React.Component {
   }
 
   addScore(record) {
-    ST.httpPost(`/api/users/add_score?id=${record.userId}`, {score: record.score})
+    ST.httpPost(`/api/topics/send_score?id=${record.userId}`, {score: record.score})
       .then(result=> {
         ST.info.success('返豆成功.')
       })
