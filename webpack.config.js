@@ -6,7 +6,7 @@ module.exports = {
 
   output: {
     path: 'public',
-    filename: 'bundle_201609131044.js',
+    filename: 'bundle_201609140951.js',
     publicPath: '/'
   },
   plugins: process.env.NODE_ENV === 'production' ? [
