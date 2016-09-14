@@ -552,8 +552,9 @@ export class TimeRange extends React.Component {
           {...this.props.form.formItemLayout}
           label={this.props.label}>
           <a href="javascript:void(0)" onClick={this.setDate.bind(this, 1)}>1天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 2)} >2天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 3)}>3天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 7)}>7天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 14)}>14天</a> | <a href="javascript:void(0)" onClick={this.setDate.bind(this, 30)}>30天</a>| <a href="javascript:void(0)" onClick={this.setFromNight }>凌晨起始</a> | <a href="javascript:void(0)" onClick={this.setFromNow}>现在起始</a>
+          <br/>
           <RangePicker
-            style={{ width: 300 }}
+            style={{ width: 400 }}
             showTime
             {...rangeProps} />
         </FormItem>

@@ -40,10 +40,22 @@ export default class List extends ListComponent {
             recButton = <Popconfirm title={`确定要发布这个话题吗`} onConfirm={this.publish.bind(this, record)}>
               <a href="javascript:void(0)">发布</a>
             </Popconfirm>
-          } else if (record.opState==1) {
-            recButton = <Popconfirm title={`确定要取消发布这个话题吗`} onConfirm={this.cancelPublish.bind(this, record)}>
-              <a href="javascript:void(0)">取消发布</a>
-            </Popconfirm>
+          }  else if (record.opState==1) {
+            recButton =
+              [<Popconfirm title={`确定要取消发布这个话题吗`} onConfirm={this.cancelPublish.bind(this, record)}>
+                <a href="javascript:void(0)">取消发布</a>
+              </Popconfirm>,
+                <span className="ant-divider"></span>,
+                <a href="javascript:void(0)" onClick={this.top.bind(this, record)}>置顶</a>
+              ]
+
+          } else if (record.opState==2) {
+            recButton = [
+              <Popconfirm title={`确定要取消置顶这个文章吗`} onConfirm={this.cancelTop.bind(this, record)}>
+                <a href="javascript:void(0)">取消置顶</a>
+              </Popconfirm>
+            ]
+
           }
 
           return <span>
@@ -84,6 +96,18 @@ export default class List extends ListComponent {
       `/api/topics/cancel_publish?id=${record.id}`)
       .then(result=> {
         ST.successReload('取消发布成功')
+      })
+      .catch(e=>ST.info.error(e.message)).done
+  }
+
+  top(record) {
+    ST.history.push(`/backend/topics/top/${record.id}`)
+  }
+
+  cancelTop(record) {
+    ST.httpPost(`/api/articles/cancel_top?id=${record.id}`)
+      .then(result=> {
+        ST.successReload('取消置顶成功')
       })
       .catch(e=>ST.info.error(e.message)).done
   }

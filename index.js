@@ -40,6 +40,7 @@ import Topics from './pages/Topics.js'
 import TopicsAdd from './pages/topics/TopicsAdd.js'
 import TopicsEdit from './pages/topics/TopicsEdit.js'
 import TopicsShow from './pages/topics/TopicsShow.js'
+import TopicTop from './pages/topics/_Top.js'
 import AllFeeds from './pages/topics/AllFeeds.js'
 import ShakeTips from './pages/ShakeTips.js'
 import ShakeTipsAdd from './pages/shake_tips/ShakeTipsAdd.js'
@@ -133,6 +134,7 @@ render((
           <Route path="edit/:id" component={TopicsEdit}/>
           <Route path="show/:id" component={TopicsShow}/>
           <Route path="all_feeds/:id" component={AllFeeds}/>
+          <Route path="top/:id" component={TopicTop}/>
         </Route>
         <Route path="advs" component={App}>
           <IndexRoute component={Advs} />
