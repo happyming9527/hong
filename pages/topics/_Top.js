@@ -9,7 +9,7 @@ import ST, {SingleContainer} from '../../Setting.js'
 export default class Rec extends React.Component {
 
   submitCallback = (values)=> {
-    ST.httpPost(`/api/articles/top?id=${this.props.params.id }`, values)
+    ST.httpPost(`/api/topics/top?id=${this.props.params.id }`, values)
       .then(result=> {
         ST.info.success('操作成功.')
         ST.historyGoBack()
