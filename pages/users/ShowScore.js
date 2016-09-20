@@ -20,6 +20,10 @@ export default class FansList extends SearchComponent {
     ST.history.push(`/backend/users/add_score/${this.props.params.id}`)
   }
 
+  addGrowth() {
+    ST.history.push(`/backend/users/add_growth/${this.props.params.id}`)
+  }
+
   getData() {
     let that = this
     ST.httpPost(
@@ -47,6 +51,12 @@ export default class FansList extends SearchComponent {
             type="primary"
             htmlType="submit"
             onClick={this.addScore.bind(this)}>下发积分{`( 现有积分: ${this.state.oldNode&&this.state.oldNode.score} )`}</Button>
+
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{marginLeft: 20}}
+            onClick={this.addGrowth.bind(this)}>下发成长值{`( 现有成长值: ${this.state.oldNode&&this.state.oldNode.growthValue} )`}</Button>
 
         </Row>
 
